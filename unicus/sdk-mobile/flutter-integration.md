@@ -216,6 +216,17 @@ standard Unicus process:
 Your app should not call `/start-process-transaction` or
 `/get-restart-session` manually for the standard Flutter integration.
 
+The standard sequence is:
+
+1. Your app calls `unicus.start(...)`.
+2. The SDK calls `/start-process-transaction` and receives a new transaction id
+   `tid`.
+3. The SDK calls `/get-restart-session` using that `tid`.
+4. The SDK applies the company colors, logo, and FaceTec text configuration.
+5. The SDK opens the native verification screen.
+6. The SDK sends the encrypted verification data to Unicus.
+7. Your app receives one `UnicusVerificationResult`.
+
 ## Document types
 
 Use the enum provided by the SDK.
@@ -260,7 +271,7 @@ const UnicusVerificationRequest(
 | Field | Description |
 | --- | --- |
 | `success` | `true` when the verification completed successfully. |
-| `outcome` | Normalized result category: success, failed, canceled, review, or error. |
+| `outcome` | Normalized result category: success, warning, failed, canceled, error, or unknown. |
 | `tid` | Unicus transaction id created by the SDK. |
 | `resultCode` | Unicus result code, when available. |
 | `resultMessage` | Human-readable result message, when available. |
@@ -274,8 +285,8 @@ switch (result.outcome) {
   case UnicusVerificationOutcome.success:
     // Continue with the verified user.
     break;
-  case UnicusVerificationOutcome.review:
-    // Send the user to a manual review or pending screen.
+  case UnicusVerificationOutcome.warning:
+    // Continue or route to manual review according to your business rules.
     break;
   case UnicusVerificationOutcome.canceled:
     // Allow the user to retry.
@@ -283,6 +294,9 @@ switch (result.outcome) {
   case UnicusVerificationOutcome.failed:
   case UnicusVerificationOutcome.error:
     // Show the configured failure flow.
+    break;
+  case UnicusVerificationOutcome.unknown:
+    // Show a support or retry path.
     break;
 }
 ```
