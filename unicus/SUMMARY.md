@@ -18,6 +18,10 @@
 * [Versioning](sdk-web/releases.md)
 * [Appearance configuration](sdk-web/configuracion.md)
 
+## MOBILE SDK INTEGRATION PROCESS <a href="#mobile-sdk" id="mobile-sdk"></a>
+
+* [FLUTTER INTEGRATION](sdk-mobile/flutter-integration.md)
+
 ## Administrative Portal
 
 * [Glossary](administrative-portal/glossary.md)
