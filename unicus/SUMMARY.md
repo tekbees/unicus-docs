@@ -20,7 +20,7 @@
 
 ## MOBILE SDK INTEGRATION PROCESS <a href="#mobile-sdk" id="mobile-sdk"></a>
 
-* [FLUTTER INTEGRATION](sdk-mobile/flutter-integration.md)
+* [FLUTTER INTEGRATION](mobile-sdk/flutter-integration.md)
 
 ## Administrative Portal
 
