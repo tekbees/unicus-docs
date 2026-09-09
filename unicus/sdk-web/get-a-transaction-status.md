@@ -1,39 +1,41 @@
 # Get a transaction status
 
-This Unicus API endpoint allows our customers to know the status of a transaction through a post type service and returns all the information related to the requested transaction, only when it has been completed successfully. The customer token is required.
-
-
+Use this endpoint from your backend to query the current or final status of a
+Unicus transaction. The request requires the transaction id, called `tid`, and
+the Customer Token assigned to the company.
 
 ## Query transaction endpoint
 
 <mark style="color:green;">`POST`</mark> `<unicus-server-api-url>/query-transaction`
 
-#### Headers
+### Headers
 
-| Name                                            | Type   | Description        |
-| ----------------------------------------------- | ------ | ------------------ |
-| X-Customer-ID<mark style="color:red;">\*</mark> | String | **Customer Token** |
+| Name | Required | Description |
+| --- | --- | --- |
+| `X-Customer-ID` | Yes | Customer Token for the same environment where the transaction was created. |
 
-#### Request Body
+### Request body
 
-| Name                                  | Type   | Description    |
-| ------------------------------------- | ------ | -------------- |
-| tid<mark style="color:red;">\*</mark> | String | Transaction ID |
+| Name | Required | Description |
+| --- | --- | --- |
+| `tid` | Yes | Transaction id returned by Unicus. |
 
-#### Curl Execution
+### Curl example
 
+{% code overflow="wrap" %}
+```bash
+curl --location '<unicus-server-api-url>/query-transaction' \
+  --header 'X-Customer-ID: <CUSTOMER_TOKEN>' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "tid": "<TID>"
+  }'
 ```
-curl --location 'https://api.idunicus.com:8080/query-transaction' \
---header 'X-Customer-ID: XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX' \
---header 'Content-Type: application/json' \
---data '{
-    "tid": "tid" 
-}'
-```
+{% endcode %}
 
-#### Response
+### Responses
 
-200: OK Response for a complete transaction
+200: OK response for a completed transaction
 
 ```json5
 {
@@ -50,15 +52,15 @@ curl --location 'https://api.idunicus.com:8080/query-transaction' \
     "tid": "<<tid transaction>>",
     "transactionType": "<<ENROLL WITH FACE-ID||VERIFY WITH FACE>>",
     "transactionResult": "<<SUCCESS||FAIL||>>",
-    "transactionStatus": "<<MESSAGE STATUS>>",
-    "transactionStatusId": STATUS_ID,
+    "transactionStatus": "<<STATUS MESSAGE>>",
+    "transactionStatusId": <<STATUS_ID>>,
     "transactionDate": "2023-09-26T14:05:52.000+00:00",
     "document": "<<ID NUMBER>>",
     "documentType": "<<ID TYPE>>",
-    "name": "<<NAME SCANED>>",
-    "lastName": "<<LAST NAME SCANED>>",
+    "name": "<<SCANNED NAME>>",
+    "lastName": "<<SCANNED LAST NAME>>",
     "country": "CO",
-    "statusUser": USER STATUS ,
+    "statusUser": "<<USER STATUS>>",
     "companyName": "<<COMPANY NAME>>",
     "feature": {
         "path": "enrollment-3d",
@@ -68,14 +70,14 @@ curl --location 'https://api.idunicus.com:8080/query-transaction' \
         "resultCode": 0,
         "wasProcessed": true,
         "resultMessage": "success",
-        "scanResultBlob": "<<ENCRIPTED SCAN PROCESS>>",
+        "scanResultBlob": "<<ENCRYPTED SCAN PROCESS>>",
         "retryScreenEnumInt": 0,
         "additionalSessionData": {
             "appID": "web.idunicus.com",
             "platform": "web",
             "ipAddress": "<<IP DEVICE>>",
             "sessionID": "<<ID SESSION>>",
-            "userAgent": "<<DETAIL DEVICE>>",
+            "userAgent": "<<DEVICE DETAIL>>",
             "deviceModel": "<<MODEL DEVICE>>",
             "installationID": "<<ID DEVICE>>",
             "deviceSDKVersion": "VERSION SDK",
@@ -167,7 +169,7 @@ curl --location 'https://api.idunicus.com:8080/query-transaction' \
 }
 ```
 
-200: OK Response for transaction in process or created
+200: OK response for a transaction in process or created
 
 ```json5
 {
@@ -185,7 +187,7 @@ curl --location 'https://api.idunicus.com:8080/query-transaction' \
 }
 ```
 
-200: OK Response for transaction not found
+200: OK response for transaction not found
 
 {% code overflow="wrap" expandable="true" %}
 ```json5

@@ -1,3 +1,65 @@
 # Compatibility
 
-<table data-header-hidden><thead><tr><th width="122"></th><th width="120"></th><th width="121.33333333333331"></th><th width="120"></th><th width="118"></th><th width="139"></th><th width="136"></th><th data-hidden></th></tr></thead><tbody><tr><td>Native<br>Mobile<br><br><img src="../.gitbook/assets/image.png" alt=""></td><td>Android<br><br><img src="../.gitbook/assets/image (2).png" alt="" data-size="original"><br><br>4.4+</td><td>Apple<br><br><img src="../.gitbook/assets/image (10).png" alt=""><br><br>8.3+</td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>Mobile<br>Browser<br><br><img src="../.gitbook/assets/image.png" alt=""></td><td>Android<br>Chrome<br><br><img src="../.gitbook/assets/m_merged (1).png" alt=""><br><br>56</td><td>Android<br>Firefox<br><br><img src="../.gitbook/assets/m_merged (2).png" alt=""><br><br>50</td><td>Android<br>Opera<br><br><img src="../.gitbook/assets/m_merged (3).png" alt=""><br><br>47</td><td>iOS<br>Safari<br><br><img src="../.gitbook/assets/m_merged (4).png" alt=""><br><br>11</td><td>iOS<br>Chrome<br><br><img src="../.gitbook/assets/m_merged.png" alt=""><br><br>iOS WebRTC<br>Bug Prevents<br>Compatibility</td><td>iOS<br>Firefox<br><br><img src="../.gitbook/assets/m_merged (5).png" alt=""><br><br>iOS WebRTC<br>Bug Prevents<br>Compatibility</td><td></td></tr><tr><td>Desktop<br>Browser<br><br><img src="../.gitbook/assets/image (7).png" alt=""><br></td><td>Chrome<br><br><img src="../.gitbook/assets/App-Chrome-icon.png" alt=""><br><br>56</td><td>Firefox<br><br><img src="../.gitbook/assets/mozilla.png" alt=""><br><br>50</td><td>Opera<br><br><img src="../.gitbook/assets/opera.png" alt=""><br><br>47</td><td>Safari<br><br><img src="../.gitbook/assets/safari.png" alt=""><br><br>11</td><td>Edge<br><br><img src="../.gitbook/assets/image (9).png" alt=""><br><br>17</td><td>Internet<br>Explorer<br><br><img src="../.gitbook/assets/image (6).png" alt=""><br><br>Planned<br>Support</td><td></td></tr></tbody></table>
+Use this page before going live to confirm that the customer site can load the
+Unicus Button and run the verification flow correctly.
+
+## Required browser capabilities
+
+| Requirement | Why it matters |
+| --- | --- |
+| HTTPS | Browsers require HTTPS for camera access and secure iframe behavior. |
+| JavaScript enabled | The button is a web component loaded by the Unicus script. |
+| Camera permission | Verification requires access to the user's camera. |
+| Third-party iframe allowed | The button opens the Unicus flow in an iframe. |
+| Stable network connection | The verification flow uploads encrypted biometric and document payloads. |
+
+## Supported browsers
+
+| Platform | Recommended browsers |
+| --- | --- |
+| Desktop | Latest Chrome, Edge, Firefox, or Safari. |
+| Android mobile browser | Latest Chrome or Samsung Internet. |
+| iOS mobile browser | Latest Safari. |
+
+{% hint style="warning" %}
+iOS browsers other than Safari can behave differently because all iOS browsers
+depend on Apple's WebKit engine and camera permission model. For production
+validation on iPhone, test with Safari.
+{% endhint %}
+
+## Iframe and Content Security Policy
+
+If the customer site uses a Content Security Policy, allow the Unicus domains
+provided by Tekbees. At minimum, review these directives:
+
+| Directive | Allow |
+| --- | --- |
+| `script-src` | `https://unicusbtn.idunicus.com` |
+| `frame-src` or `child-src` | The Unicus flow domain, for example `https://id.idunicus.com`. |
+| `connect-src` | The Unicus API and flow domains. |
+| `img-src` | `https:` and `data:` if the policy is restrictive. |
+
+Do not block the iframe from using camera and geolocation permissions. The
+Unicus iframe is created with permission attributes for camera, geolocation,
+encrypted media, and microphone.
+
+## Mobile behavior
+
+On mobile devices, the flow can use a full-screen iframe experience so the user
+does not lose the connection with the customer page. Users should complete the
+process in portrait orientation and avoid refreshing or closing the browser
+during verification.
+
+## Pre-production checklist
+
+1. Open the page over HTTPS.
+2. Confirm `https://unicusbtn.idunicus.com/sdkButton.js` loads successfully.
+3. Confirm `<unicus-btn>` appears and becomes enabled after the transaction is
+   created.
+4. Confirm the browser asks for camera permission.
+5. Complete one successful enrollment verification transaction.
+6. Complete one liveness transaction if your application uses liveness.
+7. Confirm `OnUnicus:loaded`, `OnUnicus:details`, and `OnUnicus:finished` are
+   received by the customer page.
+8. Confirm the final transaction appears in the Unicus administrative portal or
+   in your webhook/status integration.

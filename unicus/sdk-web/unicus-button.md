@@ -1,141 +1,257 @@
 ---
 description: >-
-  Unicus Web SDK is a suite of services focused on identity verification,
-  detailed below.
+  Add the Unicus Web Button to a website and start enrollment verification or
+  liveness from the customer page.
 ---
 
-# Unicus WEB SDK
+# Unicus Button
 
-<figure><img src="../.gitbook/assets/Screenshot from 2020-11-10 08-49-26.png" alt=""><figcaption></figcaption></figure>
+Unicus Button is a web component that starts the Unicus verification flow from
+your web page. The customer application integrates **Unicus** only: add the
+script, render `<unicus-btn>`, pass the required attributes, and listen for
+events.
 
-## Unicus Button Integration
-
-For the integration of the _**Unicus**_ button, we have two main processes **Enrollment - Verify** and **Liveness** which you should take into account, depending on your business needs.
-
-### How to use it?
-
-Add the following line of code inside the header or head tag of your website.
-
-{% hint style="warning" %}
-**Important**
-
-It is recommended to include the script with the **async** or **defer** attribute to improve page loading.
+{% hint style="info" %}
+Do not create Unicus transactions manually when using `<unicus-btn>`. The button
+creates the transaction, opens the iframe, and reports progress through browser
+events.
 {% endhint %}
 
-{% code overflow="wrap" expandable="true" %}
-```javascript
-<script 
-    type="text/javascript" 
-    src="https://unicusbtn.idunicus.com/sdkButton.js">
+## 1. Add the script
+
+Add the Unicus Button script once in your page, preferably with `defer`.
+
+{% code overflow="wrap" %}
+```html
+<script
+  type="text/javascript"
+  src="https://unicusbtn.idunicus.com/sdkButton.js"
+  defer>
 </script>
 ```
 {% endcode %}
 
-#### **Enrollment - Verify**
+## 2. Render the button
 
-Process that unifies facial recognition with the identity document, to validate the identity of a person. When the person has already enrolled (_registered_) in the platform, only his or her face will be requested in the following transactions, verification process.
-
-<figure><img src="../.gitbook/assets/SCR-20231219-itrj.png" alt="" width="272"><figcaption></figcaption></figure>
-
-If you want to integrate the **Enrollment-Verify** process you need to specify three attributes, the first one is [`customertoken`](how-to-get-customer-token.md) with the value of your generated token, the second one is `transactiontype` with enrollment-verify and the third attribute `clientid` with the user identifier (Passport, Driver License, ID, etc.)
+Use `transactiontype="enrollment-verify"` when the user must be enrolled if they
+do not already exist in Unicus, or verified if they are already enrolled.
 
 {% code overflow="wrap" %}
 ```html
-<!-- @param {clientid} document type : customer's document number-->
-<!-- @param {customerid} you get it from the administration panel -->
-<!-- @param {transactiontype} Transaction type -->
-<unicus-btn 
-    clientid="<document_id>:<client_id>" 
-    transactiontype="enrollment-verify" 
-    customerid="<customertoken>">
+<unicus-btn
+  id="unicus-verification"
+  customerid="<CUSTOMER_TOKEN>"
+  transactiontype="enrollment-verify"
+  clientid="ID:123456789">
 </unicus-btn>
 ```
 {% endcode %}
 
-The valid document types are:
+Use `transactiontype="liveness"` when the flow only needs a liveness check.
+`clientid` is not required for liveness.
 
-1. ID: National ID document
-2. PP: Passport
-3. DL: Driver's license
-4. FD: Foreign document
-
-#### **Liveness**
-
-A process that applies facial recognition to identify that a user is a real person.
-
-<div align="center" data-with-frame="true"><figure><img src="../.gitbook/assets/SCR-20231219-iuvh.png" alt="" width="273"><figcaption></figcaption></figure></div>
-
-
-
-* If you want to integrate the **Liveness** process, you need to specify two attributes, the first one is [`customertoken`](how-to-get-customer-token.md) with the value of your token generated in the [admin panel](https://app.idunicus.com) and the second is `transactiontype` with _liveness_ like the following example
-* ```html
-  <!-- @param {customertoken} you get it in your administration panel -->
-  <!-- @param {transactiontype} Transaction type -->
-  <unicus-btn 
-      transactiontype="liveness" 
-      customerid="<customertoken>">
-  </unicus-btn>
-  ```
-
-
-
-### Unicus Button Attributes
-
-The following is a list of the attributes of the button that will allow a better understanding of its use.
-
-<table><thead><tr><th width="169">Attribute</th><th width="106">Type</th><th width="211">Description</th><th>Required</th></tr></thead><tbody><tr><td><strong>customertoken</strong></td><td>string</td><td>The corporate identification token</td><td><strong>mandatory</strong></td></tr><tr><td><strong>transactiontype</strong></td><td>string</td><td><p>Type of transaction to be executed:</p><ul><li>liveness</li><li>enrollment-verify</li></ul></td><td><strong>mandatory</strong></td></tr><tr><td><strong>clientid</strong></td><td>string</td><td>User identification consists of the type of identification and its identification number &#x3C;DOCUMENT_ID>:&#x3C;CLIENT_ID>. This attribute is used for <code>enrollment-verify</code> transactions.</td><td><strong>mandatory for enrollment-verify transaction</strong></td></tr><tr><td><strong>language</strong></td><td>string</td><td>interface language according to the user;'s browser</td><td><em>automatic</em></td></tr><tr><td><strong>color</strong></td><td>string</td><td>colors configured in the admin portal</td><td><em>automatic</em></td></tr><tr><td><strong>disabled</strong></td><td>string</td><td>according to the button context</td><td><em>automatic</em></td></tr></tbody></table>
-
-### Javascript Frameworks integration
-
-In this section you will find different implementations with the main web technologies. To use the examples it is necessary to replace the token
-
-{% tabs %}
-{% tab title=" Vanilla Javascript" %}
-Implement it on your own website with just a few lines of code regardless of the framework.
-
-Example of the complete code and its integration in the following [_link_](https://codesandbox.io/s/unicus-web-demo-yz9k4q?file=/index.html)
-{% endtab %}
-
-{% tab title="React" %}
-Example of the complete code and its integration in the following [_**link**_](https://codesandbox.io/s/unicus-react-demo-e9u6rj?file=/src/App.js)
-{% endtab %}
-
-{% tab title="Vue.js" %}
-Remember that, for the correct installation in Vue.js you must place the following line of code, this, because we are using custom elements. In this way, it will not cause warning for the use of a component not imported from npm modules.
-
-```javascript
-Vue.config.ignoredElements = ["unicus-btn"];
+{% code overflow="wrap" %}
+```html
+<unicus-btn
+  id="unicus-liveness"
+  customerid="<CUSTOMER_TOKEN>"
+  transactiontype="liveness">
+</unicus-btn>
 ```
+{% endcode %}
 
-Example of the complete code and its integration in the following [_**link**_](https://codesandbox.io/s/vue-demo-unicus-forked-yf0x7b?file=/src/App.vue)
-{% endtab %}
+## Attribute reference
 
-{% tab title="Angular" %}
-Remember that, for its correct installation in Angular you must place the following line of code, this, because we are using custom elements. In this way, it will not cause warning for the use of a component not imported from npm modules.
+| Attribute | Required | Example | Description |
+| --- | --- | --- | --- |
+| `customerid` | Yes | `<CUSTOMER_TOKEN>` | Customer token generated in the Unicus administrative portal. This is the same value described as Customer Token in other API pages. |
+| `transactiontype` | Yes | `enrollment-verify` | Public flow requested by the customer app. Supported values are `enrollment-verify` and `liveness`. |
+| `clientid` | Required for `enrollment-verify` | `ID:123456789` | Document type and document number separated by `:`. The value before `:` is sent as `documentType`; the value after `:` is sent as `externalDatabaseRefID`. |
+| `language` | Optional | `en` | Button label language. If omitted, the browser language is used when supported. The verification flow language is resolved by the Unicus flow configuration. |
 
-{% hint style="info" %}
-**Important:**\
-Use _**CUSTOM\_ELEMENTS\_SCHEMA**_ importing it from @angular/core
-{% endhint %}
+Valid document types for `clientid`:
 
-```typescript
-// app.module.ts
-import { ..., CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+| Code | Description |
+| --- | --- |
+| `ID` | National ID document. |
+| `FD` | Foreign document. |
+| `PP` | Passport. |
+| `DL` | Driver license. |
+
+## What happens internally
+
+For `transactiontype="enrollment-verify"`, the button sends this transaction
+creation request to Unicus:
+
+{% code overflow="wrap" %}
+```json
+{
+  "documentType": "ID",
+  "externalDatabaseRefID": "123456789",
+  "process": "face-id"
+}
+```
+{% endcode %}
+
+The customer token is sent as the `X-Customer-ID` header. If the transaction is
+created successfully, Unicus returns a `tid`, company colors, and the next flow
+decision.
+
+The button then converts the public `enrollment-verify` request into one of the
+internal flow values:
+
+| Backend decision | Internal flow opened by the button | User experience |
+| --- | --- | --- |
+| User is not enrolled | `enrollment` | Face verification plus document capture. |
+| User is already enrolled | `verify` | Face verification only. |
+
+For `transactiontype="liveness"`, the button creates a liveness transaction and
+opens the liveness flow.
+
+## Full HTML example
+
+{% code overflow="wrap" %}
+```html
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script
+      type="text/javascript"
+      src="https://unicusbtn.idunicus.com/sdkButton.js"
+      defer>
+    </script>
+  </head>
+  <body>
+    <unicus-btn
+      id="unicus-verification"
+      customerid="<CUSTOMER_TOKEN>"
+      transactiontype="enrollment-verify"
+      clientid="ID:123456789">
+    </unicus-btn>
+
+    <script>
+      const unicusButton = document.querySelector('#unicus-verification');
+
+      unicusButton.addEventListener('OnUnicus:loaded', ({ detail }) => {
+        console.log('Unicus transaction created', detail.transaction.transactionId);
+      });
+
+      unicusButton.addEventListener('OnUnicus:finished', ({ detail }) => {
+        console.log('Unicus transaction finished', detail);
+      });
+
+      unicusButton.addEventListener('OnUnicus:error', ({ detail }) => {
+        console.error('Unicus transaction error', detail);
+      });
+    </script>
+  </body>
+</html>
+```
+{% endcode %}
+
+## Framework notes
+
+### React
+
+React can render the custom element directly. Attach listeners with a `ref`.
+
+{% code overflow="wrap" %}
+```jsx
+import { useEffect, useRef } from 'react';
+
+export function UnicusVerificationButton() {
+  const ref = useRef(null);
+
+  useEffect(() => {
+    const button = ref.current;
+    if (!button) return;
+
+    const onFinished = (event) => {
+      console.log('Unicus finished', event.detail);
+    };
+
+    button.addEventListener('OnUnicus:finished', onFinished);
+    return () => button.removeEventListener('OnUnicus:finished', onFinished);
+  }, []);
+
+  return (
+    <unicus-btn
+      ref={ref}
+      customerid="<CUSTOMER_TOKEN>"
+      transactiontype="enrollment-verify"
+      clientid="ID:123456789"
+    />
+  );
+}
+```
+{% endcode %}
+
+### Vue
+
+Vue 3 can render custom elements directly. If your build warns about unresolved
+components, configure Vue to treat `unicus-btn` as a custom element.
+
+{% code overflow="wrap" %}
+```js
+// vite.config.js
+import vue from '@vitejs/plugin-vue';
+
+export default {
+  plugins: [
+    vue({
+      template: {
+        compilerOptions: {
+          isCustomElement: (tag) => tag === 'unicus-btn',
+        },
+      },
+    }),
+  ],
+};
+```
+{% endcode %}
+
+### Angular
+
+Add `CUSTOM_ELEMENTS_SCHEMA` to the Angular module that renders the button.
+
+{% code overflow="wrap" %}
+```ts
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 
 @NgModule({
-  declarations: [
-    ...,
-    ...
-  ],
-  imports: [
-    ...
-  ],
-  providers: [],
-  bootstrap: [...],
-  schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
+export class AppModule {}
 ```
+{% endcode %}
 
-Example of the complete code and its integration in the following [_**link**_](https://codesandbox.io/s/unicus-angular-demo-hgrgws)
-{% endtab %}
-{% endtabs %}
+## Security and iframe behavior
+
+The button opens the Unicus flow inside an iframe. The transaction id and flow
+type are included in the iframe URL, but the customer token is not added to that
+URL. The token is sent to the iframe through a secure `postMessage` handshake
+after the iframe is ready.
+
+If your site has a Content Security Policy, allow:
+
+| Directive | Required value |
+| --- | --- |
+| `script-src` | `https://unicusbtn.idunicus.com` |
+| `frame-src` or `child-src` | The Unicus flow domain provided by Tekbees, for example `https://id.idunicus.com`. |
+| `connect-src` | The Unicus API and flow domains provided by Tekbees. |
+| `img-src` | `https:` and `data:` if your policy is restrictive. |
+
+The iframe requires access to camera, geolocation, encrypted media, and
+microphone permissions. Users must grant camera access to complete verification.
+
+## Common mistakes
+
+| Symptom | What to check |
+| --- | --- |
+| The button stays disabled or gray | Confirm `customerid` is valid and the Unicus API environment matches the token. |
+| `OnUnicus:error` says `clientid` is invalid | Confirm `clientid` uses `DOCUMENT_TYPE:DOCUMENT_NUMBER`, for example `ID:123456789`. |
+| User is blocked | The transaction creation response can return result code `2052`; contact Tekbees support or review the user status in Unicus. |
+| Events never fire | Attach listeners to the existing DOM element with `document.querySelector(...)`, not to a detached element created only in JavaScript. |
+| The iframe does not open | Check browser popup/script blockers, CSP `frame-src`, and that the script loaded from `https://unicusbtn.idunicus.com/sdkButton.js`. |

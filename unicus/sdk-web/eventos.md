@@ -1,407 +1,204 @@
 ---
 description: >-
-  For Unicus SDK Web you will receive the following events in your website which
-  will help you know what step the process is executing and the result of a
-  transaction.
+  Listen to Unicus Web Button events from the customer page and react to
+  transaction progress, completion, and errors.
 ---
 
 # Events
 
-### How to subscribe to SDK Web events?
+Unicus Button emits browser events from the `<unicus-btn>` element. Use these
+events to update your application UI, store the transaction id, and react when
+the user finishes or leaves the flow.
 
-{% hint style="warning" %}
-**Interesting:** \
-In addition to the Webhooks where you can have server-side response of the flow of your users, you can also do it from the following feature.
+{% hint style="info" %}
+Server-side webhooks are still recommended for authoritative back-office
+processing. Browser events are useful for the user interface and immediate page
+behavior.
 {% endhint %}
 
-The following are the events that can be returned by _**Unicus**_ _**Button**_, followed by a description of when each event is triggered and its characteristics.
+## Subscribe to events
 
-```javascript
-/* Add listener pointing to the Unicus Button */
-const unicusButton = document.createElement("unicus-btn");
+Attach listeners to the `<unicus-btn>` element that exists in the page.
 
-  unicusButton.addEventListener("OnUnicus:loaded", ({ detail }) => {
-    console.log("Unicus loaded with transaction detail", detail);
+{% code overflow="wrap" %}
+```html
+<unicus-btn
+  id="unicus-verification"
+  customerid="<CUSTOMER_TOKEN>"
+  transactiontype="enrollment-verify"
+  clientid="ID:123456789">
+</unicus-btn>
+
+<script>
+  const unicusButton = document.querySelector('#unicus-verification');
+
+  unicusButton.addEventListener('OnUnicus:loaded', ({ detail }) => {
+    console.log('Transaction created', detail.transaction.transactionId);
   });
-  
-  unicusButton.addEventListener("OnUnicus:details", ({ detail }) => {
-    console.log("OnUnicus:details", detail);
+
+  unicusButton.addEventListener('OnUnicus:details', ({ detail }) => {
+    console.log('Transaction progress', detail.transaction.state);
   });
-  
-  unicusButton.addEventListener("OnUnicus:error", ({ detail }) => {
-    console.log("OnUnicus:error", detail);
+
+  unicusButton.addEventListener('OnUnicus:finished', ({ detail }) => {
+    console.log('Transaction finished', detail);
   });
-  
-  unicusButton.addEventListener("OnUnicus:finished", ({ detail }) => {
-    console.log("OnUnicus:finished", detail);
+
+  unicusButton.addEventListener('OnUnicus:error', ({ detail }) => {
+    console.error('Transaction error', detail);
   });
-  
-  unicusButton.addEventListener("OnUnicus:exit", ({ detail }) => {
-    console.log("OnUnicus:exit", detail);
-  });
-```
-
-#### Unicus button load
-
-Add the following **listener** to detect when the Unicus Button is finished loading.
-
-```javascript
-/* Add listener by pointing to the Unicus Button */
-const unicusButton = document.createElement("unicus-btn");
-
-unicusButton.addEventListener('OnUnicus:loaded', function(event) {
-  console.log('Unicus loaded with transaction detail: ', event.detail)
-});
-```
-
-{% tabs %}
-{% tab title="Paramenters" %}
-Keep in mind the following convention to know what each object means in the response corresponding to this Event.
-
-<table data-header-hidden data-search="false"><thead><tr><th width="275.3197616683218">Name</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td><strong>status_error</strong></td><td>Boolean</td><td>Defines whether an error occurred during service loading or related to the pending process.</td></tr><tr><td><strong>loaded</strong></td><td>Boolean</td><td>Defines whether the process loaded correctly</td></tr><tr><td><strong>message</strong></td><td>String</td><td>Provides an immediate response message to the customer to let them know how the process was completed</td></tr><tr><td><strong>link</strong></td><td>String</td><td>Gives the customer the option to open the Web help modal himself.</td></tr><tr><td><strong>transaction</strong></td><td>Object</td><td>Provides an object with transaction data</td></tr><tr><td><strong>transaction</strong>.<strong>transactionId</strong></td><td>String</td><td>Corresponds to the transaction ID</td></tr><tr><td><strong>transaction</strong>.<strong>clientid</strong></td><td>String</td><td>Corresponds to the identification of the customer with whom the transaction is to be carried out.</td></tr></tbody></table>
-{% endtab %}
-
-{% tab title="Response" %}
-If all goes well, you should see the following response in the (developer) console in your application.
-
-{% hint style="success" %}
-successful
-{% endhint %}
-
-```javascript
-{
-  link: "URL/?token=<TransactionID>",
-  loaded: true,
-  message: "Unicus SDK: loaded successfully",
-  status_error: false,
-  transaction: {
-    transactionId: "<TransactionID>",
-    clientid: "<ClientID>",
-  },
-}
-```
-
-{% hint style="warning" %}
-**Important**\
-If the **status\_error** object is set to True, it means that the transaction cannot be executed.\
-\
-Please check carefully the values of the client and customerid attributes corresponding to the Unicus button to see if there are any errors or inconsistencies, ultimately contact support.
-{% endhint %}
-{% endtab %}
-{% endtabs %}
-
-### Events Details&#x20;
-
-#### Enrollment with document and verification
-
-Add the following _addEventListener_ to listen when the user has an active transaction.
-
-{% code overflow="wrap" expandable="true" %}
-```js
-/* Add listener by pointing to the Unicus Button */
-const unicusButton = document.createElement("unicus-btn");
-unicusButton.addEventListener("OnUnicus:details", ({ detail }) => {
-    console.log("Unicus with transaction details", detail);
-  });
+</script>
 ```
 {% endcode %}
 
-#### Liveness
+Do not use `document.createElement("unicus-btn")` only to subscribe to events.
+Listeners must be attached to the element that is rendered in the DOM.
 
-{% tabs %}
-{% tab title="Parameters" %}
-<table><thead><tr><th width="202.55989583333331">Name</th><th width="144">Type</th><th>Description</th></tr></thead><tbody><tr><td><strong>status_error</strong></td><td>Booleano</td><td>Defines whether an error occurred during service loading or related to the pending process.</td></tr><tr><td><strong>message</strong></td><td>String</td><td>Provides an immediate response message to the customer to let them know how the process was completed</td></tr><tr><td><strong>transaction</strong></td><td>Object</td><td>Provides an object with data from the transaction process</td></tr><tr><td><strong>transaction.state</strong></td><td>Object</td><td>Provides an object with data on the status of the transaction performed.</td></tr><tr><td><strong>transaction.state.additionalSessionData</strong></td><td>Object</td><td>Provides an object with transaction session data.</td></tr><tr><td><strong>transaction.state.faceScanSecurityChecks</strong></td><td>Object</td><td>Provides an object with data from the performed face scan.</td></tr></tbody></table>
-{% endtab %}
+## Event summary
 
-{% tab title="Response" %}
-{% hint style="success" %}
-Successful
+| Event | When it happens | Recommended action |
+| --- | --- | --- |
+| `OnUnicus:loaded` | The button created the transaction and received a `tid`. | Store `transaction.transactionId` if your application needs to correlate the transaction. Enable any UI that depends on the transaction being ready. |
+| `OnUnicus:details` | The verification flow reports progress. This event can fire several times. | Update progress indicators. Do not treat this as final success or failure. |
+| `OnUnicus:finished` | The user completed the flow or closed the final Unicus screen. | Close local modals, refresh user state, and optionally call `query-transaction` or wait for your webhook. |
+| `OnUnicus:error` | The button or flow could not continue. | Show a recoverable error and log the payload with the transaction id when available. |
+| `OnUnicus:exit` | Legacy exit signal, if emitted by older flows. | Treat the flow as closed. Prefer `OnUnicus:finished` for new integrations. |
 
-Note that this event will be repeated several times as the customer repeats the document validation process.
-{% endhint %}
+## `OnUnicus:loaded`
 
-```json5
-{ 
-  status_error: false,
-  message: "Unicus SDK: User is active on transaction",
-  status_error: false,
-    transaction:{
-     exited: false
-     state: {
-          success: true,
-          wasProcessed: true,
-          error: false,
-          path: "match-3d-3d",
-          resultCode: 0,
-          resultMessage: "The match request was processed  and the Match Level was  15",
-          additionalSessionData: {
-                isAdditionalDataPartiallyIncomplete: false,
-                platform: "web",
-                appID: "192.168.100.70",
-                installationID: "ad2b8bd8-fc54-4446-bebf-23e2634f8d5a",
-                deviceModel: "EB2103",
-                deviceSDKVersion: "9.6.18",
-                sessionID: "231d724f-6706-4790-920a-314604817cbe",
-                userAgent: "Mozilla/5.0 (Linux; Android 13; EB2103)",
-                ipAddress: "157.100.137.115"
-          },
-          elapsedPerformanceTime: 1623,
-          externalDatabaseRefID: a84785fd-c821-11ed-b3bf-12dee90996cb,
-          faceScanSecurityChecks: {
-               success: true,
-               replayCheckSucceeded: true,
-               sessionTokenCheckSucceeded: true,
-               auditTrailVerificationCheckSucceeded: true,
-               faceScanLivenessCheckSucceeded: true
-          },
-          ageEstimateGroupEnumInt: 1,
-          matchLevel: 15,
-          retryScreenEnumInt: 0,
-          scanResultBlob: "AAEAAABTAAAAAAAAAPCFkLOa4Lfa5VYTYLjY8VVcx1kIH+CtvK77KaGtuTozuNB7HNabe7/ms19h86bhjOZMmuGcvgP2vQFo/b2ijxN/LvB9+XwyPwmg2YMDk1kbb92k"
-     },
+This event confirms that Unicus created the transaction.
+
+{% code overflow="wrap" %}
+```json
+{
+  "status_error": false,
+  "loaded": true,
+  "message": "Unicus SDK: loaded successfully",
+  "link": "https://id.idunicus.com/?token=<TID>",
+  "transaction": {
+    "transactionId": "<TID>",
+    "clientid": "123456789"
+  }
+}
+```
+{% endcode %}
+
+For liveness transactions, `transaction.clientid` can be an empty string.
+
+## `OnUnicus:details`
+
+This event reports intermediate progress while the verification flow is running.
+It can fire more than once during the same transaction.
+
+{% code overflow="wrap" %}
+```json
+{
+  "status_error": false,
+  "message": "Unicus SDK: User is active on transaction",
+  "transaction": {
+    "exited": false,
+    "transactionId": "<TID>",
+    "state": {
+      "path": "match-3d-2d-idscan",
+      "success": true,
+      "wasProcessed": true,
+      "resultCode": 200,
+      "resultMessage": "Success",
+      "isFrontSide": true,
+      "matchLevel": 4
     }
+  }
 }
 ```
+{% endcode %}
 
-{% hint style="danger" %}
-Errors \
-The following is a list of errors you might get.
-{% endhint %}
+The `state.path` value helps identify which step reported the event. Common
+values include:
 
-* **USER\_ALREADY\_ENROLL:**
+| `state.path` | Meaning |
+| --- | --- |
+| `match-3d-2d-idscan` | Face and document step. |
+| `match-3d-3d` | Face verification step. |
+| `liveness-3d` | Liveness step. |
 
-> It occurs if the user re-enrolls. This error is only possible during an internal application failure since the application automatically detects which process it should direct to.
+Only use fields that your application needs. The payload can include additional
+technical fields depending on the verification step.
 
-```javascript
-{ 
-   status_error: false,
-   message: "Unicus auth: User is active on transaction",
-   transaction: {
-      exited: false,
-      transactionId: "c84c962d-29a7-11eb-8376-16aff0d1ab49",
-      ageEstimateGroupEnumInt: 0,
-      externalDatabaseRefID: "102349666",
-      resultCode: 2011,
-      resultMessage: "USER_ALREADY_ENROLL",
-      success: false,
-      error: false,    
-   },
-}
-```
-{% endtab %}
-{% endtabs %}
+## `OnUnicus:finished`
 
-#### Enrollment
+This event is emitted when the Unicus flow ends from the customer page
+perspective.
 
-{% tabs %}
-{% tab title="Parameters" %}
-<table><thead><tr><th width="192.33333333333331">Name</th><th width="144">Type</th><th>Description</th></tr></thead><tbody><tr><td><strong>status_error</strong></td><td>Booleano</td><td>Defines whether an error occurred during service loading or related to the pending process.</td></tr><tr><td><strong>message</strong></td><td>String</td><td>Provides an immediate response message to the customer to let them know how the process was completed</td></tr><tr><td><strong>transaction</strong></td><td>Object</td><td>Provides an object with data from the transaction process</td></tr><tr><td><strong>transaction.state</strong></td><td>Object</td><td>Provides an object with data on the status of the transaction performed.</td></tr><tr><td><strong>transaction.state.additionalSessionData</strong></td><td>Object</td><td>Provides an object with transaction session data.</td></tr><tr><td><strong>transaction.state.faceScanSecurityChecks</strong></td><td>Object</td><td>Provides an object with data from the performed face scan.</td></tr></tbody></table>
-{% endtab %}
-
-{% tab title="Response" %}
-{% hint style="success" %}
-Success
-
-Note that this event will be repeated several times as the customer repeats the document validation process.
-{% endhint %}
-
-```json5
-{ 
-  status_error: false,
-  message: "Unicus SDK: User is active on transaction",
-  status_error: false,
-    transaction:{
-     exited: false
-     state: "",
-     ageEstimateGroupEnumInt: 0,
-     barcodeStatusEnumInt: 0,
-     digitalIDSpoofStatusEnumInt: 0,
-     documentData: "{<DOCUMENT_INFORMATION>}",
-     error: false,
-     externalDatabaseRefID: "<ID_TRANSACTION>",
-     faceOnDocumentStatusEnumInt: 1,
-     fullIDStatusEnumInt: 0,
-     idScanAgeEstimateGroupEnumInt: 4,
-     isCompletelyDone: false,
-     isFrontSide: true,
-     matchLevel: 4,
-     matchLevelNFCToFaceMap: 0,
-     nfcStatusEnumInt: 0,
-     ocrResults: "{<OCR_SERVICE_DOCUMENT>}",
-     path: "match-3d-2d-idscan",
-     resultCode: 200,
-     resultMessage: "Success",
-     scanResultBlob: "AAEAAAA6MwAAAAAAANA5/JQ6E4/qlhw2Kb1KbXl5bPFg0xsTJ,
-     success: true,
-     textOnDocumentStatusEnumInt: 1,
-     wasProcessed: true
+{% code overflow="wrap" %}
+```json
+{
+  "status_error": false,
+  "message": "Unicus SDK: User ended transaction",
+  "transaction": {
+    "exited": false,
+    "transactionId": "<TID>",
+    "state": {
+      "exited": true,
+      "success": true
     }
-  transactionId: "70a440e5-c7e2-11ec-b35b-160220c5a63b" 
+  }
 }
 ```
+{% endcode %}
 
+For the final authoritative transaction result, use your configured webhook or
+call [Get a transaction status](get-a-transaction-status.md) with the `tid`.
+Browser events can be affected by page refreshes, browser navigation, or network
+conditions.
 
-{% endtab %}
-{% endtabs %}
+## `OnUnicus:error`
 
-#### Verify
+This event is emitted when the button cannot create or continue a transaction.
 
-{% tabs %}
-{% tab title="Parameters" %}
-<table><thead><tr><th width="192.33333333333331">Name</th><th width="144">Type</th><th>Description</th></tr></thead><tbody><tr><td><strong>status_error</strong></td><td>Booleano</td><td>Defines whether an error occurred during service loading or related to the pending process.</td></tr><tr><td><strong>message</strong></td><td>String</td><td>Provides an immediate response message to the customer to let them know how the process was completed</td></tr><tr><td><strong>transaction</strong></td><td>Object</td><td>Provides an object with data from the transaction process</td></tr><tr><td><strong>transaction.state</strong></td><td>Object</td><td>Provides an object with data on the status of the transaction performed.</td></tr><tr><td><strong>transaction.state.additionalSessionData</strong></td><td>Object</td><td>Provides an object with transaction session data.</td></tr><tr><td><strong>transaction.state.faceScanSecurityChecks</strong></td><td>Object</td><td>Provides an object with data from the performed face scan.</td></tr></tbody></table>
-{% endtab %}
-
-{% tab title="Response" %}
-{% hint style="success" %}
-Success
-
-Note that this event will be repeated several times as the customer repeats the document validation process.
-{% endhint %}
-
-```json5
-{ 
-  status_error: false,
-  message: "Unicus SDK: User is active on transaction",
-  status_error: false,
-    transaction:{
-     exited: false
-     state: {
-          success: true,
-          wasProcessed: true,
-          error: false,
-          path: "match-3d-3d",
-          resultCode: 0,
-          resultMessage: "The match request was processed  and the Match Level was  15",
-          additionalSessionData: {
-                isAdditionalDataPartiallyIncomplete: false,
-                platform: "web",
-                appID: "192.168.100.70",
-                installationID: "ad2b8bd8-fc54-4446-bebf-23e2634f8d5a",
-                deviceModel: "EB2103",
-                deviceSDKVersion: "9.6.18",
-                sessionID: "231d724f-6706-4790-920a-314604817cbe",
-                userAgent: "Mozilla/5.0 (Linux; Android 13; EB2103)",
-                ipAddress: "157.100.137.115"
-          },
-          elapsedPerformanceTime: 1623,
-          externalDatabaseRefID: "a84785fd-c821-11ed-b3bf-12dee90996cb",
-          faceScanSecurityChecks: {
-               success: true,
-               replayCheckSucceeded: true,
-               sessionTokenCheckSucceeded: true,
-               auditTrailVerificationCheckSucceeded: true,
-               faceScanLivenessCheckSucceeded: true
-          },
-          ageEstimateGroupEnumInt: 1,
-          matchLevel: 15,
-          retryScreenEnumInt: 0,
-          scanResultBlob: "AAEAAABTAAAAAAAAAPCFkLOa4Lfa5VYTYLjY8VVcx1kIH+CtvK77KaGtuTozuNB7HNabe7/ms19h86bhjOZMmuGcvgP2vQFo/b2ijxN/LvB9+XwyPwmg2YMDk1kbb92k"
-     },
-    }
+{% code overflow="wrap" %}
+```json
+{
+  "status_error": true,
+  "message": "Unicus SDK: cannot connect with server, check [customerid] or [clientid] might be wrong"
 }
 ```
-{% endtab %}
-{% endtabs %}
+{% endcode %}
 
-[Check result codes](result-codes-and-references.md#event-codes)
+Common causes:
 
-### **Transaction Completion**
+| Cause | What to check |
+| --- | --- |
+| Invalid customer token | Confirm the `customerid` attribute contains the Customer Token for the same environment as the script. |
+| Invalid document data | Confirm `clientid` uses `DOCUMENT_TYPE:DOCUMENT_NUMBER`, for example `ID:123456789`. |
+| User blocked | The transaction creation response can return result code `2052`. Review the user status in Unicus or contact Tekbees support. |
+| CSP or iframe blocked | Confirm your site allows the Unicus script, iframe, and network domains. |
+| Browser permission denied | Ask the user to allow camera access and retry the transaction. |
 
-Add the following addEventListener to listen when the user has a completed transaction.
+## Recommended implementation pattern
 
-```javascript
-/* Add listener by pointing to the Unicus Button */
-const unicusButton = document.createElement("unicus-btn");
+Use `OnUnicus:loaded` to store the `tid`, `OnUnicus:details` for progress UI,
+and `OnUnicus:finished` to close your local UI or trigger a status refresh.
+Replace the helper functions in this example with your application logic.
 
-unicusButton.addEventListener('OnUnicus:finished', ({ detail }) => {
-  console.log('loaded payload', detail)
+{% code overflow="wrap" %}
+```js
+let unicusTid = null;
+
+unicusButton.addEventListener('OnUnicus:loaded', ({ detail }) => {
+  unicusTid = detail.transaction.transactionId;
 });
-```
 
-{% tabs %}
-{% tab title="Parameters" %}
-| status\_error             | Boolean | Defines whether an error occurred during service loading or related to the pending process.           |
-| ------------------------- | ------- | ----------------------------------------------------------------------------------------------------- |
-| message                   | String  | Provides an immediate response message to the customer to let them know how the process was completed |
-| transaction               | Object  | Provides an object including the final state of the transaction                                       |
-| transaction.exited        | Boolean | Provides a value given the case true or false                                                         |
-| transaction.transactionId | String  | Corresponds to the ID                                                                                 |
-{% endtab %}
+unicusButton.addEventListener('OnUnicus:details', ({ detail }) => {
+  renderProgress(detail.transaction.state);
+});
 
-{% tab title="Response" %}
-{% hint style="danger" %}
-Errors \
-The following is a list of errors that you might get
-{% endhint %}
-
-* **USER\_ALREADY\_ENROLL:**
-
-> It occurs if the user re-enrolls. This error is only possible during an internal application failure because the application automatically detects which process it should direct to.
-
-```javascript
-  status_error: false,
-  message: "Unicus auth: User is active on transaction",
-  transaction: {
-    exited: false,
-    transactionId: "c84c962d-29a7-11eb-8376-16aff0d1ab49",
-    ageEstimateGroupEnumInt: 0,
-    externalDatabaseRefID: "1022349666",
-    resultCode: 2011,
-    resultMessage: "USER_ALREADY_ENROLL",
-    success: false,
-    error: false,    
-  },
-
-```
-{% endtab %}
-{% endtabs %}
-
-### Transaction error
-
-Add the following addEventListener to listen when the user has a completed transaction.
-
-```javascript
-/* Add listener pointing to the Unicus Button */
-const unicusButton = document.createElement("unicus-btn");
+unicusButton.addEventListener('OnUnicus:finished', async () => {
+  if (!unicusTid) return;
+  await refreshTransactionStatus(unicusTid);
+});
 
 unicusButton.addEventListener('OnUnicus:error', ({ detail }) => {
-  console.log('Unicus:OnError', detail)
-}); 
+  showUnicusError(detail.message);
+});
 ```
-
-{% tabs %}
-{% tab title="Parameters" %}
-| status\_error | Boolean | Defines whether an error occurred during service loading or related to the pending process.           |
-| ------------- | ------- | ----------------------------------------------------------------------------------------------------- |
-| message       | String  | Provides an immediate response message to the customer to let them know how the process was completed |
-| details       | Object  | Contains the error detail or description                                                              |
-{% endtab %}
-
-{% tab title="Responses" %}
-{% hint style="danger" %}
-Errors \
-The following is a list of errors that you might get
-{% endhint %}
-
-* **USER\_ALREADY\_ENROLL:**
-
-> It occurs if the user re-enrolls. This error is only possible during an internal application failure because the application automatically detects which process it should direct to.
-
-```javascript
-  status_error: false,
-  message: "Unicus auth: User is active on transaction",
-  transaction: {
-    exited: false,
-    transactionId: "c84c962d-29a7-11eb-8376-16aff0d1ab49",
-    ageEstimateGroupEnumInt: 0,
-    externalDatabaseRefID: "1022349666",
-    resultCode: 2011,
-    resultMessage: "USER_ALREADY_ENROLL",
-    success: false,
-    error: false,    
-  },
-
-```
-{% endtab %}
-{% endtabs %}
-
+{% endcode %}
