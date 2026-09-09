@@ -319,20 +319,19 @@ The SDK includes default English text based on the current Unicus web SDK
 configuration. If your application needs different language or wording, provide
 text overrides when configuring Unicus.
 
+The example app includes complete English and Spanish FaceTec text maps copied
+from `facesdk_web` `app.FaceTec` in
+`example/lib/sample_facetec_texts.dart`. Use that file as the starting point for
+your own language file. The example start screen intentionally asks only for
+document id and document type; text is changed in code, not through the demo UI.
+
 {% code overflow="wrap" %}
 ```dart
 await unicus.configure(
   const UnicusSdkConfig(
     baseUrl: '<UNICUS_BASE_URL>',
     apiKey: '<UNICUS_CUSTOMER_TOKEN>',
-    verificationTextOverrides: <String, String>{
-      UnicusVerificationTextKey.actionImReady: 'ESTOY LISTO',
-      UnicusVerificationTextKey.actionContinue: 'CONTINUAR',
-      UnicusVerificationTextKey.actionTryAgain: 'INTENTAR DE NUEVO',
-      UnicusVerificationTextKey.feedbackCenterFace: 'Centra tu rostro',
-      UnicusVerificationTextKey.idScanTypeSelectionHeader:
-          'Prepara tu documento',
-    },
+    verificationTextOverrides: sampleFaceTecTextOverrides,
   ),
 );
 ```
@@ -340,6 +339,9 @@ await unicus.configure(
 
 Unicus merges your overrides with the default text and sends the final text map
 to the native Android and iOS verification screens before the session opens.
+Web locale keys that changed names in FaceTec Android/iOS 10.1.16 are adapted
+internally by the SDK, and `<br/>` line breaks are converted to native line
+breaks.
 
 Common text keys:
 
