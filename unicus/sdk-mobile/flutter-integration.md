@@ -1,7 +1,7 @@
 ---
 description: >-
   Integrate Unicus identity verification in native Flutter applications for
-  Android and iOS without calling FaceTec directly.
+  Android and iOS without calling the native provider directly.
 ---
 
 # FLUTTER INTEGRATION
@@ -13,9 +13,10 @@ company branding, opens the native verification screens, processes the
 encrypted biometric data through Unicus, and returns the final result.
 
 {% hint style="info" %}
-Do not integrate FaceTec directly in your Flutter app. Do not add FaceTec
-dependencies, do not edit native FaceTec code, and do not call FaceTec APIs from
-your application. FaceTec is already wrapped inside the Unicus Flutter SDK.
+Do not integrate the native verification provider directly in your Flutter app.
+Do not add provider dependencies, do not edit provider native code, and do not
+call provider APIs from your application. The provider is already wrapped inside
+the Unicus Flutter SDK.
 {% endhint %}
 
 ## What Unicus will provide
@@ -28,7 +29,7 @@ administrator or Tekbees support team.
 | `baseUrl` | Unicus API environment URL. | `https://alpha.idunicus.com:8080` |
 | `apiKey` | Customer token generated for your company. | `<UNICUS_CUSTOMER_TOKEN>` |
 
-The FaceTec device key assigned to Tekbees is embedded inside the Unicus
+The provider device key assigned to Tekbees is embedded inside the Unicus
 Flutter SDK. The customer app must not request, store, or pass that key.
 
 {% hint style="warning" %}
@@ -112,7 +113,7 @@ include this metadata inside `<application>`:
 ```
 {% endcode %}
 
-No additional FaceTec dependency is required in Android.
+No additional native provider dependency is required in Android.
 
 ## 3. Configure iOS
 
@@ -146,7 +147,7 @@ cd ..
 ```
 {% endcode %}
 
-No FaceTec import is required in `AppDelegate`, `SceneDelegate`, or any iOS
+No provider import is required in `AppDelegate`, `SceneDelegate`, or any iOS
 native file.
 
 ## 4. Configure the SDK
@@ -222,7 +223,7 @@ The standard sequence is:
 2. The SDK calls `/start-mobile-transaction` and receives a new transaction id
    `tid`.
 3. The SDK calls `/get-restart-session` using that `tid`.
-4. The SDK applies the company colors, logo, and FaceTec text configuration.
+4. The SDK applies the company colors, logo, and Unicus verification text.
 5. The SDK opens the native verification screen.
 6. The SDK sends the encrypted verification data to Unicus.
 7. Your app receives one `UnicusVerificationResult`.
@@ -319,9 +320,9 @@ The SDK includes default English text based on the current Unicus web SDK
 configuration. If your application needs different language or wording, provide
 text overrides when configuring Unicus.
 
-The example app includes complete English and Spanish FaceTec text maps copied
-from `facesdk_web` `app.FaceTec` in
-`example/lib/sample_facetec_texts.dart`. Use that file as the starting point for
+The example app includes complete English and Spanish Unicus text maps based on
+the current web SDK language configuration in
+`example/lib/sample_unicus_texts.dart`. Use that file as the starting point for
 your own language file. The example start screen intentionally asks only for
 document id and document type; text is changed in code, not through the demo UI.
 
@@ -331,7 +332,7 @@ await unicus.configure(
   const UnicusSdkConfig(
     baseUrl: '<UNICUS_BASE_URL>',
     apiKey: '<UNICUS_CUSTOMER_TOKEN>',
-    verificationTextOverrides: sampleFaceTecTextOverrides,
+    verificationTextOverrides: sampleUnicusTextOverrides,
   ),
 );
 ```
@@ -339,9 +340,8 @@ await unicus.configure(
 
 Unicus merges your overrides with the default text and sends the final text map
 to the native Android and iOS verification screens before the session opens.
-Web locale keys that changed names in FaceTec Android/iOS 10.1.16 are adapted
-internally by the SDK, and `<br/>` line breaks are converted to native line
-breaks.
+Provider-specific native text keys are adapted internally by the SDK, and
+`<br/>` line breaks are converted to native line breaks.
 
 Common text keys:
 
@@ -476,10 +476,10 @@ returned by the session endpoint.
 | `textColor` | Button and feedback text color. |
 | `logo` | Company logo. |
 
-iOS can use the remote logo URL returned by Unicus. Android FaceTec 10.1.16
-requires the logo to be a native drawable resource, so Android applies colors
-automatically. If your Android integration requires a logo inside the native
-verification screen, coordinate the drawable resource name with Tekbees support.
+iOS can use the remote logo URL returned by Unicus. Android requires the logo to
+be a native drawable resource, so Android applies colors automatically. If your
+Android integration requires a logo inside the native verification screen,
+coordinate the drawable resource name with Tekbees support.
 
 ## Testing checklist
 
