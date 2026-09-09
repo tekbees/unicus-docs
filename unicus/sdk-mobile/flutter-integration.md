@@ -183,7 +183,7 @@ Send the document type and the user's document number to `start`.
 ```dart
 Future<void> startUnicusVerification() async {
   final UnicusVerificationResult result = await unicus.start(
-    const UnicusVerificationRequest(
+    const UnicusVerificationRequest.enrollmentVerify(
       document: UnicusDocument(
         type: UnicusDocumentType.id,
         externalDatabaseRefId: '123456789',
@@ -201,25 +201,26 @@ Future<void> startUnicusVerification() async {
 {% endcode %}
 
 When `start` is called, the SDK internally creates the transaction using the
-standard Unicus process:
+standard Unicus mobile process:
 
 {% code overflow="wrap" %}
 ```json
 {
   "documentType": "ID",
   "externalDatabaseRefID": "123456789",
-  "process": "face-id"
+  "process": "ENROLLMENT-VERIFY"
 }
 ```
 {% endcode %}
 
-Your app should not call `/start-process-transaction` or
-`/get-restart-session` manually for the standard Flutter integration.
+Your app should not call `/start-mobile-transaction` or `/get-restart-session`
+manually for the standard Flutter integration. It should also not ask the user
+or the application developer to select a process value.
 
 The standard sequence is:
 
 1. Your app calls `unicus.start(...)`.
-2. The SDK calls `/start-process-transaction` and receives a new transaction id
+2. The SDK calls `/start-mobile-transaction` and receives a new transaction id
    `tid`.
 3. The SDK calls `/get-restart-session` using that `tid`.
 4. The SDK applies the company colors, logo, and FaceTec text configuration.
@@ -238,31 +239,20 @@ Use the enum provided by the SDK.
 | `UnicusDocumentType.passport` | `PP` | Passport |
 | `UnicusDocumentType.driverLicense` | `DL` | Driver license |
 
-## Default flow
+## Native flow behavior
 
-The default flow is `UnicusVerificationFlow.auto`. This is the recommended
-configuration.
+The default native flow is handled internally by the SDK. No flow field is
+required in the customer application.
 
-In automatic mode, Unicus checks the current session state:
+Unicus checks the current session state:
 
 | Session state | Behavior |
 | --- | --- |
 | User is already enrolled | The SDK starts face authentication. |
 | User is not enrolled | The SDK starts face and document enrollment. |
 
-You can pass the flow explicitly, but most applications should keep `auto`.
-
-{% code overflow="wrap" %}
-```dart
-const UnicusVerificationRequest(
-  document: UnicusDocument(
-    type: UnicusDocumentType.id,
-    externalDatabaseRefId: '123456789',
-  ),
-  flow: UnicusVerificationFlow.auto,
-)
-```
-{% endcode %}
+For the standard Flutter integration, the application should only provide
+document type and document id.
 
 ## Read the result
 
@@ -394,7 +384,7 @@ class _UnicusVerificationButtonState extends State<UnicusVerificationButton> {
 
     try {
       final result = await unicus.start(
-        const UnicusVerificationRequest(
+        const UnicusVerificationRequest.enrollmentVerify(
           document: UnicusDocument(
             type: UnicusDocumentType.id,
             externalDatabaseRefId: '123456789',
