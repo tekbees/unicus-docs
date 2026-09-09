@@ -59,12 +59,10 @@ dependencies:
 
   unicus_sdk_flutter:
     git:
-      url: <UNICUS_SDK_GIT_URL>
+      url: git@bitbucket.org:tekbees/unicus_sdk_flutter.git
       ref: v0.1.0
 ```
 {% endcode %}
-
-Replace `<UNICUS_SDK_GIT_URL>` with the repository URL provided by Tekbees.
 
 Then install the dependency:
 
