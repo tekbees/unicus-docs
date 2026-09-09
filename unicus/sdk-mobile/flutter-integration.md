@@ -27,7 +27,9 @@ administrator or Tekbees support team.
 | --- | --- | --- |
 | `baseUrl` | Unicus API environment URL. | `https://alpha.idunicus.com:8080` |
 | `apiKey` | Customer token generated for your company. | `<UNICUS_CUSTOMER_TOKEN>` |
-| `sdkDeviceKey` | Native SDK device key assigned to your environment. | `<UNICUS_SDK_DEVICE_KEY>` |
+
+The FaceTec device key assigned to Tekbees is embedded inside the Unicus
+Flutter SDK. The customer app must not request, store, or pass that key.
 
 {% hint style="warning" %}
 Use the values for the correct environment. Sandbox, staging, and production
@@ -165,7 +167,6 @@ Future<void> configureUnicus() async {
     const UnicusSdkConfig(
       baseUrl: '<UNICUS_BASE_URL>',
       apiKey: '<UNICUS_CUSTOMER_TOKEN>',
-      sdkDeviceKey: '<UNICUS_SDK_DEVICE_KEY>',
     ),
   );
 }
@@ -314,6 +315,49 @@ await subscription.cancel();
 ```
 {% endcode %}
 
+## Customize verification text
+
+The SDK includes default English text based on the current Unicus web SDK
+configuration. If your application needs different language or wording, provide
+text overrides when configuring Unicus.
+
+{% code overflow="wrap" %}
+```dart
+await unicus.configure(
+  const UnicusSdkConfig(
+    baseUrl: '<UNICUS_BASE_URL>',
+    apiKey: '<UNICUS_CUSTOMER_TOKEN>',
+    verificationTextOverrides: <String, String>{
+      UnicusVerificationTextKey.actionImReady: 'ESTOY LISTO',
+      UnicusVerificationTextKey.actionContinue: 'CONTINUAR',
+      UnicusVerificationTextKey.actionTryAgain: 'INTENTAR DE NUEVO',
+      UnicusVerificationTextKey.feedbackCenterFace: 'Centra tu rostro',
+      UnicusVerificationTextKey.idScanTypeSelectionHeader:
+          'Prepara tu documento',
+    },
+  ),
+);
+```
+{% endcode %}
+
+Unicus merges your overrides with the default text and sends the final text map
+to the native Android and iOS verification screens before the session opens.
+
+Common text keys:
+
+| Dart key | Screen text |
+| --- | --- |
+| `UnicusVerificationTextKey.actionImReady` | Ready button. |
+| `UnicusVerificationTextKey.actionContinue` | Continue button. |
+| `UnicusVerificationTextKey.actionTryAgain` | Retry button. |
+| `UnicusVerificationTextKey.feedbackCenterFace` | Face alignment feedback. |
+| `UnicusVerificationTextKey.initializingCamera` | Camera initialization message. |
+| `UnicusVerificationTextKey.idScanTypeSelectionHeader` | Document scan title. |
+| `UnicusVerificationTextKey.resultFaceScanUploadMessage` | Face upload message. |
+
+For advanced OCR confirmation labels, coordinate the
+`verificationOcrLocalization` dictionary with Tekbees support.
+
 ## Optional API logs for testing
 
 During sandbox testing, API logs can help your team confirm the responses
@@ -330,7 +374,6 @@ await unicus.configure(
   const UnicusSdkConfig(
     baseUrl: '<UNICUS_BASE_URL>',
     apiKey: '<UNICUS_CUSTOMER_TOKEN>',
-    sdkDeviceKey: '<UNICUS_SDK_DEVICE_KEY>',
     enableApiLogging: true,
   ),
 );
@@ -374,7 +417,6 @@ class _UnicusVerificationButtonState extends State<UnicusVerificationButton> {
       const UnicusSdkConfig(
         baseUrl: '<UNICUS_BASE_URL>',
         apiKey: '<UNICUS_CUSTOMER_TOKEN>',
-        sdkDeviceKey: '<UNICUS_SDK_DEVICE_KEY>',
       ),
     );
   }
@@ -428,6 +470,7 @@ returned by the session endpoint.
 
 | Field | Behavior |
 | --- | --- |
+| `backgroundColor` | Native verification screen background color. |
 | `windowColor` | Primary native verification color. |
 | `buttonColor` | Button, progress, frame, and OCR accent color. |
 | `textColor` | Button and feedback text color. |
