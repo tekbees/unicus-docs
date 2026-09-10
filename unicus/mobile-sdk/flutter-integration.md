@@ -29,8 +29,12 @@ administrator or Tekbees support team.
 | `baseUrl` | Unicus API environment URL. | `https://alpha.idunicus.com:8080` |
 | `apiKey` | Customer token generated for your company. | `<UNICUS_CUSTOMER_TOKEN>` |
 
-The provider device key assigned to Tekbees is embedded inside the Unicus
-Flutter SDK. The customer app must not request, store, or pass that key.
+The native provider device key and the Tekbees Unicus session device id are
+embedded inside the Unicus Flutter SDK. The customer app must not request,
+store, or pass those internal keys.
+
+The customer app uses `apiKey` only for its Unicus Customer Token. The SDK uses
+Tekbees internal keys for session and provider operations.
 
 {% hint style="warning" %}
 Use the values for the correct environment. Sandbox, staging, and production
@@ -50,7 +54,15 @@ repositories.
 
 ## 1. Add the dependency
 
-Add `unicus_sdk_flutter` to your application's `pubspec.yaml`.
+Tekbees will provide the approved SDK delivery option for your project.
+
+For closed external delivery, use the binary SDK package provided by Tekbees.
+That package includes the public Flutter wrapper plus the Android and iOS native
+binaries. Do not add the native provider dependency directly and do not request
+Tekbees internal keys.
+
+For internal Tekbees pilots or source-based private pilots, the SDK can also be
+used from the private repository:
 
 {% code overflow="wrap" %}
 ```yaml
@@ -73,8 +85,7 @@ flutter pub get
 ```
 {% endcode %}
 
-If Tekbees provides the SDK as a local package during development, use a local
-path instead:
+If Tekbees provides a local pilot package instead of a Git dependency, use:
 
 {% code overflow="wrap" %}
 ```yaml
