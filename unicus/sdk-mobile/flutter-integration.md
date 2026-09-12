@@ -29,8 +29,16 @@ administrator or Tekbees support team.
 | `baseUrl` | Unicus API environment URL. | `https://alpha.idunicus.com:8080` |
 | `apiKey` | Customer token generated for your company. | `<UNICUS_CUSTOMER_TOKEN>` |
 
-The provider device key assigned to Tekbees is embedded inside the Unicus
-Flutter SDK. The customer app must not request, store, or pass that key.
+The native provider device key and the Tekbees Unicus session device id are
+embedded inside the Unicus Flutter SDK. The customer app must not request,
+store, or pass those internal keys.
+
+The customer app uses `apiKey` only for its Unicus Customer Token. Transaction
+creation uses that customer token through `X-Customer-ID`. The active-country
+lookup uses the same customer token through `X-Device-ID`, because that endpoint
+uses it to resolve the customer's enabled countries. Session calls such as
+`/get-restart-session` and `/sdk-execution-keys` use the Tekbees session device
+id embedded in the SDK through `X-Device-ID`.
 
 {% hint style="warning" %}
 Use the values for the correct environment. Sandbox, staging, and production
@@ -47,10 +55,103 @@ repositories.
 | Android | `minSdkVersion 21` or newer |
 | iOS | iOS `15.0` or newer |
 | Devices | Physical Android or iOS device with camera for full validation |
+| Permissions | Camera is required. Location is optional and the SDK continues if the user denies it. |
 
-## 1. Add the dependency
+## 1. Review the customer package
 
-Add `unicus_sdk_flutter` to your application's `pubspec.yaml`.
+Tekbees provides a customer package named like this:
+
+{% code overflow="wrap" %}
+```text
+unicus_sdk_flutter_0.1.0_customer_package.zip
+```
+{% endcode %}
+
+When unzipped, it contains:
+
+{% code overflow="wrap" %}
+```text
+unicus_sdk_flutter_0.1.0_customer_package/
+  README.md
+  sdk/
+    unicus_sdk_flutter/
+  example/
+    TECHNICAL_INTEGRATION.md
+    lib/
+      main.dart
+      sample_unicus_texts.dart
+```
+{% endcode %}
+
+| Path | Purpose |
+| --- | --- |
+| `README.md` | Quick start for the package. |
+| `sdk/unicus_sdk_flutter/` | Public Flutter wrapper that the customer app integrates. |
+| `example/` | Runnable Flutter app already configured to use the included SDK. |
+| `example/TECHNICAL_INTEGRATION.md` | Technical reference for the customer's development team. |
+| `example/lib/sample_unicus_texts.dart` | Editable language/text maps using public `Unicus_` keys. |
+
+The package contains the public Flutter wrapper, the closed Android native core,
+the closed iOS native core, required native provider binaries, resources, and a
+runnable example. Customer applications should integrate only Unicus.
+
+## 2. Run the included example
+
+Before changing your own app, run the included example to confirm the
+environment, device, permissions, and customer token.
+
+{% code overflow="wrap" %}
+```bash
+cd unicus_sdk_flutter_0.1.0_customer_package/example
+flutter pub get
+flutter devices
+flutter run -d <DEVICE_ID> \
+  --dart-define=UNICUS_BASE_URL=<UNICUS_BASE_URL> \
+  --dart-define=UNICUS_API_KEY=<UNICUS_CUSTOMER_TOKEN>
+```
+{% endcode %}
+
+The example screen asks only for:
+
+1. Document id.
+2. Document type: `ID`, `FD`, `PP`, or `DL`.
+
+The example may also show the platform location permission prompt. If the user
+does not share location, the transaction continues without location data. If
+your Unicus account has more than one active country, the example shows a
+country selector after the transaction id is created. If there is only one
+active country, the SDK selects it automatically and continues.
+
+The SDK creates the transaction, reads the customer session configuration,
+applies the theme and text, opens the native verification experience, processes
+the encrypted requests, and returns the result.
+
+For a compile-only check:
+
+{% code overflow="wrap" %}
+```bash
+flutter build apk --debug
+flutter build ios --debug --simulator
+```
+{% endcode %}
+
+Use a physical Android or iOS device with camera for full end-to-end
+verification. For iOS physical devices, use a signed build.
+
+## 3. Add the dependency
+
+For your own app, copy `sdk/unicus_sdk_flutter` from the customer package into
+your application repository, for example:
+
+{% code overflow="wrap" %}
+```text
+your_flutter_app/
+  vendor/
+    unicus_sdk_flutter/
+```
+{% endcode %}
+
+Then add the local dependency to your application's `pubspec.yaml`:
 
 {% code overflow="wrap" %}
 ```yaml
@@ -59,9 +160,7 @@ dependencies:
     sdk: flutter
 
   unicus_sdk_flutter:
-    git:
-      url: git@bitbucket.org:tekbees/unicus_sdk_flutter.git
-      ref: v0.1.0
+    path: vendor/unicus_sdk_flutter
 ```
 {% endcode %}
 
@@ -73,18 +172,23 @@ flutter pub get
 ```
 {% endcode %}
 
-If Tekbees provides the SDK as a local package during development, use a local
-path instead:
+The private Git repository is only for internal Tekbees development or
+source-based private pilots explicitly approved by Tekbees:
 
 {% code overflow="wrap" %}
 ```yaml
 dependencies:
   unicus_sdk_flutter:
-    path: ../unicus_sdk_flutter
+    git:
+      url: git@bitbucket.org:tekbees/unicus_sdk_flutter.git
+      ref: v0.1.0
 ```
 {% endcode %}
 
-## 2. Configure Android
+Do not add the native provider dependency directly and do not request Tekbees
+internal keys.
+
+## 4. Configure Android
 
 Open `android/app/src/main/AndroidManifest.xml` and add the required
 permissions above the `<application>` tag.
@@ -94,6 +198,8 @@ permissions above the `<application>` tag.
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application>
         ...
@@ -115,16 +221,21 @@ include this metadata inside `<application>`:
 
 No additional native provider dependency is required in Android.
 
-## 3. Configure iOS
+## 5. Configure iOS
 
-Open `ios/Runner/Info.plist` and add a camera usage description.
+Open `ios/Runner/Info.plist` and add camera and location usage descriptions.
 
 {% code overflow="wrap" %}
 ```xml
 <key>NSCameraUsageDescription</key>
 <string>Camera access is required to verify your identity.</string>
+<key>NSLocationWhenInUseUsageDescription</key>
+<string>Location access helps complete the identity verification context.</string>
 ```
 {% endcode %}
+
+If location permission is denied, disabled, or not configured, the Unicus SDK
+continues the transaction without location data.
 
 The Unicus Flutter SDK uses CocoaPods for iOS integration. If your Flutter
 project has Swift Package Manager enabled globally, disable it in `pubspec.yaml`.
@@ -150,7 +261,7 @@ cd ..
 No provider import is required in `AppDelegate`, `SceneDelegate`, or any iOS
 native file.
 
-## 4. Configure the SDK
+## 6. Configure the SDK
 
 Create one `UnicusSdkFlutter` instance in the part of your app that owns the
 verification flow.
@@ -166,6 +277,7 @@ Future<void> configureUnicus() async {
     const UnicusSdkConfig(
       baseUrl: '<UNICUS_BASE_URL>',
       apiKey: '<UNICUS_CUSTOMER_TOKEN>',
+      collectLocationOnStart: true,
     ),
   );
 }
@@ -174,8 +286,10 @@ Future<void> configureUnicus() async {
 
 Call `configureUnicus()` before starting the first verification. A common place
 is after the user reaches the screen where identity verification can begin.
+`collectLocationOnStart` is optional and defaults to `true`. Set it to `false`
+only when your app must not request location for this flow.
 
-## 5. Start a verification
+## 7. Start a verification
 
 Send the document type and the user's document number to `start`.
 
@@ -222,11 +336,52 @@ The standard sequence is:
 1. Your app calls `unicus.start(...)`.
 2. The SDK calls `/start-mobile-transaction` and receives a new transaction id
    `tid`.
-3. The SDK calls `/get-restart-session` using that `tid`.
-4. The SDK applies the company colors, logo, and Unicus verification text.
-5. The SDK opens the native verification screen.
-6. The SDK sends the encrypted verification data to Unicus.
-7. Your app receives one `UnicusVerificationResult`.
+3. The SDK requests location from the platform when enabled. If the user denies
+   permission or the device cannot provide location, the SDK continues.
+4. The SDK calls `/company-countries`, reads the active countries for the
+   customer, and selects the only active country automatically when applicable.
+5. The SDK calls `/get-restart-session` using the `tid` and selected country
+   when one is available.
+6. The SDK applies the company colors, logo, and Unicus verification text.
+7. The SDK opens the native verification screen.
+8. The SDK sends the encrypted verification data to Unicus.
+9. Your app receives one `UnicusVerificationResult`.
+
+## Country selection
+
+For most integrations, calling `start(...)` is enough. If your Unicus account
+has only one active country, the SDK selects it automatically. If the account
+has several active countries and your app must let the user choose, use
+`prepareEnrollmentVerify(...)` first.
+
+{% code overflow="wrap" %}
+```dart
+Future<void> startWithCountrySelection() async {
+  final prepared = await unicus.prepareEnrollmentVerify(
+    document: const UnicusDocument(
+      type: UnicusDocumentType.id,
+      externalDatabaseRefId: '123456789',
+    ),
+  );
+
+  final String? selectedCountry = prepared.requiresCountrySelection
+      ? await showYourCountryPicker(prepared.countries)
+      : prepared.defaultCountry?.code;
+
+  final result = await unicus.start(
+    prepared.toRequest(country: selectedCountry),
+  );
+
+  // Handle UnicusVerificationResult here.
+}
+```
+{% endcode %}
+
+`prepareEnrollmentVerify(...)` creates the Unicus transaction id, optionally
+collects location, and returns the active countries. It does not open the native
+verification screen. Call `start(...)` with `prepared.toRequest(...)` after your
+app has selected the country. The country value should be an ISO 3166-1 alpha-2
+code such as `CO`, `US`, or `MX`.
 
 ## Document types
 
@@ -263,9 +418,10 @@ document type and document id.
 | `success` | `true` when the verification completed successfully. |
 | `outcome` | Normalized result category: success, warning, failed, canceled, error, or unknown. |
 | `tid` | Unicus transaction id created by the SDK. |
-| `resultCode` | Unicus result code, when available. |
+| `resultCode` | Unicus transaction result code, when available. If Unicus has finalized the transaction, this value takes precedence over the native screen status. |
 | `resultMessage` | Human-readable result message, when available. |
-| `status` | Native session status. |
+| `status` | Native screen status for technical diagnostics. |
+| `sessionError` | `true` only for a technical interruption, cancellation, or native/session error. Business outcomes should be handled through `outcome` and `resultCode`. |
 
 Recommended result handling:
 
@@ -476,10 +632,11 @@ returned by the session endpoint.
 | `textColor` | Button and feedback text color. |
 | `logo` | Company logo. |
 
-iOS can use the remote logo URL returned by Unicus. Android requires the logo to
-be a native drawable resource, so Android applies colors automatically. If your
-Android integration requires a logo inside the native verification screen,
-coordinate the drawable resource name with Tekbees support.
+iOS can use the remote logo URL returned by Unicus when the URL points to a
+raster image such as PNG or JPG. Android requires the logo to be a native
+drawable resource, so Android applies colors automatically. If your Android
+integration requires a logo inside the native verification screen, coordinate
+the drawable resource name with Tekbees support.
 
 ## Testing checklist
 
@@ -489,17 +646,24 @@ Use a physical device for the final validation.
 2. Run the app on Android and accept camera permission.
 3. Run the app on a signed physical iPhone and accept camera permission.
 4. Test one valid document with document type `ID`, `FD`, `PP`, or `DL`.
-5. Confirm the native verification screen opens.
-6. Confirm the company colors and logo are displayed as expected.
-7. Confirm your app receives a `UnicusVerificationResult`.
-8. Confirm the transaction appears in the Unicus administrative portal.
+5. Test location permission accepted and denied. Both paths should continue.
+6. If the account has one active country, confirm the flow continues without
+   showing a country selector.
+7. If the account has several active countries, confirm your app shows a
+   country selector before opening the native verification screen.
+8. Confirm the native verification screen opens.
+9. Confirm the company colors and logo are displayed as expected.
+10. Confirm your app receives a `UnicusVerificationResult`.
+11. Confirm the transaction appears in the Unicus administrative portal.
 
 Useful commands:
 
 {% code overflow="wrap" %}
 ```bash
 flutter devices
-flutter run -d <DEVICE_ID>
+flutter run -d <DEVICE_ID> \
+  --dart-define=UNICUS_BASE_URL=<UNICUS_BASE_URL> \
+  --dart-define=UNICUS_API_KEY=<UNICUS_CUSTOMER_TOKEN>
 ```
 {% endcode %}
 
@@ -512,10 +676,13 @@ Flutter or Xcode.
 | --- | --- |
 | The SDK says it is not configured | Confirm `unicus.configure(...)` runs before `unicus.start(...)`. |
 | Camera permission is denied | Confirm Android `CAMERA` permission or iOS `NSCameraUsageDescription`. |
+| Location permission is denied | This does not stop the transaction. The SDK continues without location data. |
+| Country selector does not appear | Confirm the customer account has more than one active country in Unicus. For one active country, the SDK selects it automatically. |
 | No transaction id is returned | Confirm `baseUrl`, `apiKey`, document type, and document number. |
 | iOS build fails after adding the package | Confirm CocoaPods is installed and Swift Package Manager is disabled for this app. |
 | Native verification does not open | Confirm you are running on a supported physical device with camera access. |
 | Company colors do not appear | Confirm `/get-restart-session` returns `windowColor`, `buttonColor`, and `textColor`. |
+| iOS logo does not appear | Confirm `/get-restart-session` returns `logo` as an HTTPS PNG or JPG URL. SVG URLs are not valid for the native mobile logo. |
 | Android logo does not appear | Confirm whether a drawable resource name was coordinated with Tekbees support. |
 
 ## Support
