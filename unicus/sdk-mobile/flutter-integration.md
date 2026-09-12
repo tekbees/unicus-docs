@@ -1,7 +1,7 @@
 ---
 description: >-
   Integrate Unicus identity verification in native Flutter applications for
-  Android and iOS without calling the native provider directly.
+  Android and iOS using only the Unicus SDK.
 ---
 
 # FLUTTER INTEGRATION
@@ -13,10 +13,10 @@ company branding, opens the native verification screens, processes the
 encrypted biometric data through Unicus, and returns the final result.
 
 {% hint style="info" %}
-Do not integrate the native verification provider directly in your Flutter app.
-Do not add provider dependencies, do not edit provider native code, and do not
-call provider APIs from your application. The provider is already wrapped inside
-the Unicus Flutter SDK.
+The Unicus Flutter SDK includes everything required for identity verification:
+camera capture, liveness, document scanning, encryption, and the Unicus API
+calls. Do not add other biometric or document-capture packages for this flow,
+and do not edit the native code inside the SDK.
 {% endhint %}
 
 ## What Unicus will provide
@@ -29,9 +29,9 @@ administrator or Tekbees support team.
 | `baseUrl` | Unicus API environment URL. | `https://alpha.idunicus.com:8080` |
 | `apiKey` | Customer token generated for your company. | `<UNICUS_CUSTOMER_TOKEN>` |
 
-The native provider device key and the Tekbees Unicus session device id are
-embedded inside the Unicus Flutter SDK. The customer app must not request,
-store, or pass those internal keys.
+The Unicus internal keys (the Tekbees session device id and the Unicus
+verification engine key) are embedded inside the Unicus Flutter SDK. The customer
+app must not request, store, or pass those internal keys.
 
 The customer app uses `apiKey` only for its Unicus Customer Token. Transaction
 creation uses that customer token through `X-Customer-ID`. The active-country
@@ -92,8 +92,8 @@ unicus_sdk_flutter_0.1.0_customer_package/
 | `example/lib/sample_unicus_texts.dart` | Editable language/text maps using public `Unicus_` keys. |
 
 The package contains the public Flutter wrapper, the closed Android native core,
-the closed iOS native core, required native provider binaries, resources, and a
-runnable example. Customer applications should integrate only Unicus.
+the closed iOS native core with all their internal components, resources, and a
+runnable example. Customer applications integrate only Unicus.
 
 ## 2. Run the included example
 
@@ -185,7 +185,7 @@ dependencies:
 ```
 {% endcode %}
 
-Do not add the native provider dependency directly and do not request Tekbees
+Do not add extra native dependencies for this flow and do not request Tekbees
 internal keys.
 
 ## 4. Configure Android
@@ -219,7 +219,7 @@ include this metadata inside `<application>`:
 ```
 {% endcode %}
 
-No additional native provider dependency is required in Android.
+No additional native dependency is required in Android.
 
 ## 5. Configure iOS
 
@@ -258,8 +258,8 @@ cd ..
 ```
 {% endcode %}
 
-No provider import is required in `AppDelegate`, `SceneDelegate`, or any iOS
-native file.
+No changes are required in `AppDelegate`, `SceneDelegate`, or any iOS native
+file.
 
 ## 6. Configure the SDK
 
@@ -496,8 +496,8 @@ await unicus.configure(
 
 Unicus merges your overrides with the default text and sends the final text map
 to the native Android and iOS verification screens before the session opens.
-Provider-specific native text keys are adapted internally by the SDK, and
-`<br/>` line breaks are converted to native line breaks.
+Internal native text keys are adapted by the SDK, and `<br/>` line breaks are
+converted to native line breaks.
 
 Common text keys:
 
