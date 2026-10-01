@@ -1,0 +1,34 @@
+---
+description: Versioning policy and release notes of Unicus Web SDK 2.0.
+---
+
+# Versioning
+
+The script is published under a major-version path:
+
+| Path | Receives |
+| --- | --- |
+| `https://unicusbtn.idunicus.com/v2/sdkButton.js` | Every compatible 2.x update (bug fixes, new optional attributes, new events). Pages pick it up on the next load; no action needed. |
+| `https://unicusbtn.idunicus.com/v3/…` (future) | Breaking changes. Announced in advance; the previous path keeps working during the transition. |
+
+`customElements.get('unicus-btn').version` returns the exact version loaded.
+
+## 2.0.0
+
+* New web application: modular flows composed in the administrative portal
+  (consent, info, liveness, document with server validations, face match,
+  signature, OTP, form, age check).
+* 30 KB initial download; biometric engine prefetched in the background and
+  cached; designed for low-bandwidth mobile networks.
+* Desktop hand-off by QR, WhatsApp or SMS with a live mirror of the phone's
+  progress and the final result on the computer.
+* One-time hand-off tokens in the URL fragment; the transaction id never
+  travels in a link.
+* Button redesign: brand colours applied automatically and remembered, `label`
+  and `size` attributes, visible states, click during loading honoured, new
+  transaction after every finished or exited flow.
+* Events: `stepProgress` payloads per step, `resultCode` in `finished` and
+  `error`, `2002` *not configured*, `2013` *under review*.
+* Security: no secrets in the bundle, origin-checked messaging, 15-minute device
+  session bound to the transaction, strict iframe permissions, `no-referrer`.
+* Public contract (attributes, events, `transactionId`) compatible with 1.x.
