@@ -25,14 +25,34 @@ integration only has to change the script URL. See
 | Area | Web SDK 1.x | Web SDK 2.0 |
 | --- | --- | --- |
 | Flow | Fixed: face, then document. | **Modular.** Your company composes the flow in the Unicus administrative portal: consent, instructions, liveness, document, face match, electronic signature, OTP, data form, age check. The web app runs whatever flow is assigned to the transaction type. |
-| Weight | ~9 MB and 7 sequential requests before the camera opened. | ~30 KB of application code; the biometric engine (~8.7 MB) is downloaded once in the background while the user reads the first screens and cached for later transactions. Designed for low-bandwidth mobile networks. |
+| Weight | Several megabytes before the camera opened. | A few kilobytes of application code; the biometric engine is downloaded once in the background while the user reads the first screens and cached for later transactions. Designed for low-bandwidth mobile networks. |
 | Desktop users | Hand-off by QR code. | Hand-off by QR code, WhatsApp or SMS (channels enabled per company). The desktop page mirrors the phone's progress step by step and shows the final result. |
 | Hand-off links | Transaction id in the URL. | One-time hand-off tokens in the URL fragment. The transaction id never travels in a link, a Referer, or a server log. |
 | Button | Fixed label, loading state. | Brand colours applied automatically, custom label, two sizes, visible loading / ready / verifying / error states, one click opens the flow even while the transaction is still being created. |
-| Errors | Generic messages. | Machine-readable result codes and rejection reasons in every event (see [Result codes](result-codes.md)). |
-| Security | Secrets in the bundle, `postMessage('*')`. | No secrets in the browser bundle, origin-checked messaging, 15-minute device session bound to the transaction, strict iframe permissions. |
+| Errors | Generic messages. | Result codes and rejection reasons in every event (see [Result codes](result-codes.md)). |
+| Texts | Fixed. | Step titles, descriptions, consent, instructions, signature agreement and form labels configured per flow in Spanish and English; button label per page (see [Texts and languages](texts-and-languages.md)). |
+| Security | Transaction id visible in links. | Short-lived sessions bound to one transaction, one-time links, origin-checked messaging between your page and Unicus, strict camera permissions. |
 
 ## How it works
+
+```mermaid
+sequenceDiagram
+  autonumber
+  participant P as Your page
+  participant B as unicus-btn
+  participant U as Unicus
+  participant S as Your backend
+  P->>B: render with customerid + clientid
+  B->>U: create transaction
+  U-->>B: tid + company colours
+  B-->>P: OnUnicus:loaded (tid)
+  P->>B: user clicks
+  B->>U: open verification (iframe)
+  U-->>P: OnUnicus:details (one per step)
+  U-->>P: OnUnicus:finished (success, resultCode)
+  U->>S: webhook with the final result
+  S->>U: query-transaction (optional)
+```
 
 1. The customer page loads `sdkButton.js` and renders `<unicus-btn>` with the
    company's **Customer Token** and the user's document.
@@ -74,7 +94,8 @@ document number (`clientid` attribute).
 3. [Events](events.md): payload of every event and how to react.
 4. [Flows and hand-off](flows-and-handoff.md): what the user sees for each step
    type and how the phone hand-off works.
-5. [Result codes](result-codes.md) and
+5. [Texts and languages](texts-and-languages.md): what wording you control.
+6. [Result codes](result-codes.md) and
    [Errors and troubleshooting](errors-and-troubleshooting.md).
-6. [Compatibility and security](compatibility-and-security.md) before going
+7. [Compatibility and security](compatibility-and-security.md) before going
    live.

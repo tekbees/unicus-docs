@@ -6,6 +6,11 @@ description: >-
 
 # Quick start
 
+```mermaid
+flowchart LR
+  A["1. Load the script"] --> B["2. Render unicus-btn"] --> C["3. Listen to OnUnicus events"] --> D["Confirm server side<br/>(webhook / query-transaction)"]
+```
+
 ## 1. Load the script
 
 Add the script once per page, with `defer`. It weighs about 6 KB and registers

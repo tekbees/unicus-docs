@@ -37,8 +37,7 @@ If your page sets a CSP, allow:
 | `img-src` | `data:` (the button draws its mark inline) |
 
 Sandbox environments use other domains provided by Tekbees. The verification
-iframe has its own CSP; your page does not need to allow the biometric engine,
-the websocket or the storage domains.
+iframe has its own policy; your page only needs the entries above.
 
 ## Permissions Policy
 
@@ -54,16 +53,16 @@ Permissions-Policy: camera=(self "https://id.idunicus.com"), geolocation=(self "
 ## Security model
 
 * **No secrets in the browser.** The Customer Token is a public identifier of
-  your company. Transactions are authorised by a device session (15-minute JWT)
-  issued by Unicus and bound to one transaction; it is never in a URL.
+  your company. Transactions are authorised by a short-lived session issued by
+  Unicus and bound to one transaction; it is never in a URL.
 * **No transaction id in links.** QR, SMS and WhatsApp links carry a one-time
   token in the URL fragment, which browsers never send to servers. The web app
   sends no `Referer`.
 * **Origin-checked messaging.** The web app only talks to the page that
   embedded it (origin learned during the handshake) and the button only accepts
   messages from the iframe it created.
-* **Server authority.** Step order, completion and results are decided by the
-  Unicus API. Changing URL parameters can only make the user's own flow fail.
+* **Server authority.** Step order, completion and results are decided by
+  Unicus, not by the browser.
 * **Biometric data** never reaches the customer page. Events carry result
   codes and metadata only. Images and templates are processed by Unicus under
   the data processing agreement of your company.
@@ -75,10 +74,10 @@ Permissions-Policy: camera=(self "https://id.idunicus.com"), geolocation=(self "
 
 | Item | Size | When |
 | --- | --- | --- |
-| Button script | ~6 KB | Once per page load; cached by the browser. |
-| Web app | ~30 KB | When the flow opens; cached. |
-| Biometric engine | ~8.7 MB | Once per device; downloaded in the background during the first screens and cached for later transactions. |
-| Uploads | ~0.5 MB per selfie, ~0.5 MB per document side | During the flow. |
+| Button script | a few KB | Once per page load; cached by the browser. |
+| Verification screens | tens of KB | When the flow opens; cached. |
+| Biometric engine | several MB | Once per device; downloaded in the background during the first screens and cached for later transactions. |
+| Uploads | about 0.5 MB per selfie and per document side | During the flow. |
 
 ## Pre-production checklist
 

@@ -27,6 +27,18 @@ the current transaction and creates a new one; `OnUnicus:loaded` fires again.
 
 ## States
 
+```mermaid
+stateDiagram-v2
+  [*] --> idle
+  idle --> loading: attributes present
+  loading --> ready: transaction created
+  loading --> error: creation failed
+  loading --> no_flow: no flow assigned (2002)
+  ready --> active: click (or click during loading)
+  active --> ready: finished / exit → next click creates a new transaction
+  error --> loading: click (retry)
+```
+
 The button reflects its state in the `state` attribute, so you can style or
 observe it (`button.getAttribute('state')`).
 
@@ -44,9 +56,9 @@ observe it (`button.getAttribute('state')`).
 1. **Mount.** The transaction is created immediately so the flow opens without
    delay when the user clicks. If the user never clicks, the transaction expires
    on its own in Unicus; nothing is recorded against the person.
-2. **Click.** The button opens the Unicus web app in a full-screen iframe
-   (`position: fixed`, maximum `z-index`) with permission for camera,
-   microphone, geolocation and fullscreen. Your page stays loaded underneath.
+2. **Click.** The button opens the Unicus verification in a full-screen iframe
+   over your page, with permission for camera, microphone, geolocation and
+   fullscreen. Your page stays loaded underneath.
 3. **Events.** Progress arrives through `OnUnicus:details`; the end through
    `OnUnicus:finished` or `OnUnicus:exit`. The iframe is removed when the flow
    ends.
@@ -66,8 +78,7 @@ The flow is not rendered in a popup window, so popup blockers do not affect it.
 ## Appearance
 
 The button is a hexagonal white badge with the Unicus mark over a pill in your
-brand colour, the same design as Web SDK 1.x but weighing 6 KB instead of
-200 KB. Colours come from the company configuration in the portal
+brand colour, the same design as Web SDK 1.x. Colours come from the company configuration in the portal
 (`windowColor`, `textColor`); you can override them per page with attributes or
 CSS custom properties on the element:
 
@@ -102,7 +113,7 @@ by Unicus and not by your site, which is part of the consent the user gives.
 
 Colours and logo of the verification screens are configured in the
 administrative portal (Company → Settings) and applied to every screen,
-including the camera screens of the biometric engine: frame, buttons, progress,
-result animations and the document capture guidance. The customer page does not
-pass any appearance values for the screens. Logos are served from a URL with
-long-lived caching, so they do not weigh on every transaction.
+including the camera screens: frame, buttons, progress, result animations and
+the document capture guidance. The customer page does not pass any appearance
+values for the screens. Texts are configured with the flow; see
+[Texts and languages](texts-and-languages.md).

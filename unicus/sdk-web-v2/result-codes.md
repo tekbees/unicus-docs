@@ -70,7 +70,7 @@ required camera step fails.
 | `9001` | Selfie does not match the document photo. |
 | `9002` | Selfie does not match the enrolled face. |
 | `9004` / `9005` | Biometric engine internal or communication error. |
-| `9990` + status | The camera session ended with a FaceTec status: `9992` user cancelled the face scan, `9993` user cancelled the document scan, `9994` locked out after too many attempts, `9995` camera error, `9996` camera permission denied, `9997` unknown internal error (also used when the engine does not start within 90 s). |
+| `9992`–`9997` | The camera session ended early: `9992` the user cancelled the face scan, `9993` the user cancelled the document scan, `9994` locked out after too many attempts, `9995` camera error, `9996` camera permission denied, `9997` the camera could not start. |
 
 ## Match levels and age groups
 

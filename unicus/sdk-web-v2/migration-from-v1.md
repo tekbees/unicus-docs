@@ -31,6 +31,7 @@ Everything below is optional.
 | `OnUnicus:error` message only. | Adds `resultCode` and the `2002` *not configured* case. | Show a different message for `2002` if you want. |
 | Flow fixed. | Flow configured in the portal. | **Assign a flow to each transaction type before switching the script.** Without it the button shows "Verification not configured". |
 | Hand-off by QR only. | QR, WhatsApp, SMS (per company). | Enable the channels you want in the portal. |
+| Screen texts fixed. | Titles, descriptions, consent, instructions and form labels per flow, in Spanish and English. | Fill them in the flow editor; empty fields use the Unicus defaults. |
 
 ## In the portal
 

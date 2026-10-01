@@ -18,8 +18,8 @@ The script is published under a major-version path:
 * New web application: modular flows composed in the administrative portal
   (consent, info, liveness, document with server validations, face match,
   signature, OTP, form, age check).
-* 30 KB initial download; biometric engine prefetched in the background and
-  cached; designed for low-bandwidth mobile networks.
+* Lightweight start; biometric engine prefetched in the background and cached;
+  designed for low-bandwidth mobile networks.
 * Desktop hand-off by QR, WhatsApp or SMS with a live mirror of the phone's
   progress and the final result on the computer.
 * One-time hand-off tokens in the URL fragment; the transaction id never
@@ -29,6 +29,8 @@ The script is published under a major-version path:
   transaction after every finished or exited flow.
 * Events: `stepProgress` payloads per step, `resultCode` in `finished` and
   `error`, `2002` *not configured*, `2013` *under review*.
-* Security: no secrets in the bundle, origin-checked messaging, 15-minute device
-  session bound to the transaction, strict iframe permissions, `no-referrer`.
+* Texts per flow in Spanish and English; language selector on every screen;
+  `label` attribute on the button.
+* Security: short-lived sessions bound to one transaction, origin-checked
+  messaging, strict iframe permissions, no referrer leakage.
 * Public contract (attributes, events, `transactionId`) compatible with 1.x.

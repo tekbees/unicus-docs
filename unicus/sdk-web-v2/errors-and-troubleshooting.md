@@ -19,9 +19,9 @@ code when one applies. The customer page receives the same case through
 | The link expired or was already used | `2051` | One-time hand-off link opened twice or after 24 hours. | Generate a new QR/SMS/WhatsApp from the computer. |
 | Verification not configured | `2002` | No flow for this company and transaction type. | Assign a flow in the portal. |
 | Step rejected | `2052` | The server refused a step; the reason is shown. | Usually a stale client after a flow change: reload. |
-| Too many requests | `429` | Rate limit hit by the device. | Wait a few seconds; the app retries once by itself. |
-| Session does not match | `403` | The device session belongs to another transaction. | Reopen from a fresh link. |
-| We could not start the secure camera | `9997`, `9004` | The biometric engine did not start (blocked download, unsupported browser, biometric server unavailable). | Check the browser and CSP; retry. |
+| Too many requests | — | Too many attempts from the same device in a short time. | Wait a few seconds and retry. |
+| Session does not match | — | The link belongs to another transaction. | Reopen from a fresh link. |
+| We could not start the secure camera | `9997`, `9004` | The camera components could not be loaded or the biometric service did not answer. | Check the browser and CSP; retry. |
 | Camera permission denied | `9996` | The user refused camera access. | Ask the user to allow the camera in the browser settings and retry. |
 | Please rotate your device | — | The phone is in landscape. | Rotate to portrait. |
 | We could not verify your identity | step code | A required step failed. | Show the user a retry option; the code says which step. |
@@ -39,15 +39,14 @@ code when one applies. The customer page receives the same case through
 | The camera never opens | The site must be served over HTTPS; the iframe needs the `camera` permission (set by the button; a parent `Permissions-Policy` header that denies `camera` overrides it). |
 | Events never fire | Listeners must be attached to the element in the DOM (or to `document`, since events bubble). With React, attach in `useEffect` through a `ref`. |
 | `finished` arrives with `success: false` and `resultCode: 2013` | Not an error: the transaction is under manual review. |
-| The desktop mirror stops updating | The phone keeps the authoritative state; the result is in Unicus. Check that the websocket domain is allowed by `connect-src` (`wss:`). |
+| The desktop mirror stops updating | The phone keeps the authoritative state; the result is in Unicus and reaches your webhook. |
 | The company logo or colours do not appear | The branding is configured in the portal for the same environment as the Customer Token. Colours must be hex (`#rrggbb`). |
 
 ## Debug panel
 
-In sandbox environments the Unicus web app shows a collapsible **debug** panel
-at the bottom with a timestamped log of the flow (session, steps, camera
-phases, mirror messages). When reporting an issue to Tekbees, include that log
-and the `tid`. It never contains personal data or secrets.
+In sandbox environments the verification screens show a collapsible **debug**
+panel at the bottom with a timestamped log of the flow. When reporting an issue
+to Tekbees, include that log and the `tid`. It contains no personal data.
 
 ## What to send to support
 

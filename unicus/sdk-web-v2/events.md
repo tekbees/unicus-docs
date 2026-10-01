@@ -18,6 +18,23 @@ element, on an ancestor or on `document` all work.
 | `OnUnicus:exit` | The user closed the verification before a final state. | Offer to try again. |
 | `OnUnicus:error` | The transaction could not be created, or the flow stopped because of a configuration, session or network problem. | Show a recoverable error; log `message` and `resultCode`. |
 
+```mermaid
+sequenceDiagram
+  participant P as Your page
+  participant B as unicus-btn
+  B-->>P: OnUnicus:loaded
+  loop every step
+    B-->>P: OnUnicus:details
+  end
+  alt the user completes the flow
+    B-->>P: OnUnicus:finished (success · resultCode)
+  else the user leaves
+    B-->>P: OnUnicus:exit
+  else something prevents the flow
+    B-->>P: OnUnicus:error (message · resultCode)
+  end
+```
+
 {% hint style="info" %}
 Browser events drive your user interface. The authoritative result of a
 transaction is the one your backend receives through the
@@ -93,7 +110,6 @@ internal fields removed:
     "responseType": "MATCH_3D_2D_ID_SCAN",
     "success": true,
     "resultCode": 2000,
-    "photoIDNextStepEnumInt": 2,
     "isCompletelyDone": false,
     "matchLevel": 5
   }
@@ -145,7 +161,7 @@ closed the result screen.
 
 Same envelope as `finished`, with `state.success` `false` and no final
 `resultCode`. The user closed the verification before a final state (close
-button, browser back, or FaceTec session cancelled). The transaction is marked
+button, browser back, or camera session cancelled). The transaction is marked
 *cancelled by the user* (`2041`) in Unicus. The next click on the button
 creates a new transaction.
 

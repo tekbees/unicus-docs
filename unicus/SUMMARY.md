@@ -9,6 +9,7 @@
 * [Button reference](sdk-web-v2/button-reference.md)
 * [Events](sdk-web-v2/events.md)
 * [Flows and hand-off](sdk-web-v2/flows-and-handoff.md)
+* [Texts and languages](sdk-web-v2/texts-and-languages.md)
 * [Result codes](sdk-web-v2/result-codes.md)
 * [Errors and troubleshooting](sdk-web-v2/errors-and-troubleshooting.md)
 * [Compatibility and security](sdk-web-v2/compatibility-and-security.md)
