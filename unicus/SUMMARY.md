@@ -2,19 +2,19 @@
 
 * [Let's get started!](README.md)
 
-## WEB SDK 4.0 INTEGRATION PROCESS <a href="#sdk-web-v4" id="sdk-web-v4"></a>
+## WEB SDK 5.0 INTEGRATION PROCESS <a href="#sdk-web-v5" id="sdk-web-v5"></a>
 
-* [Overview](sdk-web-v4/overview.md)
-* [Quick start](sdk-web-v4/quick-start.md)
-* [Button reference](sdk-web-v4/button-reference.md)
-* [Events](sdk-web-v4/events.md)
-* [Flows and hand-off](sdk-web-v4/flows-and-handoff.md)
-* [Texts and languages](sdk-web-v4/texts-and-languages.md)
-* [Result codes](sdk-web-v4/result-codes.md)
-* [Errors and troubleshooting](sdk-web-v4/errors-and-troubleshooting.md)
-* [Compatibility and security](sdk-web-v4/compatibility-and-security.md)
-* [Migration from Web SDK 3.x](sdk-web-v4/migration-from-v3.md)
-* [Versioning](sdk-web-v4/versioning.md)
+* [Overview](sdk-web-v5/overview.md)
+* [Quick start](sdk-web-v5/quick-start.md)
+* [Button reference](sdk-web-v5/button-reference.md)
+* [Events](sdk-web-v5/events.md)
+* [Flows and hand-off](sdk-web-v5/flows-and-handoff.md)
+* [Texts and languages](sdk-web-v5/texts-and-languages.md)
+* [Result codes](sdk-web-v5/result-codes.md)
+* [Errors and troubleshooting](sdk-web-v5/errors-and-troubleshooting.md)
+* [Compatibility and security](sdk-web-v5/compatibility-and-security.md)
+* [Migration from Web SDK 4.x](sdk-web-v5/migration-from-v4.md)
+* [Versioning](sdk-web-v5/versioning.md)
 
 ## WEB SDK INTEGRATION PROCESS <a href="#sdk-web" id="sdk-web"></a>
 

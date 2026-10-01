@@ -1,6 +1,6 @@
 ---
 description: >-
-  Screens the user can see when something goes wrong in Web SDK 4.0, what each
+  Screens the user can see when something goes wrong in Web SDK 5.0, what each
   one means, and how to diagnose integration problems.
 ---
 

@@ -1,6 +1,6 @@
 ---
 description: >-
-  Add Unicus Web SDK 4.0 to a page in three steps: load the script, render the
+  Add Unicus Web SDK 5.0 to a page in three steps: load the script, render the
   button, listen to the events.
 ---
 
@@ -18,11 +18,11 @@ the `<unicus-btn>` element.
 
 {% code overflow="wrap" %}
 ```html
-<script src="https://unicusbtn.idunicus.com/v4/sdkButton.js" defer></script>
+<script src="https://unicusbtn.idunicus.com/v5/sdkButton.js" defer></script>
 ```
 {% endcode %}
 
-The `/v4/` path receives compatible updates automatically (bug fixes, new
+The `/v5/` path receives compatible updates automatically (bug fixes, new
 optional attributes). A breaking change will be published under a new path.
 
 ## 2. Render the button
@@ -104,7 +104,7 @@ Events bubble, so you can also listen on `document`:
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <script src="https://unicusbtn.idunicus.com/v4/sdkButton.js" defer></script>
+    <script src="https://unicusbtn.idunicus.com/v5/sdkButton.js" defer></script>
   </head>
   <body>
     <h1>Verify your identity</h1>

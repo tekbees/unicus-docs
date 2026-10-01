@@ -1,7 +1,7 @@
 ---
 description: >-
   Every attribute, state, property and CSS variable of the <unicus-btn> element
-  in Web SDK 4.0, and the lifecycle of the transaction it creates.
+  in Web SDK 5.0, and the lifecycle of the transaction it creates.
 ---
 
 # Button reference
@@ -71,14 +71,14 @@ The flow is not rendered in a popup window, so popup blockers do not affect it.
 
 | Member | Description |
 | --- | --- |
-| `button.transactionId` | Current `tid`, or `null` before `OnUnicus:loaded`. Also available as `button.__transactionId` for compatibility with 3.x code. |
+| `button.transactionId` | Current `tid`, or `null` before `OnUnicus:loaded`. Also available as `button.__transactionId` for compatibility with 4.x code. |
 | `button.open()` | Opens the flow programmatically, same as a click. |
 | `customElements.get('unicus-btn').version` | Version string of the loaded script. |
 
 ## Appearance
 
 The button is a hexagonal white badge with the Unicus mark over a pill in your
-brand colour, the same design as Web SDK 3.x. Colours come from the company configuration in the portal
+brand colour, the same design as Web SDK 4.x. Colours come from the company configuration in the portal
 (`windowColor`, `textColor`); you can override them per page with attributes or
 CSS custom properties on the element:
 

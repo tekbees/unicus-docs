@@ -1,6 +1,6 @@
 ---
 description: >-
-  Payload of every OnUnicus event emitted by the Web SDK 4.0 button and how a
+  Payload of every OnUnicus event emitted by the Web SDK 5.0 button and how a
   customer page should react.
 ---
 

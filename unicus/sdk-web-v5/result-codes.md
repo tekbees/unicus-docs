@@ -1,6 +1,6 @@
 ---
 description: >-
-  Result codes returned in Web SDK 4.0 events, webhooks and the
+  Result codes returned in Web SDK 5.0 events, webhooks and the
   query-transaction endpoint, and the rejection reasons attached to them.
 ---
 
@@ -75,5 +75,5 @@ required camera step fails.
 ## Match levels and age groups
 
 The match levels (`matchLevel`) and age groups (`ageEstimateGroup`) that
-accompany step results are the same as in Web SDK 3.x; see
+accompany step results are the same as in Web SDK 4.x; see
 [Result Codes and References](../sdk-web/result-codes-and-references.md).
