@@ -1,5 +1,5 @@
 ---
-description: Versioning policy and release notes of Unicus Web SDK 2.0.
+description: Versioning policy and release notes of Unicus Web SDK 4.0.
 ---
 
 # Versioning
@@ -8,12 +8,12 @@ The script is published under a major-version path:
 
 | Path | Receives |
 | --- | --- |
-| `https://unicusbtn.idunicus.com/v2/sdkButton.js` | Every compatible 2.x update (bug fixes, new optional attributes, new events). Pages pick it up on the next load; no action needed. |
-| `https://unicusbtn.idunicus.com/v3/…` (future) | Breaking changes. Announced in advance; the previous path keeps working during the transition. |
+| `https://unicusbtn.idunicus.com/v4/sdkButton.js` | Every compatible 4.x update (bug fixes, new optional attributes, new events). Pages pick it up on the next load; no action needed. |
+| `https://unicusbtn.idunicus.com/v5/…` (future) | Breaking changes. Announced in advance; the previous path keeps working during the transition. |
 
 `customElements.get('unicus-btn').version` returns the exact version loaded.
 
-## 2.0.0
+## 4.0.0
 
 * New web application: modular flows composed in the administrative portal
   (consent, info, liveness, document with server validations, face match,
@@ -33,4 +33,4 @@ The script is published under a major-version path:
   `label` attribute on the button.
 * Security: short-lived sessions bound to one transaction, origin-checked
   messaging, strict iframe permissions, no referrer leakage.
-* Public contract (attributes, events, `transactionId`) compatible with 1.x.
+* Public contract (attributes, events, `transactionId`) compatible with 3.x.

@@ -1,28 +1,28 @@
 ---
 description: >-
-  What Unicus Web SDK 2.0 is, what changed from the previous button, and what a
+  What Unicus Web SDK 4.0 is, what changed from the previous button, and what a
   customer web application has to implement.
 ---
 
 # Overview
 
-Unicus Web SDK 2.0 is the new web integration of the Unicus identity
+Unicus Web SDK 4.0 is the new web integration of the Unicus identity
 verification platform. From the customer page it is still one script and one
 HTML element: `<unicus-btn>`. Everything else — transaction creation, the
 verification screens, the camera, the hand-off to the user's phone and the
 result — is handled by Unicus.
 
 {% hint style="info" %}
-Web SDK 2.0 keeps the public contract of the previous button: the same
+Web SDK 4.0 keeps the public contract of the previous button: the same
 attributes (`customerid`, `transactiontype`, `clientid`, `language`), the same
 `OnUnicus:*` browser events and the same `transactionId` property. An existing
 integration only has to change the script URL. See
-[Migration from Web SDK 1.x](migration-from-v1.md).
+[Migration from Web SDK 3.x](migration-from-v3.md).
 {% endhint %}
 
 ## What is new
 
-| Area | Web SDK 1.x | Web SDK 2.0 |
+| Area | Web SDK 3.x | Web SDK 4.0 |
 | --- | --- | --- |
 | Flow | Fixed: face, then document. | **Modular.** Your company composes the flow in the Unicus administrative portal: consent, instructions, liveness, document, face match, electronic signature, OTP, data form, age check. The web app runs whatever flow is assigned to the transaction type. |
 | Weight | Several megabytes before the camera opened. | A few kilobytes of application code; the biometric engine is downloaded once in the background while the user reads the first screens and cached for later transactions. Designed for low-bandwidth mobile networks. |
@@ -80,7 +80,7 @@ iframe manually.
 | Value | Where it goes | Description |
 | --- | --- | --- |
 | Customer Token | `customerid` attribute | Public token of your company, generated in the administrative portal (Company → Settings). It is safe to render in HTML: it identifies the company, it does not authorise anything by itself. One token per environment. |
-| Script URL | `<script src>` | `https://unicusbtn.idunicus.com/v2/sdkButton.js` in production. Tekbees provides the sandbox URL. |
+| Script URL | `<script src>` | `https://unicusbtn.idunicus.com/v4/sdkButton.js` in production. Tekbees provides the sandbox URL. |
 | Flow | Administrative portal | At least one flow assigned to the transaction type you use. Without it the button shows "Verification not configured" (result code `2002`). |
 
 For enrollment and verification you also need the user's document type and

@@ -18,7 +18,7 @@ flowchart LR
 *Example of a complete flow. Dark steps run in one camera session; the others
 need no camera. Your flow can use any subset, in any order the portal allows.*
 
-In Web SDK 2.0 the verification is a **flow**: an ordered list of steps that
+In Web SDK 4.0 the verification is a **flow**: an ordered list of steps that
 your company composes in the administrative portal and assigns to a transaction
 type. The web app runs the flow attached to each transaction, so a change in the
 portal applies to the next transaction without touching your page.

@@ -1,7 +1,7 @@
 ---
 description: >-
   Browser requirements, Content Security Policy, permissions and the security
-  model of Web SDK 2.0. Read before going live.
+  model of Web SDK 4.0. Read before going live.
 ---
 
 # Compatibility and security
@@ -82,7 +82,7 @@ Permissions-Policy: camera=(self "https://id.idunicus.com"), geolocation=(self "
 ## Pre-production checklist
 
 1. Page served over HTTPS.
-2. `https://unicusbtn.idunicus.com/v2/sdkButton.js` loads; the button changes
+2. `https://unicusbtn.idunicus.com/v4/sdkButton.js` loads; the button changes
    from neutral to your brand colour.
 3. `OnUnicus:loaded` arrives with a `tid`.
 4. One complete enrolment from a phone, one from a computer with hand-off.

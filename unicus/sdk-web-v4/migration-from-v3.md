@@ -1,10 +1,10 @@
 ---
 description: >-
-  Move an existing Unicus Button integration to Web SDK 2.0. One line changes in
+  Move an existing Unicus Button integration to Web SDK 4.0. One line changes in
   the page; the rest is configuration in the portal.
 ---
 
-# Migration from Web SDK 1.x
+# Migration from Web SDK 3.x
 
 ## In the page
 
@@ -16,13 +16,13 @@ unchanged.
 <!-- before -->
 <script src="https://unicusbtn.idunicus.com/sdkButton.js" defer></script>
 <!-- after -->
-<script src="https://unicusbtn.idunicus.com/v2/sdkButton.js" defer></script>
+<script src="https://unicusbtn.idunicus.com/v4/sdkButton.js" defer></script>
 ```
 {% endcode %}
 
 Everything below is optional.
 
-| 1.x behaviour | 2.0 behaviour | Action |
+| 3.x behaviour | 4.0 behaviour | Action |
 | --- | --- | --- |
 | Button label fixed. | `label` attribute. | None unless you want another text. |
 | Colours from the transaction response. | Same, plus remembered in the browser and overridable with `color` / `textcolor` or CSS variables. | None. |
@@ -38,18 +38,18 @@ Everything below is optional.
 1. Create the flow(s) that reproduce what your users do today (for example
    consent → liveness → document → face match) and assign them to the
    transaction types you use (`enrollment-verify`, `liveness`).
-2. Review the company branding: logo and hex colours. The 2.0 screens apply
+2. Review the company branding: logo and hex colours. The 4.0 screens apply
    them everywhere, including the camera screens.
 3. Enable the hand-off channels (QR, WhatsApp, SMS). WhatsApp needs the
    authentication template approved for your company.
 
 ## CSP
 
-Add `https://id.idunicus.com` to `frame-src` if your 1.x policy pointed at a
+Add `https://id.idunicus.com` to `frame-src` if your 3.x policy pointed at a
 different flow domain, and keep `connect-src` for the API.
 
 ## Running both versions
 
-1.x and 2.0 can coexist on different pages of the same site during the
+3.x and 4.0 can coexist on different pages of the same site during the
 transition. They use the same Customer Token and the same transactions appear
 in the portal and webhooks.
