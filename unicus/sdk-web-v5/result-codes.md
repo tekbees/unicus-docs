@@ -29,6 +29,12 @@ Codes appear in `OnUnicus:finished` (`state.resultCode`), in `OnUnicus:details`
 | `2002` | No flow assigned to the company and transaction type, or unknown `data-flow-id`. | Assign or publish the flow in the administrative portal. |
 | `2052` | The person is blocked. | Review the person in the portal. |
 
+## Temporary failure
+
+| Code | Meaning | What to do |
+| --- | --- | --- |
+| `2054` | Unicus could not process the request at that moment. Nothing was used up: the same link and the same transaction remain valid. | The web app shows the user a "try again" screen with a **Retry** button. Do not create a new transaction; if it persists, contact support. |
+
 ## Step rejected by the server (`2052` during the flow)
 
 While the flow runs, `2052` means the Unicus API refused a step. The reason is
