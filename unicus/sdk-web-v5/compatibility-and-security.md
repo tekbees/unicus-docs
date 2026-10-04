@@ -12,6 +12,7 @@ description: >-
 | --- | --- |
 | HTTPS | Browsers only expose the camera to secure origins, and the hand-off links are HTTPS only. `http://localhost` is accepted for development. |
 | JavaScript and custom elements | The button is a web component. |
+| No domain registration | Your page can be served from any domain. The Customer Token identifies your company; you do not need to send the domain of your site to Tekbees. |
 | Third-party iframe allowed | The flow runs in an iframe of the Unicus domain. |
 | Camera permission | Liveness and document steps. Microphone and geolocation are requested only when a flow needs them (geolocation is used to pre-select the document country). |
 | Stable connection during capture | Uploads are small (about 1.5 MB per enrolment) but must complete. |
