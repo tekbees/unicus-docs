@@ -38,8 +38,8 @@ sequenceDiagram
 {% hint style="info" %}
 Browser events drive your user interface. The authoritative result of a
 transaction is the one your backend receives through the
-[webhook](../sdk-web/types-webhook.md) or by calling
-[Get a transaction status](../sdk-web/get-a-transaction-status.md) with the
+[webhook](webhooks.md) or by calling
+[Get a transaction status](transaction-status.md) with the
 `tid`. Page reloads, closed tabs and network conditions can prevent a browser
 event from reaching your page.
 {% endhint %}

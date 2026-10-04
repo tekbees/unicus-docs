@@ -6,6 +6,13 @@ description: >-
 
 # Migration from Web SDK 4.x
 
+{% hint style="warning" %}
+**Coming soon.** Web SDK 5.0 is not yet available in production. Tekbees will
+announce the release date; until then the production script URL shown in this
+documentation is not active and Web SDK 4.x remains the version to use. Ask
+Tekbees for access to the sandbox environment to start your integration.
+{% endhint %}
+
 ## In the page
 
 Replace the script URL. Attributes, events and the `transactionId` property are

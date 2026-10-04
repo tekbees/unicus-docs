@@ -67,6 +67,8 @@ observe it (`button.getAttribute('state')`).
 
 The flow is not rendered in a popup window, so popup blockers do not affect it.
 
+<figure><img src="../.gitbook/assets/web-sdk-5-flow-open.jpg" alt="The verification opened over the customer page on a computer" width="563"><figcaption><p>The verification opened over the page on a computer. On a phone it fills the screen.</p></figcaption></figure>
+
 ## Properties and methods
 
 | Member | Description |
@@ -76,6 +78,8 @@ The flow is not rendered in a popup window, so popup blockers do not affect it.
 | `customElements.get('unicus-btn').version` | Version string of the loaded script. |
 
 ## Appearance
+
+<figure><img src="../.gitbook/assets/web-sdk-5-button.jpg" alt="Default and large Unicus buttons" width="563"><figcaption><p>Default button and `size="lg"` with a custom `label`.</p></figcaption></figure>
 
 The button is a hexagonal white badge with the Unicus mark over a pill in your
 brand colour, the same design as Web SDK 4.x. Colours come from the company configuration in the portal

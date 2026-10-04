@@ -6,6 +6,13 @@ description: >-
 
 # Overview
 
+{% hint style="warning" %}
+**Coming soon.** Web SDK 5.0 is not yet available in production. Tekbees will
+announce the release date; until then the production script URL shown in this
+documentation is not active and Web SDK 4.x remains the version to use. Ask
+Tekbees for access to the sandbox environment to start your integration.
+{% endhint %}
+
 Unicus Web SDK 5.0 is the new web integration of the Unicus identity
 verification platform. From the customer page it is still one script and one
 HTML element: `<unicus-btn>`. Everything else — transaction creation, the
@@ -68,8 +75,8 @@ sequenceDiagram
    The end of the flow produces `OnUnicus:finished` (or `OnUnicus:exit` if the
    user left before finishing).
 6. Your backend receives the authoritative result through your
-   [webhook](../sdk-web/types-webhook.md) or by calling
-   [Get a transaction status](../sdk-web/get-a-transaction-status.md).
+   [webhook](webhooks.md) or by calling
+   [Get a transaction status](transaction-status.md).
 
 The customer application never calls `/start-process-transaction`,
 `/get-restart-session` or `/process-request` directly and never creates the
@@ -79,7 +86,7 @@ iframe manually.
 
 | Value | Where it goes | Description |
 | --- | --- | --- |
-| Customer Token | `customerid` attribute | Public token of your company, generated in the administrative portal (Company → Settings). It is safe to render in HTML: it identifies the company, it does not authorise anything by itself. One token per environment. |
+| [Customer Token](customer-token.md) | `customerid` attribute | Public token of your company, generated in the administrative portal (Company → Settings). It is safe to render in HTML: it identifies the company, it does not authorise anything by itself. One token per environment. |
 | Script URL | `<script src>` | `https://unicusbtn.idunicus.com/v5/sdkButton.js` in production. Tekbees provides the sandbox URL. |
 | Flow | Administrative portal | At least one flow assigned to the transaction type you use. Without it the button shows "Verification not configured" (result code `2002`). |
 
@@ -97,5 +104,8 @@ document number (`clientid` attribute).
 5. [Texts and languages](texts-and-languages.md): what wording you control.
 6. [Result codes](result-codes.md) and
    [Errors and troubleshooting](errors-and-troubleshooting.md).
-7. [Compatibility and security](compatibility-and-security.md) before going
+7. [Webhooks](webhooks.md) and
+   [Get a transaction status](transaction-status.md): the authoritative result
+   for your backend.
+8. [Compatibility and security](compatibility-and-security.md) before going
    live.

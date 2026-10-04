@@ -35,6 +35,11 @@ portal applies to the next transaction without touching your page.
 | `form` | Fills a data form defined in the portal (fields, types, validation rules). | Any device |
 | `age_check` | No screen: Unicus checks the estimated age against a threshold. | Server |
 
+<div><figure><img src="../.gitbook/assets/web-sdk-5-consent.jpg" alt="Consent screen on a phone" width="280"><figcaption><p>Consent: what will be captured and why.</p></figcaption></figure> <figure><img src="../.gitbook/assets/web-sdk-5-before-start.jpg" alt="Preparation screen before the camera opens" width="280"><figcaption><p>Preparation before the camera opens.</p></figcaption></figure></div>
+
+Screens use the logo and colours of your company; the examples show a sample
+company.
+
 Consecutive camera steps (`liveness`, `document`, `face_match`) run in one
 camera session, so the user opens the camera once. Steps that need no camera
 can be completed on the computer before handing off to the phone.
@@ -84,6 +89,8 @@ channels enabled for your company:
 | WhatsApp | The user types the phone number; Unicus sends a template message with the link. |
 | SMS | The user types the phone number; Unicus sends a text message with the link. |
 
+<figure><img src="../.gitbook/assets/web-sdk-5-handoff-options.jpg" alt="Hand-off options on a computer: QR code, WhatsApp and SMS" width="563"><figcaption><p>The channels enabled for the company, offered on the computer.</p></figcaption></figure>
+
 The computer screen then becomes a **mirror**: it shows each step the phone
 completes (front of the document, face match, back, data confirmation…) in real
 time and finally the result. The customer page keeps receiving `OnUnicus:*`
@@ -104,7 +111,7 @@ hand-off token** in the URL fragment (`https://id.idunicus.com/#h=…`):
   `Referer`, not in access logs.
 * The link works once. Opening it a second time shows "the link expired or was
   already used".
-* The link expires after 24 hours; a transaction has its own, shorter life.
+* The link expires if it is not used; the transaction has its own expiry.
 * If Unicus cannot open the link at that moment, the phone shows "try again"
   with a **Retry** button. The same link stays valid: no new QR code or message
   is needed.

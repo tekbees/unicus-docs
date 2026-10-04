@@ -80,6 +80,42 @@ required camera step fails.
 
 ## Match levels and age groups
 
-The match levels (`matchLevel`) and age groups (`ageEstimateGroup`) that
-accompany step results are the same as in Web SDK 4.x; see
-[Result Codes and References](../sdk-web/result-codes-and-references.md).
+Step results and webhooks can carry a `matchLevel` and an `ageEstimateGroup`.
+
+**Face against the enrolled face** (verification): levels `0` to `15`.
+
+| Level | False acceptance rate |
+| --- | --- |
+| `15` | 1 in 125,000,000 |
+| `14` | 1 in 95,000,000 |
+| `13` | 1 in 70,000,000 |
+| `12` | 1 in 50,000,000 |
+| `11` | 1 in 25,000,000 |
+| `10` | 1 in 12,800,000 |
+| `9` | 1 in 2,000,000 |
+| `8` | 1 in 1,000,000 |
+| `7` | 1 in 500,000 |
+| `6` | 1 in 100,000 |
+| `5` | 1 in 10,000 |
+| `4` | 1 in 1,000 |
+| `3` | 1 in 500 |
+| `2` | 1 in 250 |
+| `1` | 1 in 100 |
+| `0` | No match |
+
+**Face against the document photo** (enrolment): levels `0` to `7`, with the
+same rates as the table above for each level. Rejections vary with the security
+features of the document and the age of its photo.
+
+**Age group** (`ageEstimateGroup`):
+
+| Value | Meaning |
+| --- | --- |
+| `0` | Not available |
+| `1` | Under 8 |
+| `2` | Over 8 |
+| `3` | Over 13 |
+| `4` | Over 18 |
+| `5` | Over 21 |
+| `6` | Over 25 |
+| `7` | Over 30 |

@@ -6,6 +6,13 @@ description: >-
 
 # Quick start
 
+{% hint style="warning" %}
+**Coming soon.** Web SDK 5.0 is not yet available in production. Tekbees will
+announce the release date; until then the production script URL shown in this
+documentation is not active and Web SDK 4.x remains the version to use. Ask
+Tekbees for access to the sandbox environment to start your integration.
+{% endhint %}
+
 ```mermaid
 flowchart LR
   A["1. Load the script"] --> B["2. Render unicus-btn"] --> C["3. Listen to OnUnicus events"] --> D["Confirm server side<br/>(webhook / query-transaction)"]
@@ -13,8 +20,8 @@ flowchart LR
 
 ## 1. Load the script
 
-Add the script once per page, with `defer`. It weighs about 6 KB and registers
-the `<unicus-btn>` element.
+Add the script once per page, with `defer`. It is lightweight and registers the
+`<unicus-btn>` element.
 
 {% code overflow="wrap" %}
 ```html
@@ -37,6 +44,8 @@ optional attributes). A breaking change will be published under a new path.
 </unicus-btn>
 ```
 {% endcode %}
+
+<figure><img src="../.gitbook/assets/web-sdk-5-button.jpg" alt="The Unicus button on a customer page: default size and large size with a custom label" width="563"><figcaption><p>The button on a page, in the company colour: default, and large with a custom label.</p></figcaption></figure>
 
 * `customerid`: your company's Customer Token (Company → Settings in the
   administrative portal).

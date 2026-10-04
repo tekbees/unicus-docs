@@ -12,9 +12,13 @@
 * [Texts and languages](sdk-web-v5/texts-and-languages.md)
 * [Result codes](sdk-web-v5/result-codes.md)
 * [Errors and troubleshooting](sdk-web-v5/errors-and-troubleshooting.md)
+* [Customer Token](sdk-web-v5/customer-token.md)
+* [Webhooks](sdk-web-v5/webhooks.md)
+* [Get a transaction status](sdk-web-v5/transaction-status.md)
 * [Compatibility and security](sdk-web-v5/compatibility-and-security.md)
 * [Migration from Web SDK 4.x](sdk-web-v5/migration-from-v4.md)
 * [Versioning](sdk-web-v5/versioning.md)
+* [Support](sdk-web-v5/support.md)
 
 ## WEB SDK INTEGRATION PROCESS <a href="#sdk-web" id="sdk-web"></a>
 
