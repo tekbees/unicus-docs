@@ -26,7 +26,7 @@ The most common steps include:
 * OCR extraction data, and document validation from the back side of the document (BACK\_DOCUMENT)
 * Match of face against document photo (MATCH\_DOCUMENT)
 
-The last type you will get when a transaction is completed is "MATCH\_DOCUMENT". If for any reason you don't get it, is because something happened in the previous steps, which will be described in the response codes.
+The last type you will get when a transaction is completed is "MATCH\_DOCUMENT", also when the document stage fails (the reason is in `result_code`). If the person cancels or the transaction is deleted you receive `CANCEL_TRANSACTION` or `DELETE_TRANSACTION` instead (see below).
 
 **LIVENESS\_FACEMAP**
 
@@ -244,6 +244,50 @@ The last type you will get when a transaction is completed is "MATCH\_DOCUMENT".
 {% endtabs %}
 
 ageEstimateGroup, matchLevel, result\_code return different codes which you can find described in the following section [Result codes](result-codes.md)
+
+### Transaction ended outside the capture
+
+Sent to the company webhook (and to the generic webhook for link transactions) when a
+transaction ends without going through the camera steps.
+
+| `process` | When | `result_code` |
+| --- | --- | --- |
+| `CANCEL_TRANSACTION` | The user cancelled the verification (or the SDK reported it ended). | `2041`, or the code reported by the SDK |
+| `DELETE_TRANSACTION` | The transaction was deleted with `delete-transaction`. | `2053` |
+
+```json5
+{
+    "data": {
+        "process": "CANCEL_TRANSACTION", // or "DELETE_TRANSACTION"
+        "tid": string,
+        "result_code": 2041,             // 2053 for DELETE_TRANSACTION
+        "result_message": string,
+        "success": true                  // the webhook was delivered for a finished transaction
+    },
+    "meta": {
+        "code": 200,
+        "ok": true
+    }
+}
+```
+
+### FLOW\_STEP: one-time code exhausted
+
+In portal flows with an OTP step before the camera, when the person uses up the attempts
+you receive `process: "FLOW_STEP"` with `result_code` `4001` (see [Result codes](result-codes.md)).
+
+### Changes from October 2026
+
+* **Final failures of the document stage arrive as `MATCH_DOCUMENT`** (before, some came as
+  `BACK_DOCUMENT`). Treat `MATCH_DOCUMENT` as the last message of an enrollment, whether it
+  succeeded or not.
+* **New processes** `CANCEL_TRANSACTION` and `DELETE_TRANSACTION` (above). If your service
+  rejects unknown processes, accept them.
+* **Expiration (`6003`) is sent once.** It used to arrive twice; if you de-duplicated it, nothing
+  changes.
+* **Manual review of duplicates.** When an operator decides a transaction held for review
+  (`2013`), you receive the final result with the same format as the original one, plus
+  `manual_review: true` and `review_decision` (`enroll`, `fraud` or `fail`).
 
 ### Practical URL example
 

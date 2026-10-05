@@ -41,3 +41,15 @@ The script is published under a major-version path:
 * Security: short-lived sessions bound to one transaction, origin-checked
   messaging, strict iframe permissions, no referrer leakage.
 * Public contract (attributes, events, `transactionId`) compatible with 4.x.
+
+**When the 5.0 API is deployed in your environment**
+
+* Sessions issued before the deployment stop working: transactions that were open at that
+  moment must be started again (the user sees an expired session and a new transaction is
+  needed).
+* No domain registration: the API accepts calls from any origin, you do not need to send
+  Tekbees the domain of your site.
+* Webhooks: new processes `CANCEL_TRANSACTION` and `DELETE_TRANSACTION`, document-stage failures
+  as `MATCH_DOCUMENT`, expiration sent once. See [Webhooks](webhooks.md#changes-from-october-2026).
+* A camera capture without a recorded consent is refused (`2052` with
+  `CONSENT_NOT_RECORDED`); flows built in the portal always put the consent first.

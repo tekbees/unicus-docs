@@ -25,7 +25,7 @@ portal applies to the next transaction without touching your page.
 
 | Step type | What the user does | Where it runs |
 | --- | --- | --- |
-| `consent` | Reads what will be captured and why, and accepts. Always first; added automatically if the flow does not include it. | Any device |
+| `consent` | Reads what will be captured and why, and accepts. Always before the first camera step (the portal does not publish a flow with the consent after a camera step); added automatically if the flow does not include it. | Any device |
 | `info` | Reads instructions (good light, document at hand). | Any device |
 | `liveness` | Video selfie. Proves a live person is present and captures the face. | Phone or laptop camera |
 | `document` | Photographs the front and back of the document and confirms the data read by OCR. Server-side validations configured per flow: document classifier, id number match, official registry lookup. | Phone or laptop camera |

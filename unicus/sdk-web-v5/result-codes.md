@@ -17,7 +17,8 @@ Codes appear in `OnUnicus:finished` (`state.resultCode`), in `OnUnicus:details`
 | `2000` | Success | Every required step passed. Legacy flows may report `0` or `200`. |
 | `2013` | Under review | The flow completed but Unicus holds the transaction for manual review (for example a possible duplicate identity). Treat as pending, not as a failure. The final decision arrives through the webhook. |
 | `2003` | Open | Camera steps finished but the transaction has pending steps (signature, OTP, form). Seen in step results, never as the final code of `finished`. |
-| `2041` | Cancelled | The user closed the verification before finishing (`OnUnicus:exit`). |
+| `2041` | Cancelled | The user closed the verification before finishing (`OnUnicus:exit`). Also sent in the `CANCEL_TRANSACTION` webhook (or the code the SDK reported). |
+| `2053` | Deleted | The transaction was deleted with `delete-transaction` (`DELETE_TRANSACTION` webhook). |
 | `2051` | Expired or used | The transaction, session or link is no longer valid. A new transaction is needed. |
 | `2061` | Retry limit | The user exhausted the retries of a camera step. |
 | `4001` | OTP exhausted | Too many wrong one-time codes. |
@@ -27,7 +28,7 @@ Codes appear in `OnUnicus:finished` (`state.resultCode`), in `OnUnicus:details`
 | Code | Meaning | Fix |
 | --- | --- | --- |
 | `2002` | No flow assigned to the company and transaction type, or unknown `data-flow-id`. | Assign or publish the flow in the administrative portal. |
-| `2052` | The person is blocked. | Review the person in the portal. |
+| `2052` | The transaction could not be started (for example the person is blocked). The reason is in `resultMessage`. | Review the person or the request in the portal. |
 
 ## Temporary failure
 
@@ -51,6 +52,8 @@ appropriate message.
 | `OTP_INVALID` | Wrong code; the user can retry until `4001`. |
 | `OTP_EXPIRED` | The code expired; a new one is requested. |
 | `OTP_SEND_FAILED:<channel>` | The code could not be sent by that channel (for example WhatsApp template not configured). |
+| `CONSENT_NOT_RECORDED` | A camera capture (liveness, document, face match) arrived before the person's consent was recorded. Web transactions (button or link) need the consent first; in portal flows the consent step must come before the first camera step. |
+| `TRANSACTION_ALREADY_FINISHED` | `save-sdk-status` was called for a transaction that already has a final result; nothing changes. |
 
 ## Camera and document codes
 
@@ -62,7 +65,7 @@ required camera step fails.
 | `1001` | Invalid document verification (id number check). |
 | `5003` | Liveness could not be determined. |
 | `6001` / `6002` | Invalid front / back of the document. |
-| `6003` | Timeout capturing the document. |
+| `6003` | Timeout capturing the document. Also the code of an expired transaction (sent once). |
 | `6004` | Document type not supported. |
 | `6006` | Front and back do not match. |
 | `6009` | Invalid document material (photocopy or screen). |
