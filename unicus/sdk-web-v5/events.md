@@ -52,7 +52,7 @@ event from reaching your page.
   "status_error": false,
   "loaded": true,
   "message": "Unicus SDK: loaded successfully",
-  "link": "https://id.idunicus.com/?token=<TID>&process=enrollment&lang=es",
+  "link": "https://id.idunicus.com/#token=<TID>&process=enrollment&lang=es",
   "transaction": {
     "transactionId": "<TID>",
     "clientid": "123456789"
@@ -185,10 +185,13 @@ creates a new transaction.
 | `user is currently blocked` | `2052` | The person is blocked in Unicus after repeated failures. Review in the portal or contact support. |
 | `could not create the transaction` | API code | Unicus rejected the creation; the message carries the API reason. Check the Customer Token and environment. |
 | `cannot reach the server` | — | Network, CORS or CSP problem. See [Compatibility and security](compatibility-and-security.md). |
+| `the verification could not be loaded` | — | The verification did not open within 20 seconds (blocked by the page's CSP or a browser extension, or no network). The button removes the overlay and returns to *Retry*. |
 
 Errors raised inside the flow (session expired, rate limit, step rejected by
 the server) are shown to the user on a Unicus screen and reported through
-`OnUnicus:error` with the same `resultCode` the API returned.
+`OnUnicus:error`, once per error, with the same `resultCode` the API returned.
+The verification stays open so the user can read the message; `OnUnicus:exit`
+follows when they close it.
 
 ## Recommended pattern
 

@@ -8,9 +8,9 @@ description: >-
 
 {% hint style="warning" %}
 **Coming soon.** Web SDK 5.0 is not yet available in production. Tekbees will
-announce the release date; until then the production script URL shown in this
-documentation is not active and Web SDK 4.x remains the version to use. Ask
-Tekbees for access to the sandbox environment to start your integration.
+announce the release date. On that date Web SDK 4.x stops working and every
+integration runs 5.0, including pages that still load the current script URL.
+Until then, ask Tekbees for access to the sandbox environment to prepare.
 {% endhint %}
 
 Unicus Web SDK 5.0 is the new web integration of the Unicus identity
@@ -23,8 +23,9 @@ result — is handled by Unicus.
 Web SDK 5.0 keeps the public contract of the previous button: the same
 attributes (`customerid`, `transactiontype`, `clientid`, `language`), the same
 `OnUnicus:*` browser events and the same `transactionId` property. An existing
-integration only has to change the script URL. See
-[Migration from Web SDK 4.x](migration-from-v4.md).
+integration does not have to edit its page: on the release date the script URL
+it already loads serves 5.0. What it must do first is assign a flow in the
+portal. See [Migration from Web SDK 4.x](migration-from-v4.md).
 {% endhint %}
 
 ## What is new

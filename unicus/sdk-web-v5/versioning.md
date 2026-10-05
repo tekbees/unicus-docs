@@ -6,9 +6,9 @@ description: Versioning policy and release notes of Unicus Web SDK 5.0.
 
 {% hint style="warning" %}
 **Coming soon.** Web SDK 5.0 is not yet available in production. Tekbees will
-announce the release date; until then the production script URL shown in this
-documentation is not active and Web SDK 4.x remains the version to use. Ask
-Tekbees for access to the sandbox environment to start your integration.
+announce the release date. On that date Web SDK 4.x stops working and every
+integration runs 5.0, including pages that still load the current script URL.
+Until then, ask Tekbees for access to the sandbox environment to prepare.
 {% endhint %}
 
 The script is published under a major-version path:
@@ -16,6 +16,7 @@ The script is published under a major-version path:
 | Path | Receives |
 | --- | --- |
 | `https://unicusbtn.idunicus.com/v5/sdkButton.js` | Every compatible 5.x update (bug fixes, new optional attributes, new events). Pages pick it up on the next load; no action needed. |
+| `https://unicusbtn.idunicus.com/sdkButton.js` | The address of 4.x integrations. From the 5.0 release date it serves the same script as `/v5/`, so existing pages move to 5.0 without changes. |
 | `https://unicusbtn.idunicus.com/v6/…` (future) | Breaking changes. Announced in advance; the previous path keeps working during the transition. |
 
 `customElements.get('unicus-btn').version` returns the exact version loaded.
@@ -41,3 +42,5 @@ The script is published under a major-version path:
 * Security: short-lived sessions bound to one transaction, origin-checked
   messaging, strict iframe permissions, no referrer leakage.
 * Public contract (attributes, events, `transactionId`) compatible with 4.x.
+* Replaces 4.x for every integration on the release date; the 4.x script URL
+  serves 5.0 from then on.

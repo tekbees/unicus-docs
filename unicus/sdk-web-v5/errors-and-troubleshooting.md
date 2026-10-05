@@ -36,6 +36,7 @@ code when one applies. The customer page receives the same case through
 | The button says "Verification not configured" | Result code `2002`: assign a flow to the transaction type in the portal, or remove a wrong `data-flow-id`. |
 | The button is neutral grey and never changes | The transaction is not being created. Confirm `customerid` and `transactiontype` are set when the element connects, and that the script loaded (`customElements.get('unicus-btn')` is defined). |
 | Nothing happens on click | A click during `loading` opens the flow when the transaction is ready. If the state is `error`, read `OnUnicus:error`. Check that no overlay of your page intercepts the click. |
+| The page is covered for a few seconds and the button goes back to "Retry" | The verification could not load (`OnUnicus:error`: *the verification could not be loaded*). Check CSP `frame-src`, ad or privacy blockers, and the network. |
 | The iframe is blank | CSP `frame-src` must allow the Unicus web app domain. Check the browser console for a refused frame. |
 | The camera never opens | The site must be served over HTTPS; the iframe needs the `camera` permission (set by the button; a parent `Permissions-Policy` header that denies `camera` overrides it). |
 | Events never fire | Listeners must be attached to the element in the DOM (or to `document`, since events bubble). With React, attach in `useEffect` through a `ref`. |

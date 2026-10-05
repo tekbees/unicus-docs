@@ -8,9 +8,9 @@ description: >-
 
 {% hint style="warning" %}
 **Coming soon.** Web SDK 5.0 is not yet available in production. Tekbees will
-announce the release date; until then the production script URL shown in this
-documentation is not active and Web SDK 4.x remains the version to use. Ask
-Tekbees for access to the sandbox environment to start your integration.
+announce the release date. On that date Web SDK 4.x stops working and every
+integration runs 5.0, including pages that still load the current script URL.
+Until then, ask Tekbees for access to the sandbox environment to prepare.
 {% endhint %}
 
 ```mermaid
@@ -60,6 +60,15 @@ neutral until Unicus answers with your company colours, then it shows the brand
 colour and the label. One click opens the verification; if the user clicks
 while the transaction is still being created, the flow opens as soon as it is
 ready.
+
+To avoid a layout jump while the script loads, reserve the button's space in
+your stylesheet:
+
+{% code overflow="wrap" %}
+```css
+unicus-btn:not(:defined) { display: inline-block; min-width: 224px; height: 58px; }
+```
+{% endcode %}
 
 ## 3. Listen to the events
 
