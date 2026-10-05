@@ -32,8 +32,8 @@ The script is published under a major-version path:
   progress and the final result on the computer.
 * One-time hand-off tokens in the URL fragment; the transaction id never
   travels in a link.
-* Button redesign: brand colours applied automatically and remembered, `label`
-  and `size` attributes, visible states, click during loading honoured, new
+* Button redesign: one piece with the Unicus mark, brand colours applied
+  automatically and remembered, `label`, `size` and `radius` attributes, visible states, click during loading honoured, new
   transaction after every finished or exited flow.
 * Events: `stepProgress` payloads per step, `resultCode` in `finished` and
   `error`, `2002` *not configured*, `2013` *under review*.

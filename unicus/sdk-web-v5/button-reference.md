@@ -16,7 +16,8 @@ description: >-
 | `language` | No | `es`, `en` | Language of the button label and of the verification screens. Defaults to the browser language when supported, otherwise Spanish. |
 | `data-flow-id` | No | flow slug | Runs a specific flow variant instead of the one assigned to the transaction type (for example an A/B variant or a flow for a specific product). The slug is shown in the portal. An unknown slug leaves the button in the *not configured* state (`2002`). |
 | `label` | No | text | Replaces the default label ("Validar identidad" / "Verify identity"), for example `Ingresar con mi rostro` on a login screen. |
-| `size` | No | `lg` | Larger button (56 px pill instead of 44 px). |
+| `size` | No | `lg` | Larger button (58 px tall instead of 48 px). |
+| `radius` | No | number of pixels, or `pill` | Corner rounding, so the button matches the buttons of your site: `0` for square corners, `4`, `8`… or `pill` for fully round ends. Default `12`. The CSS variable `--unicus-radius` does the same. |
 | `color` | No | `#rrggbb` | Forces the brand colour. When absent, the colour configured for the company in the portal is applied as soon as the transaction is created and remembered in the browser for the next visits. |
 | `textcolor` | No | `#rrggbb` | Forces the label colour. |
 | `disabled` | No | — | Prevents opening the flow. |
@@ -45,7 +46,7 @@ observe it (`button.getAttribute('state')`).
 | State | What the user sees | Meaning |
 | --- | --- | --- |
 | `idle` | Neutral button | Waiting for the required attributes. |
-| `loading` | Brand mark animating in the badge | The transaction is being created. A click during this state is honoured: the flow opens as soon as the transaction is ready. |
+| `loading` | Unicus mark animating inside the button | The transaction is being created. A click during this state is honoured: the flow opens as soon as the transaction is ready. |
 | `ready` | Brand colour, label | Transaction created (`OnUnicus:loaded` was emitted). |
 | `active` | Label "Validando…" / "Verifying…" | The verification is open in the iframe. |
 | `error` | Grey button, label "Reintentar" / "Retry" | The transaction could not be created (`OnUnicus:error`). A click retries. |
@@ -79,22 +80,22 @@ The flow is not rendered in a popup window, so popup blockers do not affect it.
 
 ## Appearance
 
-<figure><img src="../.gitbook/assets/web-sdk-5-button.jpg" alt="Default and large Unicus buttons" width="563"><figcaption><p>Default button and `size="lg"` with a custom `label`.</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/web-sdk-5-button.jpg" alt="Default Unicus button and a large one with square corners" width="563"><figcaption><p>Default button, and <code>size="lg"</code> with a custom <code>label</code> and <code>radius="0"</code>.</p></figcaption></figure>
 
-The button is a hexagonal white badge with the Unicus mark over a pill in your
-brand colour, the same design as Web SDK 4.x. Colours come from the company configuration in the portal
-(`windowColor`, `textColor`); you can override them per page with attributes or
-CSS custom properties on the element:
+The button is one piece in your brand colour: the Unicus mark, a thin divider
+and the label, all in the text colour. Colours come from the company
+configuration in the portal (`windowColor`, `textColor`); you can override them
+per page with attributes or CSS custom properties on the element. Use `radius`
+(or `--unicus-radius`) to give it the same corners as the other buttons of your
+site:
 
 {% code overflow="wrap" %}
 ```css
 unicus-btn {
-  --unicus-color: #1e3163;        /* pill background */
-  --unicus-text-color: #ffffff;   /* label */
-  --unicus-badge: #ffffff;        /* hexagon */
-  --unicus-mark: #1e3163;         /* Unicus mark inside the hexagon */
-  --unicus-accent: #f9ab01;       /* sweep colour of the loading animation */
-  --unicus-radius: 14px;
+  --unicus-color: #1e3163;        /* background */
+  --unicus-text-color: #ffffff;   /* label, divider and Unicus mark */
+  --unicus-accent: #f9ab01;       /* sweep colour of the loading animation on the mark */
+  --unicus-radius: 4px;           /* corners; same as radius="4" */
   --unicus-font: inherit;
 }
 ```

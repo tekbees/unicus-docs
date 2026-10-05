@@ -45,7 +45,7 @@ optional attributes). A breaking change will be published under a new path.
 ```
 {% endcode %}
 
-<figure><img src="../.gitbook/assets/web-sdk-5-button.jpg" alt="The Unicus button on a customer page: default size and large size with a custom label" width="563"><figcaption><p>The button on a page, in the company colour: default, and large with a custom label.</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/web-sdk-5-button.jpg" alt="The Unicus button on a customer page: default, and large with a custom label and square corners" width="563"><figcaption><p>The button on a page, in the company colour: default, and large with a custom label and square corners.</p></figcaption></figure>
 
 * `customerid`: your company's Customer Token (Company → Settings in the
   administrative portal).
@@ -66,7 +66,7 @@ your stylesheet:
 
 {% code overflow="wrap" %}
 ```css
-unicus-btn:not(:defined) { display: inline-block; min-width: 224px; height: 58px; }
+unicus-btn:not(:defined) { display: inline-block; min-width: 200px; height: 48px; }
 ```
 {% endcode %}
 
@@ -231,6 +231,7 @@ declare module 'react' {
         language?: 'es' | 'en';
         label?: string;
         size?: 'lg';
+        radius?: string;
       };
     }
   }
