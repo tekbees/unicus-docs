@@ -1,5 +1,9 @@
 # Support
 
+{% hint style="info" %}
+[Versión en español](es/support.md)
+{% endhint %}
+
 The most important thing for us is that you manage to implement the transactional process effectively. In case of any new developments, you can report them through the channels provided for this purpose:
 
 * E-mail addressed to: [support@tekbees.com](mailto:support@tekbees.com)&#x20;
