@@ -28,7 +28,8 @@ Customer Token en un navegador o en una app móvil.
 | `Content-Type` | Recomendado | `application/json` |
 
 El Customer Token (`X-Customer-ID`) no se acepta: es público, porque va en tu
-página. La API key identifica a tu empresa.
+página. La API key identifica a tu empresa. Cómo crearla, enviarla y rotarla:
+[API de servidor y API keys](server-api.md).
 
 ### Cuerpo
 

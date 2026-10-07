@@ -28,7 +28,8 @@ Customer Token in a browser or mobile app.
 | `Content-Type` | Recommended | `application/json` |
 
 The Customer Token (`X-Customer-ID`) is not accepted: it is public, because it
-is rendered in your page. The API key identifies your company.
+is rendered in your page. The API key identifies your company. How to create,
+send and rotate it: [Server API and API keys](server-api.md).
 
 ### Body
 
