@@ -1,10 +1,15 @@
 ---
 description: >-
   What an existing Unicus Button integration must do before the Web SDK 5.0
-  release date. No change in the page; one mandatory step in the portal.
+  release date. No change in the page; a flow in the portal and the new
+  webhook in your backend.
 ---
 
 # Migration from Web SDK 4.x
+
+{% hint style="info" %}
+[Versión en español](es/migration-from-v4.md)
+{% endhint %}
 
 {% hint style="warning" %}
 **Coming soon.** Web SDK 5.0 is not yet available in production. Tekbees will
@@ -27,7 +32,7 @@ period in which both versions run side by side.
 
 ```mermaid
 flowchart LR
-  A["Before the date<br/>assign a flow in the portal<br/>test in the sandbox"] --> B["Release date<br/>same script URL now serves 5.0"] --> C["After<br/>nothing to deploy<br/>review the optional changes"]
+  A["Before the date<br/>assign a flow in the portal<br/>update your webhook endpoint<br/>test in the sandbox"] --> B["Release date<br/>same script URL now serves 5.0"] --> C["After<br/>nothing to deploy in the page<br/>review the optional changes"]
 ```
 
 ## Before the release date (required)
@@ -48,6 +53,37 @@ configured" and does not open.
 4. Test your page in the sandbox environment with the sandbox script URL
    provided by Tekbees. See the checklist in
    [Compatibility and security](compatibility-and-security.md).
+
+## In your backend (required)
+
+{% hint style="danger" %}
+**Update your webhook endpoint.** 4.x sent one webhook per step
+(`LIVENESS_FACEMAP`, `FRONT_DOCUMENT`, `BACK_DOCUMENT`, `MATCH_DOCUMENT`,
+`VERIFY_LIVENESS`). 5.0 sends **one** webhook per transaction,
+`TRANSACTION_FINALIZED`, with the final outcome, plus
+`TRANSACTION_REVIEW_RESOLVED` when a transaction under review is decided. Code
+that waits for `MATCH_DOCUMENT` to mark a person as verified never fires again.
+{% endhint %}
+
+| 4.x | 5.0 |
+| --- | --- |
+| Several webhooks per transaction, one per step, identified by `data.process`. | One `TRANSACTION_FINALIZED` per transaction, identified by `meta.event` and deduplicated by `meta.event_id`. |
+| Success when `MATCH_DOCUMENT` (or `VERIFY_LIVENESS`) arrived with `success: true`. | Success when `data.outcome` is `APPROVED`. `REVIEW` is pending; `REJECTED`, `EXPIRED`, `CANCELLED` are final failures. |
+| An abandoned transaction sent nothing. | An abandoned transaction ends after 20 minutes of inactivity (24 hours if the link was never opened) and sends `EXPIRED` or `REJECTED`. |
+| Document data in `MATCH_DOCUMENT` (`idName`, `idNumberOCR`, `docFront`…). | The same document fields in `data.document`; images only if enabled for your company, otherwise through `query-transaction`. |
+| Unsigned. | Signed with HMAC-SHA256 once you generate a secret in the portal. |
+
+Steps:
+
+1. Accept `TRANSACTION_FINALIZED` and `TRANSACTION_REVIEW_RESOLVED` on your
+   endpoint and decide by `data.outcome` (see [Webhooks](webhooks.md)).
+2. Deduplicate by `meta.event_id`: deliveries are retried for about 22 hours.
+3. Generate a webhook secret in the portal and verify the signature.
+4. Test it in the sandbox with a completed, a failed and an abandoned
+   transaction.
+
+Transactions created before the release date are closed without sending the
+new webhook.
 
 ## In the page (optional)
 

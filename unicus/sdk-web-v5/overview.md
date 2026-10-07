@@ -6,6 +6,10 @@ description: >-
 
 # Overview
 
+{% hint style="info" %}
+[Versión en español](es/overview.md)
+{% endhint %}
+
 {% hint style="warning" %}
 **Coming soon.** Web SDK 5.0 is not yet available in production. Tekbees will
 announce the release date. On that date Web SDK 4.x stops working and every
@@ -37,7 +41,7 @@ portal. See [Migration from Web SDK 4.x](migration-from-v4.md).
 | Desktop users | Hand-off by QR code. | Hand-off by QR code, WhatsApp or SMS (channels enabled per company). The desktop page mirrors the phone's progress step by step and shows the final result. |
 | Hand-off links | Transaction id in the URL. | One-time hand-off tokens in the URL fragment. The transaction id never travels in a link, a Referer, or a server log. |
 | Button | Fixed label, loading state. | Brand colours applied automatically, custom label, two sizes, visible loading / ready / verifying / error states, one click opens the flow even while the transaction is still being created. |
-| Errors | Generic messages. | Result codes and rejection reasons in every event (see [Result codes](result-codes.md)). |
+| Errors | Generic messages. | Result codes in the `details`, `finished` and `error` events, and rejection reasons on the user's screen (see [Result codes](result-codes.md)). |
 | Texts | Fixed. | Step titles, descriptions, consent, instructions, signature agreement and form labels configured per flow in Spanish and English; button label per page (see [Texts and languages](texts-and-languages.md)). |
 | Security | Transaction id visible in links. | Short-lived sessions bound to one transaction, one-time links, origin-checked messaging between your page and Unicus, strict camera permissions. |
 
@@ -56,9 +60,9 @@ sequenceDiagram
   B-->>P: OnUnicus:loaded (tid)
   P->>B: user clicks
   B->>U: open verification (iframe)
-  U-->>P: OnUnicus:details (one per step)
+  U-->>P: OnUnicus:details (step progress)
   U-->>P: OnUnicus:finished (success, resultCode)
-  U->>S: webhook with the final result
+  U->>S: one webhook: TRANSACTION_FINALIZED
   S->>U: query-transaction (optional)
 ```
 
@@ -69,15 +73,20 @@ sequenceDiagram
 3. When the user clicks, the button opens the Unicus web app in a full-screen
    iframe. The web app fetches the session: company branding and the **flow**
    assigned to the transaction.
-4. The web app runs the flow. On a desktop computer it runs the pre-camera
-   steps locally and hands the camera steps off to the user's phone; the
-   desktop mirrors the progress.
-5. Each step reports progress to the customer page through `OnUnicus:details`.
+4. The web app runs the flow. On a phone or tablet the whole flow runs there.
+   On a desktop computer the steps before the first camera step run locally
+   and the rest is handed off to the user's phone; the desktop mirrors the
+   progress and shows the final result.
+5. Steps report progress to the customer page through `OnUnicus:details`.
    The end of the flow produces `OnUnicus:finished` (or `OnUnicus:exit` if the
-   user left before finishing).
+   user closed the verification before a final state).
 6. Your backend receives the authoritative result through your
    [webhook](webhooks.md) or by calling
-   [Get a transaction status](transaction-status.md).
+   [Get a transaction status](transaction-status.md). Unicus sends **one**
+   webhook per transaction, `TRANSACTION_FINALIZED`, when the transaction
+   reaches its final state; there are no per-step webhooks. If that final state
+   is a manual review, a second webhook, `TRANSACTION_REVIEW_RESOLVED`, arrives
+   when the review is decided.
 
 The customer application never calls `/start-process-transaction`,
 `/get-restart-session` or `/process-request` directly and never creates the
@@ -97,16 +106,18 @@ document number (`clientid` attribute).
 ## Reading order
 
 1. [Quick start](quick-start.md): script, element, events, full example.
-2. [Button reference](button-reference.md): attributes, states, appearance,
+2. [Integration checklist](integration-checklist.md): every step, front end and
+   back end, and the tests to run before going live.
+3. [Button reference](button-reference.md): attributes, states, appearance,
    lifecycle.
-3. [Events](events.md): payload of every event and how to react.
-4. [Flows and hand-off](flows-and-handoff.md): what the user sees for each step
+4. [Events](events.md): payload of every event and how to react.
+5. [Flows and hand-off](flows-and-handoff.md): what the user sees for each step
    type and how the phone hand-off works.
-5. [Texts and languages](texts-and-languages.md): what wording you control.
-6. [Result codes](result-codes.md) and
+6. [Texts and languages](texts-and-languages.md): what wording you control.
+7. [Result codes](result-codes.md) and
    [Errors and troubleshooting](errors-and-troubleshooting.md).
-7. [Webhooks](webhooks.md) and
+8. [Webhooks](webhooks.md) and
    [Get a transaction status](transaction-status.md): the authoritative result
    for your backend.
-8. [Compatibility and security](compatibility-and-security.md) before going
+9. [Compatibility and security](compatibility-and-security.md) before going
    live.
