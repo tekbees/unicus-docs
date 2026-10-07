@@ -94,6 +94,7 @@ iframe manually.
 | --- | --- | --- |
 | [Customer Token](customer-token.md) | `customerid` attribute | Public token of your company, generated in the administrative portal (Company → Settings). It is safe to render in HTML: it identifies the company, it does not authorise anything by itself. One token per environment. |
 | Script URL | `<script src>` | `https://unicusbtn.idunicus.com/v5/sdkButton.js` in production. Tekbees provides the sandbox URL. |
+| [API key](server-api.md) | Your backend, `Authorization: Bearer` | Only if your backend calls the server endpoints (`query-transaction`, `init-api-transaction`, `query-id`, `delete-transaction`). Created in the administrative portal; secret, never in the page. |
 | Flow | Administrative portal | At least one flow assigned to the transaction type you use. Without it the button shows "Verification not configured" (result code `2002`). |
 
 For enrollment and verification you also need the user's document type and

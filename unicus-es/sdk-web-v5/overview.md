@@ -96,6 +96,7 @@ manualmente.
 | --- | --- | --- |
 | [Customer Token](customer-token.md) | Atributo `customerid` | Token público de tu empresa, generado en el portal administrativo (Compañía → Configuraciones). Es seguro renderizarlo en HTML: identifica a la empresa, no autoriza nada por sí mismo. Un token por ambiente. |
 | URL del script | `<script src>` | `https://unicusbtn.idunicus.com/v5/sdkButton.js` en producción. Tekbees proporciona la URL del ambiente de pruebas (sandbox). |
+| [API key](server-api.md) | Tu backend, `Authorization: Bearer` | Solo si tu backend llama los endpoints de servidor (`query-transaction`, `init-api-transaction`, `query-id`, `delete-transaction`). Se crea en el portal administrativo; es secreta, nunca va en la página. |
 | Flujo | Portal administrativo | Al menos un flujo asignado al tipo de transacción que uses. Sin él, el botón muestra "Verification not configured" (verificación no configurada) (código de resultado `2002`). |
 
 Para enrolamiento y verificación también necesitas el tipo y el número de

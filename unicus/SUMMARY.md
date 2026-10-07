@@ -16,6 +16,7 @@
 * [Customer Token](sdk-web-v5/customer-token.md)
 * [Webhooks](sdk-web-v5/webhooks.md)
 * [Get a transaction status](sdk-web-v5/transaction-status.md)
+* [Server API and API keys](sdk-web-v5/server-api.md)
 * [Compatibility and security](sdk-web-v5/compatibility-and-security.md)
 * [Migration from Web SDK 4.x](sdk-web-v5/migration-from-v4.md)
 * [Versioning](sdk-web-v5/versioning.md)

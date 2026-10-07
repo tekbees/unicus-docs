@@ -26,9 +26,11 @@ flowchart LR
       WhatsApp, SMS).
 - [ ] Register your **webhook URL** and **generate the signing secret**. Store
       the secret in your backend's secret manager. See [Webhooks](webhooks.md).
-- [ ] If your backend will call `query-transaction`, generate a company **API
-      key** for it (server side only). See
-      [Get a transaction status](transaction-status.md).
+- [ ] If your backend will call the server endpoints (`query-transaction`,
+      `init-api-transaction`, `query-id`, `delete-transaction`), generate a
+      company **API key**: they all require it, and the Customer Token does not
+      open them. Server side only. See
+      [Server API and API keys](server-api.md).
 
 ## 2. In your page
 

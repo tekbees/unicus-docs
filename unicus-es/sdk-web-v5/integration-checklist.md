@@ -29,9 +29,11 @@ flowchart LR
 - [ ] Registra tu **URL de webhook** y **genera el secreto de firma**. Guarda el
       secreto en el gestor de secretos de tu backend. Consulta
       [Webhooks](webhooks.md).
-- [ ] Si tu backend va a llamar a `query-transaction`, genera una **API key** de
-      la empresa para ello (solo del lado del servidor). Consulta
-      [Consultar el estado de una transacción](transaction-status.md).
+- [ ] Si tu backend va a llamar los endpoints de servidor (`query-transaction`,
+      `init-api-transaction`, `query-id`, `delete-transaction`), genera una
+      **API key** de la empresa: todos la exigen y el Customer Token no los
+      abre. Solo del lado del servidor. Consulta
+      [API de servidor y API keys](server-api.md).
 
 ## 2. En tu página
 
