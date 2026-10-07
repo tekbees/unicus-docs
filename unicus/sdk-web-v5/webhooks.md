@@ -6,10 +6,6 @@ description: >-
 
 # Webhooks
 
-{% hint style="info" %}
-[Versión en español](es/webhooks.md)
-{% endhint %}
-
 The webhook is the **authoritative result** of a verification. The browser
 events of the button tell your page what happened, but anything the user's
 browser reports can be tampered with: decide on your backend, with the webhook

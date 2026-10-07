@@ -4,9 +4,16 @@ site:
   structure:
     - type: space
       key: space-1
-      title: Unicus Docs
+      title: English
       path: unicus
       default: true
       content:
         directory: ./unicus
         language: en
+    - type: space
+      key: space-es
+      title: Español
+      path: es
+      content:
+        directory: ./unicus-es
+        language: es

@@ -1,9 +1,5 @@
 # Customer Token
 
-{% hint style="info" %}
-[Versión en español](es/customer-token.md)
-{% endhint %}
-
 When you log in to the [administration panel](https://app.idunicus.com) you will find a tab called **Company**, select it followed by the option **Settings** and you will be able to view your token and click to copy it or generate a new one if necessary.
 
 In Unicus Button integrations, this value is passed in the `customerid`

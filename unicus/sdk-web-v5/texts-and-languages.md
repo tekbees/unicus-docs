@@ -6,10 +6,6 @@ description: >-
 
 # Texts and languages
 
-{% hint style="info" %}
-[Versión en español](es/texts-and-languages.md)
-{% endhint %}
-
 Nothing in the customer page controls the wording of the verification screens.
 Texts live with the flow in the administrative portal, so the same page can
 serve different products, companies or campaigns with their own copy.

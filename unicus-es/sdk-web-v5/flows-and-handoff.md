@@ -6,10 +6,6 @@ description: >-
 
 # Flujos y traspaso al celular
 
-{% hint style="info" %}
-[English version](../flows-and-handoff.md)
-{% endhint %}
-
 ## Flujos modulares
 
 ```mermaid
@@ -41,7 +37,7 @@ página.
 | `form` | Diligencia un formulario de datos definido en el portal (campos, tipos, reglas de validación). | Cualquier dispositivo |
 | `age_check` | Sin pantalla: Unicus compara la edad estimada a partir de la selfie de prueba de vida con un umbral (8, 13, 16, 18, 21, 25 o 30). Se ubica justo después de la sesión de cámara que captura la prueba de vida. | Servidor |
 
-<div><figure><img src="../../.gitbook/assets/web-sdk-5-consent.jpg" alt="Pantalla de consentimiento en un celular" width="280"><figcaption><p>Consentimiento: qué se capturará y por qué.</p></figcaption></figure> <figure><img src="../../.gitbook/assets/web-sdk-5-before-start.jpg" alt="Pantalla de preparación antes de que se abra la cámara" width="280"><figcaption><p>Preparación antes de que se abra la cámara.</p></figcaption></figure></div>
+<div><figure><img src="../.gitbook/assets/web-sdk-5-consent.jpg" alt="Pantalla de consentimiento en un celular" width="280"><figcaption><p>Consentimiento: qué se capturará y por qué.</p></figcaption></figure> <figure><img src="../.gitbook/assets/web-sdk-5-before-start.jpg" alt="Pantalla de preparación antes de que se abra la cámara" width="280"><figcaption><p>Preparación antes de que se abra la cámara.</p></figcaption></figure></div>
 
 Las pantallas usan el logo y los colores de tu empresa; los ejemplos muestran
 una empresa de muestra.
@@ -115,7 +111,7 @@ Cuando el código QR es el único canal de tu empresa, el computador pasa
 directamente al código QR. Cada mensaje de WhatsApp o SMS lleva un enlace nuevo;
 el código QR conserva su enlace mientras sea válido.
 
-<figure><img src="../../.gitbook/assets/web-sdk-5-handoff-options.jpg" alt="Opciones de traspaso en un computador: código QR, WhatsApp y SMS" width="563"><figcaption><p>Los canales habilitados para la empresa, ofrecidos en el computador.</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/web-sdk-5-handoff-options.jpg" alt="Opciones de traspaso en un computador: código QR, WhatsApp y SMS" width="563"><figcaption><p>Los canales habilitados para la empresa, ofrecidos en el computador.</p></figcaption></figure>
 
 La pantalla del computador se convierte entonces en un **espejo**: muestra en
 tiempo real cada paso que completa el celular (frente del documento, comparación

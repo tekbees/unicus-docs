@@ -6,10 +6,6 @@ description: >-
 
 # Consultar el estado de una transacción
 
-{% hint style="info" %}
-[English version](../transaction-status.md)
-{% endhint %}
-
 Usa `query-transaction` desde tu **backend** para leer el estado y el resultado
 de una transacción por su id (`tid`). El webhook final es el canal principal
 para los resultados; usa este endpoint como respaldo y para conciliar (consulta

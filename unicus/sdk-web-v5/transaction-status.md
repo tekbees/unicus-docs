@@ -6,10 +6,6 @@ description: >-
 
 # Get a transaction status
 
-{% hint style="info" %}
-[Versión en español](es/transaction-status.md)
-{% endhint %}
-
 Use `query-transaction` from your **backend** to read the status and result of
 a transaction by its id (`tid`). The final webhook is the primary channel for
 results; use this endpoint as a fallback and to reconcile (see

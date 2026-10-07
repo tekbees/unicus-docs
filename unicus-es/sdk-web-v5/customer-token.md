@@ -1,9 +1,5 @@
 # Customer Token
 
-{% hint style="info" %}
-[English version](../customer-token.md)
-{% endhint %}
-
 Al iniciar sesión en el [panel de administración](https://app.idunicus.com) encontrarás una pestaña llamada **Compañía**; selecciónala, luego elige la opción **Configuraciones** y podrás ver tu token, hacer clic para copiarlo o generar uno nuevo si es necesario.
 
 En las integraciones del botón Unicus, este valor se envía en el atributo
@@ -28,4 +24,4 @@ El token es un identificador público de tu empresa y es seguro incluirlo en tu
 HTML. El botón lo envía con cada transacción que crea y lo usa para
 recordar los colores de tu empresa en el navegador.
 
-<figure><img src="../../.gitbook/assets/image (20).png" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (20).png" alt="" width="563"><figcaption></figcaption></figure>

@@ -7,10 +7,6 @@ description: >-
 
 # Migración desde Web SDK 4.x
 
-{% hint style="info" %}
-[English version](../migration-from-v4.md)
-{% endhint %}
-
 {% hint style="warning" %}
 **Próximamente.** Web SDK 5.0 aún no está disponible en producción. Tekbees
 anunciará la fecha de lanzamiento. En esa fecha Web SDK 4.x deja de funcionar y

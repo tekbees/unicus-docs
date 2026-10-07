@@ -20,23 +20,6 @@
 * [Migration from Web SDK 4.x](sdk-web-v5/migration-from-v4.md)
 * [Versioning](sdk-web-v5/versioning.md)
 * [Support](sdk-web-v5/support.md)
-* [Español](sdk-web-v5/es/README.md)
-  * [Descripción general](sdk-web-v5/es/overview.md)
-  * [Inicio rápido](sdk-web-v5/es/quick-start.md)
-  * [Lista de integración](sdk-web-v5/es/integration-checklist.md)
-  * [Referencia del botón](sdk-web-v5/es/button-reference.md)
-  * [Eventos](sdk-web-v5/es/events.md)
-  * [Flujos y traspaso al celular](sdk-web-v5/es/flows-and-handoff.md)
-  * [Textos e idiomas](sdk-web-v5/es/texts-and-languages.md)
-  * [Códigos de resultado](sdk-web-v5/es/result-codes.md)
-  * [Errores y solución de problemas](sdk-web-v5/es/errors-and-troubleshooting.md)
-  * [Customer Token](sdk-web-v5/es/customer-token.md)
-  * [Webhooks](sdk-web-v5/es/webhooks.md)
-  * [Consultar el estado de una transacción](sdk-web-v5/es/transaction-status.md)
-  * [Compatibilidad y seguridad](sdk-web-v5/es/compatibility-and-security.md)
-  * [Migración desde Web SDK 4.x](sdk-web-v5/es/migration-from-v4.md)
-  * [Versionado](sdk-web-v5/es/versioning.md)
-  * [Soporte](sdk-web-v5/es/support.md)
 
 ## WEB SDK INTEGRATION PROCESS <a href="#sdk-web" id="sdk-web"></a>
 

@@ -6,10 +6,6 @@ description: >-
 
 # Flows and hand-off
 
-{% hint style="info" %}
-[Versión en español](es/flows-and-handoff.md)
-{% endhint %}
-
 ## Modular flows
 
 ```mermaid

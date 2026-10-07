@@ -6,10 +6,6 @@ description: >-
 
 # Inicio rápido
 
-{% hint style="info" %}
-[English version](../quick-start.md)
-{% endhint %}
-
 {% hint style="warning" %}
 **Próximamente.** Web SDK 5.0 aún no está disponible en producción. Tekbees
 anunciará la fecha de lanzamiento. En esa fecha Web SDK 4.x deja de funcionar y
@@ -51,7 +47,7 @@ publicará bajo una ruta nueva.
 ```
 {% endcode %}
 
-<figure><img src="../../.gitbook/assets/web-sdk-5-button.jpg" alt="El botón de Unicus en una página del cliente: por defecto, y grande con un texto del botón personalizado y esquinas cuadradas" width="563"><figcaption><p>El botón en una página, con el color de la empresa: por defecto, y grande con un texto del botón personalizado y esquinas cuadradas.</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/web-sdk-5-button.jpg" alt="El botón de Unicus en una página del cliente: por defecto, y grande con un texto del botón personalizado y esquinas cuadradas" width="563"><figcaption><p>El botón en una página, con el color de la empresa: por defecto, y grande con un texto del botón personalizado y esquinas cuadradas.</p></figcaption></figure>
 
 * `customerid`: el Customer Token de tu empresa (Compañía → Configuraciones en el
   portal administrativo).

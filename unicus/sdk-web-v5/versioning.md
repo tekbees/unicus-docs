@@ -4,10 +4,6 @@ description: Versioning policy and release notes of Unicus Web SDK 5.0.
 
 # Versioning
 
-{% hint style="info" %}
-[Versión en español](es/versioning.md)
-{% endhint %}
-
 {% hint style="warning" %}
 **Coming soon.** Web SDK 5.0 is not yet available in production. Tekbees will
 announce the release date. On that date Web SDK 4.x stops working and every

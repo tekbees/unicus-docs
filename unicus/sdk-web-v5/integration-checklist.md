@@ -6,10 +6,6 @@ description: >-
 
 # Integration checklist
 
-{% hint style="info" %}
-[Versión en español](es/integration-checklist.md)
-{% endhint %}
-
 A typical integration takes a day: a few lines in your page and one endpoint in
 your backend. Follow the steps in order.
 

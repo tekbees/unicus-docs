@@ -6,10 +6,6 @@ description: >-
 
 # Overview
 
-{% hint style="info" %}
-[Versión en español](es/overview.md)
-{% endhint %}
-
 {% hint style="warning" %}
 **Coming soon.** Web SDK 5.0 is not yet available in production. Tekbees will
 announce the release date. On that date Web SDK 4.x stops working and every
