@@ -123,7 +123,7 @@ del cliente sigue recibiendo los eventos `OnUnicus:*` desde el computador, así
 que tu integración no cambia: la pantalla de resultado aparece en el computador
 cuando el celular termina y Unicus confirma el resultado, y `finished` se emite
 cuando el usuario la cierra. Además de las actualizaciones en vivo, el
-computador consulta la transacción en Unicus cada pocos segundos, de modo que el
+computador consulta la transacción en Unicus periódicamente, de modo que el
 resultado llega aunque se pierda una actualización en vivo.
 
 {% hint style="info" %}

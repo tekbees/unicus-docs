@@ -47,7 +47,7 @@ un botón **Reintentar**; en el iframe también muestran **Cerrar**.
 | La verificación se cierra sola, sin `finished` ni `exit` | Tu página eliminó o volvió a crear el elemento `<unicus-btn>` (cambio de ruta, renderizado condicional, lista con nueva key). Mantenlo montado mientras la verificación esté abierta. |
 | `OnUnicus:loaded` se dispara varias veces | Es lo esperado después de un cambio de `customerid`, `clientid`, `transactiontype` o `data-flow-id`, y en el primer clic después de `finished` / `exit`. Conserva siempre el `tid` más reciente. |
 | `finished` llega con `success: false` y `resultCode: 2013` | No es un error: la transacción está en revisión manual. |
-| El espejo en el computador deja de actualizarse | El computador también consulta la transacción a Unicus cada pocos segundos y muestra el resultado cuando Unicus lo tiene. En cualquier caso, el resultado queda en Unicus y llega a tu webhook. |
+| El espejo en el computador deja de actualizarse | El computador también consulta la transacción a Unicus periódicamente, y de inmediato cuando recupera la conexión, y muestra el resultado cuando Unicus lo tiene. En cualquier caso, el resultado queda en Unicus y llega a tu webhook. |
 | El logo o los colores de la empresa no aparecen | La marca se configura en el portal en el mismo ambiente que el Customer Token. Los colores deben estar en hexadecimal (`#rrggbb`). |
 
 ## Log de diagnóstico

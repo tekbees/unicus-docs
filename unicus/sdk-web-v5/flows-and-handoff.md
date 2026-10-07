@@ -115,7 +115,7 @@ time and finally the result. The customer page keeps receiving `OnUnicus:*`
 events from the computer, so your integration does not change: the result
 screen appears on the computer when the phone finishes and Unicus confirms the
 result, and `finished` is emitted when the user closes it. Besides the live
-updates, the computer checks the transaction with Unicus every few seconds, so
+updates, the computer checks the transaction with Unicus regularly, so
 the result still arrives if a live update is lost.
 
 {% hint style="info" %}
