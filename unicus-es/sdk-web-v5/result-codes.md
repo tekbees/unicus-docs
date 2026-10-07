@@ -7,10 +7,6 @@ description: >-
 
 # Códigos de resultado
 
-{% hint style="info" %}
-[English version](../result-codes.md)
-{% endhint %}
-
 El mismo número significa lo mismo en todos los lugares donde aparece:
 
 | Dónde | Campo |

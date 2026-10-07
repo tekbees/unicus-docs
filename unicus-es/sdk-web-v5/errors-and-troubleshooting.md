@@ -6,10 +6,6 @@ description: >-
 
 # Errores y solución de problemas
 
-{% hint style="info" %}
-[English version](../errors-and-troubleshooting.md)
-{% endhint %}
-
 ## Pantallas que ve el usuario
 
 La aplicación web de Unicus muestra una pantalla de error con título, en el idioma del usuario, con un

@@ -6,10 +6,6 @@ description: >-
 
 # Events
 
-{% hint style="info" %}
-[Versión en español](es/events.md)
-{% endhint %}
-
 The `<unicus-btn>` element dispatches `CustomEvent`s. The data is in
 `event.detail`. Events bubble and cross shadow roots, so a listener on the
 element, on an ancestor or on `document` all work.

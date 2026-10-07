@@ -6,10 +6,6 @@ description: >-
 
 # Webhooks
 
-{% hint style="info" %}
-[English version](../webhooks.md)
-{% endhint %}
-
 El webhook es el **resultado autoritativo** de una verificación. Los eventos del
 navegador del botón le indican a tu página qué ocurrió, pero cualquier cosa que reporte el navegador del
 usuario puede ser manipulada: decide en tu backend, con el webhook
@@ -35,7 +31,7 @@ En el [portal administrativo](https://app.idunicus.com/), ve a
 **Compañía → Configuraciones → Webhook** e ingresa la URL de tu endpoint, por ejemplo
 `https://api.example.com/unicus/webhook`.
 
-<figure><img src="../../.gitbook/assets/image (25).png" alt="Configuración del webhook en el portal administrativo" width="563"><figcaption><p>Configuración del webhook en el portal administrativo.</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (25).png" alt="Configuración del webhook en el portal administrativo" width="563"><figcaption><p>Configuración del webhook en el portal administrativo.</p></figcaption></figure>
 
 Requisitos:
 

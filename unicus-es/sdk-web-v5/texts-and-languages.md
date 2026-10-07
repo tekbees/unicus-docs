@@ -6,10 +6,6 @@ description: >-
 
 # Textos e idiomas
 
-{% hint style="info" %}
-[English version](../texts-and-languages.md)
-{% endhint %}
-
 Nada en la página del cliente controla la redacción de las pantallas de
 verificación. Los textos viven con el flujo en el portal administrativo, de modo
 que la misma página puede servir a distintos productos, empresas o campañas con

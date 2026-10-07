@@ -1,9 +1,5 @@
 # Soporte
 
-{% hint style="info" %}
-[English version](../support.md)
-{% endhint %}
-
 Lo más importante para nosotros es que logres implementar el proceso transaccional de forma efectiva. Ante cualquier novedad, puedes reportarla a través de los canales dispuestos para ello:
 
 * Correo electrónico dirigido a: [support@tekbees.com](mailto:support@tekbees.com)&#x20;

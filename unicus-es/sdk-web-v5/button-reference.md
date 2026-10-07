@@ -6,10 +6,6 @@ description: >-
 
 # Referencia del botón
 
-{% hint style="info" %}
-[English version](../button-reference.md)
-{% endhint %}
-
 ## Atributos
 
 | Atributo | Obligatorio | Valores | Descripción |
@@ -92,7 +88,7 @@ estilos u observarlo (`button.getAttribute('state')`).
 El flujo no se muestra en una ventana emergente, así que los bloqueadores de
 ventanas emergentes no lo afectan.
 
-<figure><img src="../../.gitbook/assets/web-sdk-5-flow-open.jpg" alt="La verificación abierta sobre la página del cliente en un computador" width="563"><figcaption><p>La verificación abierta sobre la página en un computador. En un celular ocupa toda la pantalla.</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/web-sdk-5-flow-open.jpg" alt="La verificación abierta sobre la página del cliente en un computador" width="563"><figcaption><p>La verificación abierta sobre la página en un computador. En un celular ocupa toda la pantalla.</p></figcaption></figure>
 
 ## Propiedades y métodos
 
@@ -104,7 +100,7 @@ ventanas emergentes no lo afectan.
 
 ## Apariencia
 
-<figure><img src="../../.gitbook/assets/web-sdk-5-button.jpg" alt="Botón de Unicus por defecto y uno grande con esquinas cuadradas" width="563"><figcaption><p>Botón por defecto, y <code>size="lg"</code> con un <code>label</code> personalizado y <code>radius="0"</code>.</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/web-sdk-5-button.jpg" alt="Botón de Unicus por defecto y uno grande con esquinas cuadradas" width="563"><figcaption><p>Botón por defecto, y <code>size="lg"</code> con un <code>label</code> personalizado y <code>radius="0"</code>.</p></figcaption></figure>
 
 El botón es una sola pieza en el color de tu marca: la marca de Unicus, un
 divisor delgado y el texto del botón, todo en el color del texto. Los colores

@@ -6,10 +6,6 @@ description: >-
 
 # Compatibility and security
 
-{% hint style="info" %}
-[Versión en español](es/compatibility-and-security.md)
-{% endhint %}
-
 ## Requirements
 
 | Requirement | Why |

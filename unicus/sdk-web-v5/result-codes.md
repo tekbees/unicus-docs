@@ -7,10 +7,6 @@ description: >-
 
 # Result codes
 
-{% hint style="info" %}
-[Versión en español](es/result-codes.md)
-{% endhint %}
-
 The same number means the same thing everywhere it appears:
 
 | Where | Field |

@@ -6,10 +6,6 @@ description: >-
 
 # Errors and troubleshooting
 
-{% hint style="info" %}
-[Versión en español](es/errors-and-troubleshooting.md)
-{% endhint %}
-
 ## Screens shown to the user
 
 The Unicus web app shows a titled error screen, in the user's language, with a

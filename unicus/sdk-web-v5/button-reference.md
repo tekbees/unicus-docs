@@ -6,10 +6,6 @@ description: >-
 
 # Button reference
 
-{% hint style="info" %}
-[Versión en español](es/button-reference.md)
-{% endhint %}
-
 ## Attributes
 
 | Attribute | Required | Values | Description |
