@@ -24,12 +24,11 @@ Customer Token in a browser or mobile app.
 
 | Name | Required | Description |
 | --- | --- | --- |
-| `Authorization` | Yes, if your company requires an API key | `Bearer <API_KEY>`: the company API key generated in the administrative portal. Recommended for every integration. |
-| `X-Customer-ID` | Only without `Authorization` | Customer Token of the same environment where the transaction was created (legacy credential). Rejected with `401` once your company requires an API key. |
+| `Authorization` | Yes | `Bearer <API_KEY>`: the company API key generated in the administrative portal. |
 | `Content-Type` | Recommended | `application/json` |
 
-With a valid API key the Customer Token header is ignored: the key identifies
-your company.
+The Customer Token (`X-Customer-ID`) is not accepted: it is public, because it
+is rendered in your page. The API key identifies your company.
 
 ### Body
 
@@ -257,7 +256,7 @@ the field without the `Url` suffix (`frontDocument`, `backDocument`,
 | Status | When | Body |
 | --- | --- | --- |
 | `400` | The body is not valid JSON or not an object. | `application/problem+json` with `title` `Structure error in request [invalid-json]`. |
-| `401` | Invalid, revoked or expired API key, or your company requires an API key and the request used `X-Customer-ID`. | `{"status":401,"title":"Unauthorized","detail":"..."}` and `WWW-Authenticate: Bearer`. |
+| `401` | Missing, invalid, revoked or expired API key (for example, the request sent only `X-Customer-ID`). | `{"status":401,"title":"Unauthorized","detail":"..."}` and `WWW-Authenticate: Bearer`. |
 | `429` | Rate limit exceeded for your credential (600 requests per minute by default). | `{"status":429,"title":"Too many requests"}` and `Retry-After` in seconds. |
 | `500` | Unexpected error. | `application/problem+json`. Retry later. |
 
