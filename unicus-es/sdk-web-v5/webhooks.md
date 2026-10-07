@@ -208,7 +208,8 @@ static bool IsValid(string secret, string timestamp, string signature, byte[] ra
     "created_at": "2026-10-05T14:51:10Z",
     "started_at": "2026-10-05T14:52:02Z",
     "finalized_at": "2026-10-05T15:04:05Z",
-    "attempts": { "face": 0, "document_front": 1, "document_back": 0, "document": 0 },
+    "attempts": { "face": 0, "document_front": 1, "document_back": 0, "document": 0,
+                  "face_captures": 1, "document_front_captures": 2, "document_back_captures": 1 },
     "idNumber": "<NÚMERO DE DOCUMENTO>",
     "location": "{\"latitude\":4.7398,\"longitude\":-74.1137}",
     "document": {
@@ -254,7 +255,7 @@ static bool IsValid(string secret, string timestamp, string signature, byte[] ra
 | `created_at` | string | Cuándo se creó la transacción. |
 | `started_at` | string | Cuándo el usuario la abrió por primera vez. Ausente si nunca se abrió. |
 | `finalized_at` | string | Cuándo terminó. |
-| `attempts` | object | Intentos fallidos por captura: `face`, `document_front`, `document_back`, `document` (rostro contra documento). Los errores técnicos del lado de Unicus no se cuentan. |
+| `attempts` | object | Intentos fallidos por captura: `face`, `document_front`, `document_back`, `document` (rostro contra documento). Los errores técnicos del lado de Unicus no se cuentan. Además, todas las capturas hechas, incluida la exitosa: `face_captures` (capturas del rostro, por ejemplo las selfies de una verificación), `document_front_captures`, `document_back_captures`. |
 | `last_failure` | object | `{ code, message, step }` del último intento fallido. Ausente cuando se aprueba o cuando nada falló. |
 | `idNumber` | string | Número de documento con el que se creó la transacción (`clientid`). |
 | `location` | string | Texto JSON `{"latitude":…,"longitude":…}` cuando el usuario compartió su ubicación. Ausente en otro caso. |

@@ -28,7 +28,7 @@ portal applies to the next transaction without touching your page.
 | `consent` | Reads what will be captured and why, and accepts. Always first; added automatically if the flow does not include it. | Any device |
 | `info` | Reads instructions (good light, document at hand). | Any device |
 | `liveness` | Video selfie. Proves a live person is present and captures the face. | Phone or tablet camera |
-| `document` | Photographs the front and back of the document and confirms the data read by OCR. Server-side validations configured per flow: document classifier, id number match, official registry lookup. | Phone or tablet camera |
+| `document` | Photographs the front and back of the document and confirms the data read by OCR. Server-side validations configured per flow: document classifier, id number match, official registry lookup, and document material (rejects a capture of a photocopy, a screen or a printout; the user captures it again). | Phone or tablet camera |
 | `face_match` | The face from the selfie is compared against the document photo, or against the face enrolled earlier. | Server, inside the camera session |
 | `signature` | Draws an electronic signature on screen after reading the document shown. | Any device |
 | `otp` | Receives a one-time code by SMS, WhatsApp or email and types it. | Any device |
@@ -58,6 +58,7 @@ camera step on, the rest of the flow (including later non-camera steps such as
   button on the reloaded page creates a new transaction.
 * A transaction ends with `success` only when every required step passed. A
   step configured as optional can fail without failing the transaction.
+  Liveness, document and face match are always required.
 * `OnUnicus:details` reports steps by their `stepId`, so your page can show
   progress for the steps that exist in your flow instead of a fixed list.
   `consent` and `info` steps are not reported, and steps completed on the
