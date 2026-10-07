@@ -102,7 +102,10 @@ offers the hand-off channels enabled for your company:
 
 When the QR code is the only channel of your company, the computer goes
 straight to the QR code. Each WhatsApp or SMS message carries a new link; the
-QR code keeps its link while it is valid.
+QR code keeps its link while it is valid. If a message does not arrive, the
+user can send it again after a few seconds; Unicus limits how many messages
+one transaction and one phone number can receive, and says so on the screen
+when the limit is reached (the user can still use the QR code).
 
 <figure><img src="../.gitbook/assets/web-sdk-5-handoff-options.jpg" alt="Hand-off options on a computer: QR code, WhatsApp and SMS" width="563"><figcaption><p>The channels enabled for the company, offered on the computer.</p></figcaption></figure>
 

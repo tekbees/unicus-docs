@@ -119,3 +119,6 @@ documento del usuario (atributo `clientid`).
    autoritativo para tu backend.
 9. [Compatibilidad y seguridad](compatibility-and-security.md) antes de la salida
    a producción.
+
+Para enviarle al usuario un enlace en lugar de integrar el botón, consulta
+[Unicus Link](unicus-link.md).

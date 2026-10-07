@@ -1,5 +1,12 @@
 # Compatibility
 
+{% hint style="warning" %}
+**Web SDK 4.x (legacy).** This section documents the previous web SDK. When
+Web SDK 5.0 is released, 4.x stops working and every integration runs 5.0. For
+new integrations use [Web SDK 5.0](../sdk-web-v5/overview.md); for existing
+ones, read [Migration from Web SDK 4.x](../sdk-web-v5/migration-from-v4.md).
+{% endhint %}
+
 Use this page before going live to confirm that the customer site can load the
 Unicus Button and run the verification flow correctly.
 

@@ -117,3 +117,6 @@ document number (`clientid` attribute).
    for your backend.
 9. [Compatibility and security](compatibility-and-security.md) before going
    live.
+
+To send the user a link instead of embedding the button, see
+[Unicus Link](unicus-link.md).

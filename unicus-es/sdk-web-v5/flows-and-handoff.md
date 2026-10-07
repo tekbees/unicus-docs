@@ -109,7 +109,10 @@ paso de cámara, la aplicación web ofrece los canales de traspaso al celular
 
 Cuando el código QR es el único canal de tu empresa, el computador pasa
 directamente al código QR. Cada mensaje de WhatsApp o SMS lleva un enlace nuevo;
-el código QR conserva su enlace mientras sea válido.
+el código QR conserva su enlace mientras sea válido. Si un mensaje no llega, el
+usuario puede enviarlo de nuevo después de unos segundos; Unicus limita cuántos
+mensajes pueden recibir una transacción y un número de celular, y lo indica en
+la pantalla cuando se alcanza el límite (el usuario aún puede usar el código QR).
 
 <figure><img src="../.gitbook/assets/web-sdk-5-handoff-options.jpg" alt="Opciones de traspaso en un computador: código QR, WhatsApp y SMS" width="563"><figcaption><p>Los canales habilitados para la empresa, ofrecidos en el computador.</p></figcaption></figure>
 
