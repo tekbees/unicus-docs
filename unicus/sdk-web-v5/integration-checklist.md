@@ -29,6 +29,9 @@ flowchart LR
 - [ ] If your backend will call `query-transaction`, generate a company **API
       key** for it (server side only). See
       [Get a transaction status](transaction-status.md).
+- [ ] To test in production without mixing it with real data, ask Tekbees for
+      **test credentials** (a `sbx_` device id and a `unk_test_` key). See
+      [Test mode](customer-token.md#test-mode-sandbox).
 
 ## 2. In your page
 
