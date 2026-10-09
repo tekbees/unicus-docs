@@ -31,6 +31,9 @@ flowchart LR
       company **API key**: they all require it, and the Customer Token does not
       open them. Server side only. See
       [Server API and API keys](server-api.md).
+- [ ] To test in production without mixing it with real data, ask Tekbees for
+      **test credentials** (a `sbx_` device id and a `unk_test_` key). See
+      [Test mode](customer-token.md#test-mode-sandbox).
 
 ## 2. In your page
 
