@@ -126,6 +126,12 @@ cuando el usuario la cierra. Además de las actualizaciones en vivo, el
 computador consulta la transacción en Unicus periódicamente, de modo que el
 resultado llega aunque se pierda una actualización en vivo.
 
+Si la página se cierra por error en el celular, no se pierde nada: el
+computador ofrece **Enviar el enlace de nuevo**, y el enlace nuevo retoma en el
+primer paso pendiente. Si la transacción expira mientras el computador espera,
+el computador muestra "La sesión expiró o ya fue utilizada" y emite
+`OnUnicus:error`; el siguiente clic en el botón inicia una validación nueva.
+
 {% hint style="info" %}
 Si el celular termina pero la pestaña del computador se cerró (o el usuario
 cerró la verificación en el computador, lo que emite `exit`), el resultado

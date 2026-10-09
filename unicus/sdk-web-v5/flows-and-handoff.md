@@ -118,6 +118,12 @@ result, and `finished` is emitted when the user closes it. Besides the live
 updates, the computer checks the transaction with Unicus regularly, so
 the result still arrives if a live update is lost.
 
+If the page is closed on the phone by mistake, nothing is lost: the computer
+offers **Send the link again**, and the new link resumes at the first pending
+step. If the transaction expires while the computer is waiting, the computer
+shows "the session expired" and emits `OnUnicus:error`; the next click on the
+button starts a new verification.
+
 {% hint style="info" %}
 If the phone finishes but the computer tab was closed (or the user closed the
 verification on the computer, which emits `exit`), the result is still

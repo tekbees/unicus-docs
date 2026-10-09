@@ -38,7 +38,7 @@ flowchart LR
 **Asigna un flujo a cada tipo de transacción que uses.** En 4.x el proceso era
 fijo; en 5.0 es un flujo compuesto en el portal administrativo. Una empresa sin
 flujo en la fecha de lanzamiento obtiene un botón que muestra "Verification not
-configured" (verificación no configurada) y no se abre.
+configured" (validación no configurada) y no se abre.
 {% endhint %}
 
 1. Crea el o los flujos que reproducen lo que hacen hoy tus usuarios (por

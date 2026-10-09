@@ -84,10 +84,13 @@ Permissions-Policy: camera=(self "https://id.idunicus.com"), geolocation=(self "
 * **Biometric data** never reaches the customer page. Events carry result
   codes and metadata only. Images and templates are processed by Unicus under
   the data processing agreement of your company.
-* **Abandonment.** A verification closed during a step, or a camera session
-  cancelled by the user, on the phone or tablet running the flow is recorded
-  as cancelled by the user (`2041`). Only that device can cancel; a computer
-  that is merely mirroring the phone cannot.
+* **Abandonment.** Closing or reloading the verification never cancels the
+  transaction: progress is kept in Unicus, so the user can resume (a reload
+  continues at the first pending step; on a computer, the user can send a new
+  link to the phone). Only a camera session cancelled by the user on the
+  device running it ends the transaction as cancelled (`2041`); a computer
+  that is merely mirroring the phone cannot cancel. A transaction nobody
+  resumes expires.
 * **Local storage.** The button keeps the company colours in `localStorage`
   (key `unicus-btn:brand:<Customer Token>`) to paint the brand colour on the
   first frame of later visits. No personal data is stored.

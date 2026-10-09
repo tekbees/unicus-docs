@@ -62,7 +62,7 @@ funcionar (`2051`) y Unicus envía el webhook final.
 | `9011` | Paso `age_check`: no fue posible estimar la edad a partir del rostro. | `REJECTED` |
 | `10020` | La persona no fue verificada debido a una restricción de edad. | `REJECTED` |
 | `1001`, `7001`, `7002`, `8001`–`8006`, `6009` | Una de las validaciones de documento del flujo falló al completarse la captura del documento (ver abajo). | `REJECTED` |
-| `2041` | El usuario canceló la verificación (botón de cerrar, salir de la página durante la sesión de cámara). | `CANCELLED` |
+| `2041` | El usuario canceló la sesión de cámara. Cerrar o salir de la página no cancela. | `CANCELLED` |
 | `2053` | La transacción fue eliminada. | `DELETED` |
 | `6003` | La transacción expiró por inactividad o nunca se inició. También se usa para un tiempo de espera agotado de un servicio durante un paso, que admite reintento. | `EXPIRED` |
 

@@ -22,7 +22,7 @@ flowchart LR
 - [ ] Copia el [Customer Token](customer-token.md) (Compañía → Configuraciones).
 - [ ] Crea un **flujo** y asígnalo al tipo de transacción que usarás
       (`enrollment-verify` o `liveness`). Sin él, el botón muestra
-      "Verification not configured" (verificación no configurada) (`2002`).
+      "Verification not configured" (validación no configurada) (`2002`).
       Consulta [Flujos y traspaso al celular](flows-and-handoff.md).
 - [ ] Revisa la marca (logo y colores) y los canales de traspaso al celular
       (hand-off) (QR, WhatsApp, SMS).
@@ -100,8 +100,8 @@ sequenceDiagram
 | 5 | Abre la verificación y abandónala sin que falle nada. | Después de 20 minutos, webhook `EXPIRED` (`6003`). |
 | 6 | Cancela la cámara dentro de la verificación. | `OnUnicus:finished` con `success: false` y `resultCode` `2041`; webhook `CANCELLED`. |
 | 7 | Niega el permiso de cámara. | Una pantalla de resultado explica cómo permitirlo; `OnUnicus:finished` con `resultCode` `9996`. |
-| 7b | En un computador, cierra la ventana de verificación antes de terminar. | `OnUnicus:exit`. La transacción sigue abierta (el usuario aún puede terminar en el celular); si nadie lo hace, el webhook llega después de 20 minutos. En un celular, cerrar durante un paso la cancela (`CANCELLED`). |
-| 8 | Elimina la asignación de flujo del tipo de transacción. | `OnUnicus:error` con `2002` y el botón muestra "Verification not configured" (verificación no configurada). |
+| 7b | En un computador, cierra la ventana de verificación antes de terminar. | `OnUnicus:exit`. La transacción sigue abierta (el usuario aún puede terminar en el celular); si nadie lo hace, el webhook llega después de 20 minutos. En un celular, cerrar tampoco la cancela: al volver a abrir, el flujo se retoma. |
+| 8 | Elimina la asignación de flujo del tipo de transacción. | `OnUnicus:error` con `2002` y el botón muestra "Verification not configured" (validación no configurada). |
 | 9 | Haz que tu endpoint responda `500` una vez. | El mismo `event_id` llega de nuevo; lo procesas una sola vez. |
 | 10 | Envía a tu endpoint una solicitud con una firma incorrecta. | Tu endpoint la rechaza (`401`). |
 

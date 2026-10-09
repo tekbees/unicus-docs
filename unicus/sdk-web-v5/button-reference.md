@@ -54,7 +54,7 @@ observe it (`button.getAttribute('state')`).
 | `ready` | Brand colour, label | Transaction created (`OnUnicus:loaded` was emitted). |
 | `active` | Label "Validando…" / "Verifying…", disabled | The verification is open in the iframe. Errors inside the flow do not change this state. |
 | `error` | Grey button, label "Reintentar" / "Retry" | The transaction could not be created, or the verification did not load within 20 seconds (`OnUnicus:error`). A click creates a new transaction and opens the flow. |
-| `no_flow` | Grey button, label "Verificación no configurada" / "Verification not configured", disabled | No flow is assigned to this company and transaction type, or `data-flow-id` is unknown (result code `2002`). Clicks are ignored. Fix it in the portal, then reload the page or change an attribute that creates a new transaction. |
+| `no_flow` | Grey button, label "Validación no configurada" / "Verification not configured", disabled | No flow is assigned to this company and transaction type, or `data-flow-id` is unknown (result code `2002`). Clicks are ignored. Fix it in the portal, then reload the page or change an attribute that creates a new transaction. |
 
 ## Lifecycle
 

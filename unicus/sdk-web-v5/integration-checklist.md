@@ -96,7 +96,7 @@ sequenceDiagram
 | 5 | Open the verification and abandon it without failing anything. | After 20 minutes, webhook `EXPIRED` (`6003`). |
 | 6 | Cancel the camera inside the verification. | `OnUnicus:finished` with `success: false` and `resultCode` `2041`; webhook `CANCELLED`. |
 | 7 | Deny the camera permission. | A result screen explains how to allow it; `OnUnicus:finished` with `resultCode` `9996`. |
-| 7b | On a computer, close the verification window before finishing. | `OnUnicus:exit`. The transaction stays open (the user can still finish on the phone); if nobody does, the webhook arrives after 20 minutes. On a phone, closing during a step cancels it (`CANCELLED`). |
+| 7b | On a computer, close the verification window before finishing. | `OnUnicus:exit`. The transaction stays open (the user can still finish on the phone); if nobody does, the webhook arrives after 20 minutes. On a phone, closing does not cancel either: reopening resumes the flow. |
 | 8 | Remove the flow assignment of the transaction type. | `OnUnicus:error` with `2002` and the button shows "Verification not configured". |
 | 9 | Make your endpoint answer `500` once. | The same `event_id` arrives again; you process it once. |
 | 10 | Send a request with a wrong signature to your endpoint. | Your endpoint rejects it (`401`). |

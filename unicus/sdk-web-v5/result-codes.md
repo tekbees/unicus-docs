@@ -62,7 +62,7 @@ use up an attempt. Once the transaction is final its link no longer works
 | `9011` | `age_check` step: the age could not be estimated from the face. | `REJECTED` |
 | `10020` | The person was not verified because of an age restriction. | `REJECTED` |
 | `1001`, `7001`, `7002`, `8001`–`8006`, `6009` | One of the flow's document validations failed when the document capture completed (see below). | `REJECTED` |
-| `2041` | The user cancelled the verification (close button, leaving the page during the camera session). | `CANCELLED` |
+| `2041` | The user cancelled the camera session. Closing or leaving the page does not cancel. | `CANCELLED` |
 | `2053` | The transaction was deleted. | `DELETED` |
 | `6003` | The transaction expired by inactivity or was never started. Also used for a service timeout during a step, which is retryable. | `EXPIRED` |
 
