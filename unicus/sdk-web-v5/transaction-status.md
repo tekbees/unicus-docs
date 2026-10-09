@@ -256,7 +256,7 @@ the field without the `Url` suffix (`frontDocument`, `backDocument`,
 
 | Status | When | Body |
 | --- | --- | --- |
-| `400` | The body is not valid JSON or not an object. | `application/problem+json` with `title` `Structure error in request [invalid-json]`. |
+| `400` | The body is not valid JSON or not an object. | `application/problem+json` with a `title` such as `Malformed request [invalid-json]`. Decide by the HTTP status, not by the `title` text. |
 | `401` | Missing, invalid, revoked or expired API key (for example, the request sent only `X-Customer-ID`). | `{"status":401,"title":"Unauthorized","detail":"..."}` and `WWW-Authenticate: Bearer`. |
 | `429` | Rate limit exceeded for your credential (600 requests per minute by default). | `{"status":429,"title":"Too many requests"}` and `Retry-After` in seconds. |
 | `500` | Unexpected error. | `application/problem+json`. Retry later. |

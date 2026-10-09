@@ -105,6 +105,21 @@ app shows the user an appropriate message. Main reasons:
 | `OTP_RESEND_TOO_SOON:<seconds>` / `OTP_SEND_LIMIT` | Too early to resend, or no more sends allowed. |
 | `OTP_SEND_FAILED:<channel>:<reason>` | The code could not be sent by that channel. `reason` is `NO_OTP_TEMPLATE`, `OTP_TEMPLATE_INVALID:<code>` (configuration) or `PROVIDER_ERROR` (provider). |
 
+### OTP limits
+
+| Limit | Value | When it is reached |
+| --- | --- | --- |
+| Wrong codes per `otp` step (shared by all resends) | 5 | The transaction ends `REJECTED` with `4001`. |
+| Code validity | 5 minutes | `OTP_EXPIRED`; the user asks for a new code. |
+| Codes sent per `otp` step | 5 | `OTP_SEND_LIMIT` |
+| Wait before a resend | 30 seconds (configurable in the step) | `OTP_RESEND_TOO_SOON:<seconds>` |
+| Codes sent to one phone or e-mail | 5 per hour | `OTP_SEND_LIMIT:rate` |
+| Codes requested from one IP address | 10 per 10 minutes | `OTP_SEND_LIMIT:rate` |
+| Codes sent for your company | 1,000 per day (UTC) | `OTP_SEND_LIMIT:rate` |
+
+If you expect more than 1,000 OTP codes a day (a campaign, a migration), ask
+[Support](support.md) to raise your company's limit beforehand.
+
 ## Camera and document codes
 
 Reported in `OnUnicus:details` step results, as `last_failure.code` in the

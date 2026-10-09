@@ -258,7 +258,7 @@ URL, su contenido en base64 llega en el campo sin el sufijo `Url`
 
 | Estado | Cuándo | Cuerpo |
 | --- | --- | --- |
-| `400` | El cuerpo no es un JSON válido o no es un objeto. | `application/problem+json` con `title` `Structure error in request [invalid-json]`. |
+| `400` | El cuerpo no es un JSON válido o no es un objeto. | `application/problem+json` con un `title` como `Malformed request [invalid-json]`. Decide por el estado HTTP, no por el texto del `title`. |
 | `401` | API key ausente, inválida, revocada o expirada (por ejemplo, la solicitud envió solo `X-Customer-ID`). | `{"status":401,"title":"Unauthorized","detail":"..."}` y `WWW-Authenticate: Bearer`. |
 | `429` | Se superó el límite de solicitudes para tu credencial (600 solicitudes por minuto por defecto). | `{"status":429,"title":"Too many requests"}` y `Retry-After` en segundos. |
 | `500` | Error inesperado. | `application/problem+json`. Reintenta más tarde. |

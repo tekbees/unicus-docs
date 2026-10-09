@@ -106,6 +106,21 @@ apropiado. Motivos principales:
 | `OTP_RESEND_TOO_SOON:<seconds>` / `OTP_SEND_LIMIT` | Es demasiado pronto para reenviar, o no se permiten más envíos. |
 | `OTP_SEND_FAILED:<channel>:<reason>` | No fue posible enviar el código por ese canal. `reason` es `NO_OTP_TEMPLATE`, `OTP_TEMPLATE_INVALID:<code>` (configuración) o `PROVIDER_ERROR` (proveedor). |
 
+### Límites del OTP
+
+| Límite | Valor | Cuando se alcanza |
+| --- | --- | --- |
+| Códigos errados por paso `otp` (compartido entre reenvíos) | 5 | La transacción finaliza `REJECTED` con `4001`. |
+| Vigencia del código | 5 minutos | `OTP_EXPIRED`; el usuario pide un código nuevo. |
+| Códigos enviados por paso `otp` | 5 | `OTP_SEND_LIMIT` |
+| Espera antes de reenviar | 30 segundos (configurable en el paso) | `OTP_RESEND_TOO_SOON:<seconds>` |
+| Códigos enviados a un mismo teléfono o correo | 5 por hora | `OTP_SEND_LIMIT:rate` |
+| Códigos pedidos desde una misma dirección IP | 10 cada 10 minutos | `OTP_SEND_LIMIT:rate` |
+| Códigos enviados para tu compañía | 1.000 por día (UTC) | `OTP_SEND_LIMIT:rate` |
+
+Si esperas más de 1.000 códigos OTP al día (una campaña, una migración), pide a
+[Soporte](support.md) que aumente el límite de tu compañía con anticipación.
+
 ## Códigos de cámara y documento
 
 Se informan en los resultados de los pasos de `OnUnicus:details`, como
