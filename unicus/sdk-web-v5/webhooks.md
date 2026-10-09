@@ -208,7 +208,8 @@ static bool IsValid(string secret, string timestamp, string signature, byte[] ra
     "created_at": "2026-10-05T14:51:10Z",
     "started_at": "2026-10-05T14:52:02Z",
     "finalized_at": "2026-10-05T15:04:05Z",
-    "attempts": { "face": 0, "document_front": 1, "document_back": 0, "document": 0 },
+    "attempts": { "face": 0, "document_front": 1, "document_back": 0, "document": 0,
+                  "face_captures": 1, "document_front_captures": 2, "document_back_captures": 1 },
     "idNumber": "<DOCUMENT NUMBER>",
     "location": "{\"latitude\":4.7398,\"longitude\":-74.1137}",
     "document": {
@@ -254,7 +255,7 @@ static bool IsValid(string secret, string timestamp, string signature, byte[] ra
 | `created_at` | string | When the transaction was created. |
 | `started_at` | string | When the user first opened it. Absent if never opened. |
 | `finalized_at` | string | When it ended. |
-| `attempts` | object | Failed attempts per capture: `face`, `document_front`, `document_back`, `document` (face against document). Technical errors on Unicus' side are not counted. |
+| `attempts` | object | Failed attempts per capture: `face`, `document_front`, `document_back`, `document` (face against document). Technical errors on Unicus' side are not counted. Also every capture made, the successful one included: `face_captures` (face captures, for example the selfies of a verification), `document_front_captures`, `document_back_captures`. |
 | `last_failure` | object | `{ code, message, step }` of the last failed attempt. Absent when approved or when nothing failed. |
 | `idNumber` | string | Document number the transaction was created with (`clientid`). |
 | `location` | string | JSON text `{"latitude":…,"longitude":…}` when the user shared their location. Absent otherwise. |

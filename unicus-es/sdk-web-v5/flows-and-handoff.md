@@ -30,7 +30,7 @@ página.
 | `consent` | Lee qué se capturará y por qué, y acepta. Siempre va primero; se agrega automáticamente si el flujo no lo incluye. | Cualquier dispositivo |
 | `info` | Lee instrucciones (buena luz, documento a la mano). | Cualquier dispositivo |
 | `liveness` | Selfie en video. Demuestra que hay una persona viva presente y captura el rostro. | Cámara del celular o tableta |
-| `document` | Fotografía el frente y el reverso del documento y confirma los datos leídos por OCR. Validaciones del lado del servidor configuradas por flujo: clasificador de documentos, coincidencia del número de documento, consulta al registro oficial. | Cámara del celular o tableta |
+| `document` | Fotografía el frente y el reverso del documento y confirma los datos leídos por OCR. Validaciones del lado del servidor configuradas por flujo: clasificador de documentos, coincidencia del número de documento, consulta al registro oficial y material del documento (rechaza la captura de una fotocopia, una pantalla o una impresión; la persona vuelve a capturarlo). | Cámara del celular o tableta |
 | `face_match` | El rostro de la selfie se compara con la foto del documento, o con el rostro enrolado previamente. | Servidor, dentro de la sesión de cámara |
 | `signature` | Dibuja una firma electrónica en pantalla después de leer el documento mostrado. | Cualquier dispositivo |
 | `otp` | Recibe un código de un solo uso por SMS, WhatsApp o correo electrónico y lo escribe. | Cualquier dispositivo |
@@ -62,7 +62,8 @@ en el celular.
   botón de la página recargada crea una nueva transacción.
 * Una transacción finaliza con `success` solo cuando todos los pasos
   obligatorios fueron aprobados. Un paso configurado como opcional puede fallar
-  sin que falle la transacción.
+  sin que falle la transacción. La prueba de vida, el documento y el cotejo
+  facial son siempre obligatorios.
 * `OnUnicus:details` informa los pasos por su `stepId`, de modo que tu página
   puede mostrar el avance de los pasos que existen en tu flujo en lugar de una
   lista fija. Los pasos `consent` e `info` no se informan, y tampoco los pasos
