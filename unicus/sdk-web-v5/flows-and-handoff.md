@@ -102,7 +102,10 @@ offers the hand-off channels enabled for your company:
 
 When the QR code is the only channel of your company, the computer goes
 straight to the QR code. Each WhatsApp or SMS message carries a new link; the
-QR code keeps its link while it is valid.
+QR code keeps its link while it is valid. If a message does not arrive, the
+user can send it again after a few seconds; Unicus limits how many messages
+one transaction and one phone number can receive, and says so on the screen
+when the limit is reached (the user can still use the QR code).
 
 <figure><img src="../.gitbook/assets/web-sdk-5-handoff-options.jpg" alt="Hand-off options on a computer: QR code, WhatsApp and SMS" width="563"><figcaption><p>The channels enabled for the company, offered on the computer.</p></figcaption></figure>
 
@@ -112,8 +115,14 @@ time and finally the result. The customer page keeps receiving `OnUnicus:*`
 events from the computer, so your integration does not change: the result
 screen appears on the computer when the phone finishes and Unicus confirms the
 result, and `finished` is emitted when the user closes it. Besides the live
-updates, the computer checks the transaction with Unicus every few seconds, so
+updates, the computer checks the transaction with Unicus regularly, so
 the result still arrives if a live update is lost.
+
+If the page is closed on the phone by mistake, nothing is lost: the computer
+offers **Send the link again**, and the new link resumes at the first pending
+step. If the transaction expires while the computer is waiting, the computer
+shows "the session expired" and emits `OnUnicus:error`; the next click on the
+button starts a new verification.
 
 {% hint style="info" %}
 If the phone finishes but the computer tab was closed (or the user closed the

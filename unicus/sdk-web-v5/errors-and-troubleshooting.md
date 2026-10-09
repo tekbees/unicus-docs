@@ -47,7 +47,7 @@ a **Retry** button; in the iframe they also show **Close**.
 | The verification closes by itself, without `finished` or `exit` | Your page removed or re-created the `<unicus-btn>` element (route change, conditional rendering, re-keyed list). Keep it mounted while the verification is open. |
 | `OnUnicus:loaded` fires several times | Expected after a change of `customerid`, `clientid`, `transactiontype` or `data-flow-id`, and on the first click after `finished` / `exit`. Always keep the latest `tid`. |
 | `finished` arrives with `success: false` and `resultCode: 2013` | Not an error: the transaction is under manual review. |
-| The desktop mirror stops updating | The computer also checks the transaction with Unicus every few seconds and shows the result when Unicus has it. The result is in Unicus either way and reaches your webhook. |
+| The desktop mirror stops updating | The computer also checks the transaction with Unicus regularly, and at once when its connection comes back, and shows the result when Unicus has it. The result is in Unicus either way and reaches your webhook. |
 | The company logo or colours do not appear | The branding is configured in the portal for the same environment as the Customer Token. Colours must be hex (`#rrggbb`). |
 
 ## Diagnostic log

@@ -214,16 +214,12 @@ Misma envoltura que `finished`; `transaction.state` es
 la verificación con su botón de cerrar antes de un estado final, o cerró una
 pantalla de error. El siguiente clic en el botón crea una nueva transacción.
 
-Lo que ocurre con la transacción depende de dónde estaba el usuario:
-
-* **En un celular o tablet, durante un paso:** la transacción queda cancelada por el
-  usuario (`2041`) en Unicus.
-* **En un computador:** cerrar nunca cancela. Es posible que el computador solo esté
-  reflejando el celular, así que si el usuario ya abrió el enlace de traspaso, el
-  celular todavía puede terminar la transacción después de `exit`. Confía en tu webhook para
-  conocer el resultado.
-* **En otro caso** (pantalla de consentimiento, pantalla de error): no se registra nada; la
-  transacción expira en Unicus si no se retoma.
+Cerrar nunca cancela la transacción: sigue abierta y el usuario puede
+retomarla mientras sea válida; si nadie lo hace, expira en Unicus. En un
+computador, es posible que el computador solo esté reflejando el celular, así
+que si el usuario ya abrió el enlace de traspaso, el celular todavía puede
+terminar la transacción después de `exit`. Confía en tu webhook para conocer el
+resultado.
 
 ## `OnUnicus:error`
 

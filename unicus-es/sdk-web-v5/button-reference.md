@@ -54,7 +54,7 @@ estilos u observarlo (`button.getAttribute('state')`).
 | `ready` | Color de la marca, texto del botón | Transacción creada (se emitió `OnUnicus:loaded`). |
 | `active` | Texto del botón "Validando…" / "Verifying…", deshabilitado | La verificación está abierta en el iframe. Los errores dentro del flujo no cambian este estado. |
 | `error` | Botón gris, texto del botón "Reintentar" / "Retry" | No se pudo crear la transacción, o la verificación no cargó en 20 segundos (`OnUnicus:error`). Un clic crea una transacción nueva y abre el flujo. |
-| `no_flow` | Botón gris, texto del botón "Verificación no configurada" / "Verification not configured", deshabilitado | No hay un flujo asignado a esta empresa y tipo de transacción, o `data-flow-id` es desconocido (código de resultado `2002`). Los clics se ignoran. Corrígelo en el portal y luego recarga la página o cambia un atributo que cree una transacción nueva. |
+| `no_flow` | Botón gris, texto del botón "Validación no configurada" / "Verification not configured", deshabilitado | No hay un flujo asignado a esta empresa y tipo de transacción, o `data-flow-id` es desconocido (código de resultado `2002`). Los clics se ignoran. Corrígelo en el portal y luego recarga la página o cambia un atributo que cree una transacción nueva. |
 
 ## Ciclo de vida
 

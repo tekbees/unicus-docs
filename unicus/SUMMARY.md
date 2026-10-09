@@ -10,6 +10,7 @@
 * [Button reference](sdk-web-v5/button-reference.md)
 * [Events](sdk-web-v5/events.md)
 * [Flows and hand-off](sdk-web-v5/flows-and-handoff.md)
+* [Unicus Link](sdk-web-v5/unicus-link.md)
 * [Texts and languages](sdk-web-v5/texts-and-languages.md)
 * [Result codes](sdk-web-v5/result-codes.md)
 * [Errors and troubleshooting](sdk-web-v5/errors-and-troubleshooting.md)
@@ -22,7 +23,7 @@
 * [Versioning](sdk-web-v5/versioning.md)
 * [Support](sdk-web-v5/support.md)
 
-## WEB SDK INTEGRATION PROCESS <a href="#sdk-web" id="sdk-web"></a>
+## WEB SDK 4.x INTEGRATION PROCESS (LEGACY) <a href="#sdk-web" id="sdk-web"></a>
 
 * [Integration overview](sdk-web/integration.md)
 * [Unicus Button](sdk-web/unicus-button.md)

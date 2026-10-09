@@ -214,16 +214,11 @@ Same envelope as `finished`; `transaction.state` is
 the verification with its close button before a final state, or closed an
 error screen. The next click on the button creates a new transaction.
 
-What happens to the transaction depends on where the user was:
-
-* **On a phone or tablet, during a step:** the transaction is cancelled by the
-  user (`2041`) in Unicus.
-* **On a computer:** closing never cancels. The computer may only be
-  mirroring the phone, so if the user already opened the hand-off link the
-  phone can still finish the transaction after `exit`. Rely on your webhook for
-  the outcome.
-* **Otherwise** (consent screen, error screen): nothing is recorded; the
-  transaction expires in Unicus if it is not resumed.
+Closing never cancels the transaction: it stays open and the user can resume
+it while it is valid; if nobody does, it expires in Unicus. On a computer, the
+computer may only be mirroring the phone, so if the user already opened the
+hand-off link the phone can still finish the transaction after `exit`. Rely on
+your webhook for the outcome.
 
 ## `OnUnicus:error`
 

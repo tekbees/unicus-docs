@@ -109,7 +109,10 @@ paso de cámara, la aplicación web ofrece los canales de traspaso al celular
 
 Cuando el código QR es el único canal de tu empresa, el computador pasa
 directamente al código QR. Cada mensaje de WhatsApp o SMS lleva un enlace nuevo;
-el código QR conserva su enlace mientras sea válido.
+el código QR conserva su enlace mientras sea válido. Si un mensaje no llega, el
+usuario puede enviarlo de nuevo después de unos segundos; Unicus limita cuántos
+mensajes pueden recibir una transacción y un número de celular, y lo indica en
+la pantalla cuando se alcanza el límite (el usuario aún puede usar el código QR).
 
 <figure><img src="../.gitbook/assets/web-sdk-5-handoff-options.jpg" alt="Opciones de traspaso en un computador: código QR, WhatsApp y SMS" width="563"><figcaption><p>Los canales habilitados para la empresa, ofrecidos en el computador.</p></figcaption></figure>
 
@@ -120,8 +123,14 @@ del cliente sigue recibiendo los eventos `OnUnicus:*` desde el computador, así
 que tu integración no cambia: la pantalla de resultado aparece en el computador
 cuando el celular termina y Unicus confirma el resultado, y `finished` se emite
 cuando el usuario la cierra. Además de las actualizaciones en vivo, el
-computador consulta la transacción en Unicus cada pocos segundos, de modo que el
+computador consulta la transacción en Unicus periódicamente, de modo que el
 resultado llega aunque se pierda una actualización en vivo.
+
+Si la página se cierra por error en el celular, no se pierde nada: el
+computador ofrece **Enviar el enlace de nuevo**, y el enlace nuevo retoma en el
+primer paso pendiente. Si la transacción expira mientras el computador espera,
+el computador muestra "La sesión expiró o ya fue utilizada" y emite
+`OnUnicus:error`; el siguiente clic en el botón inicia una validación nueva.
 
 {% hint style="info" %}
 Si el celular termina pero la pestaña del computador se cerró (o el usuario
