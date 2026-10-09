@@ -196,7 +196,8 @@ static bool IsValid(string secret, string timestamp, string signature, byte[] ra
     "version": 2,
     "occurred_at": "2026-10-05T15:04:05Z",
     "ok": true,
-    "code": 200
+    "code": 200,
+    "livemode": true
   },
   "data": {
     "tid": "6f1c2a4e-1b7d-4c8e-9a51-2f3b4c5d6e7f",
@@ -241,6 +242,7 @@ static bool IsValid(string secret, string timestamp, string signature, byte[] ra
 | `version` | int | Versión del payload, actualmente `2`. |
 | `occurred_at` | string | Cuándo terminó la transacción (ISO 8601, UTC). |
 | `ok` / `code` | bool / int | `true` / `200` solo cuando `outcome` es `APPROVED`; en otro caso `false` / `400`. Prefiere `data.outcome`. |
+| `livemode` | bool | `false` para una transacción de prueba (creada con una API key de prueba o un device id de prueba, consulta [Modo de prueba](customer-token.md#modo-de-prueba-sandbox)); `true` en otro caso. Nunca actúes sobre una con `false` como si fuera real. |
 
 ### `data`
 
@@ -300,7 +302,8 @@ la transacción se cierra y su enlace deja de funcionar.
     "version": 2,
     "occurred_at": "2026-10-05T16:20:00Z",
     "ok": true,
-    "code": 200
+    "code": 200,
+    "livemode": true
   },
   "data": {
     "tid": "6f1c2a4e-1b7d-4c8e-9a51-2f3b4c5d6e7f",

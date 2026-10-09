@@ -34,6 +34,9 @@ flowchart LR
       **API key** de la empresa: todos la exigen y el Customer Token no los
       abre. Solo del lado del servidor. Consulta
       [API de servidor y API keys](server-api.md).
+- [ ] Para probar en producción sin mezclarlo con datos reales, pide a Tekbees
+      **credenciales de prueba** (un device id `sbx_` y una key `unk_test_`).
+      Consulta [Modo de prueba](customer-token.md#modo-de-prueba-sandbox).
 
 ## 2. En tu página
 
