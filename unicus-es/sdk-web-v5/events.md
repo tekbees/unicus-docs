@@ -212,7 +212,8 @@ recuperarse, el computador muestra una falla y `finished` lleva ese código.
 Misma envoltura que `finished`; `transaction.state` es
 `{ "exited": true, "success": false }`, sin `resultCode`. El usuario cerró
 la verificación con su botón de cerrar antes de un estado final, o cerró una
-pantalla de error. El siguiente clic en el botón crea una nueva transacción.
+pantalla de error. El siguiente clic en el botón retoma la misma transacción
+mientras siga abierta (una nueva si venció).
 
 Cerrar nunca cancela la transacción: sigue abierta y el usuario puede
 retomarla mientras sea válida; si nadie lo hace, expira en Unicus. En un

@@ -96,8 +96,10 @@ Permissions-Policy: camera=(self "https://id.idunicus.com"), geolocation=(self "
   celular no puede cancelar. Una transacción que nadie retoma expira.
 * **Almacenamiento local.** El botón guarda los colores de la empresa en
   `localStorage` (clave `unicus-btn:brand:<Customer Token>`) para pintar el
-  color de marca en el primer frame de visitas posteriores. No se almacenan
-  datos personales.
+  color de marca en el primer frame de visitas posteriores, y la llave que le
+  permite retomar una transacción abierta (bajo un nombre cifrado: el número de
+  documento no se guarda; la entrada se borra cuando la transacción termina).
+  No se almacenan datos personales.
 
 ## Consumo de datos
 

@@ -39,7 +39,7 @@ stateDiagram-v2
   loading --> error: falló la creación
   loading --> no_flow: sin flujo asignado (2002)
   ready --> active: clic (o clic durante loading)
-  active --> ready: finished / exit → el siguiente clic crea una transacción nueva
+  active --> ready: finished (el siguiente clic crea una nueva) o exit (el siguiente clic la retoma)
   active --> error: la verificación no cargó en 20 s
   error --> loading: clic (reintento)
 ```
@@ -82,8 +82,8 @@ estilos u observarlo (`button.getAttribute('state')`).
    conserva el `tid` anterior.
 5. **Eliminación.** Si el elemento se quita del DOM mientras la verificación
    está abierta, el iframe se quita con él y no se emite `finished` ni `exit`.
-   Un botón que se vuelve a conectar crea una transacción nueva en el siguiente
-   clic.
+   Un botón que se vuelve a conectar retoma la misma transacción en el
+   siguiente clic mientras siga abierta.
 
 El flujo no se muestra en una ventana emergente, así que los bloqueadores de
 ventanas emergentes no lo afectan.
