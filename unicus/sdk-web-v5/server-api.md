@@ -72,6 +72,8 @@ yet and verifies them if it does, with the flow assigned in the portal.
 | `documentType` | string | Yes* | Document type code, as in the button's `clientid`: `ID`, `FD`, `PP`, `DL`. |
 | `flowId` | string | No | Slug of a published flow of your company to use instead of the one assigned to the transaction type (`2002` if it is not compatible). |
 | `customParameter` | string | No | Only for age-estimation transactions, which are created without a document. |
+| `reissueLink` | boolean | No | `true` with `tid`: a new link for an open transaction instead of a new transaction (see below). |
+| `tid` | string | With `reissueLink` | The open transaction that needs a new link. Ignored without `reissueLink`. |
 
 \* Without `document`, an age-estimation transaction is created.
 
@@ -97,10 +99,31 @@ curl --request POST '<unicus-server-api-url>/init-api-transaction' \
 * Store the `tid` with your user: the [webhook](webhooks.md) and
   `query-transaction` refer to it.
 * The `url` carries a single-use token: once the person opens it, the same
-  link does not open again. Send a new one with another call if needed.
+  link does not open again. To let the person continue (they closed the page,
+  or your app shows "open again"), ask for a new link for the **same**
+  transaction with `reissueLink` (below) instead of reusing the old URL.
 * `resultMessage` says whether an enrollment or a verification was created.
 * On failure `success` is `false` and `resultCode` / `resultMessage` say why
   (for example `2002`: no flow assigned). See [Result codes](result-codes.md).
+
+### A new link for an open transaction
+
+{% code overflow="wrap" %}
+```bash
+curl --request POST '<unicus-server-api-url>/init-api-transaction' \
+  --header 'Authorization: Bearer <API_KEY>' \
+  --header 'Content-Type: application/json' \
+  --data '{ "reissueLink": true, "tid": "<TID>" }'
+```
+{% endcode %}
+
+* Answers like a creation (`success`, `tid`, `url`), with the **same** `tid` and
+  a new single-use link. Nothing is created: the person continues where they
+  left off.
+* The earlier links of that transaction that were not opened stop working:
+  only the latest one opens it.
+* `2051` when the transaction is not your company's, already ended or expired:
+  create a new one with a normal call.
 
 ## `query-transaction`
 

@@ -73,6 +73,8 @@ asignado en el portal.
 | `documentType` | string | Sí* | Código del tipo de documento, como en el `clientid` del botón: `ID`, `FD`, `PP`, `DL`. |
 | `flowId` | string | No | Slug de un flujo publicado de tu empresa para usarlo en lugar del asignado al tipo de transacción (`2002` si no es compatible). |
 | `customParameter` | string | No | Solo para transacciones de estimación de edad, que se crean sin documento. |
+| `reissueLink` | boolean | No | `true` junto con `tid`: un enlace nuevo para una transacción abierta en lugar de una transacción nueva (ver abajo). |
+| `tid` | string | Con `reissueLink` | La transacción abierta que necesita un enlace nuevo. Se ignora sin `reissueLink`. |
 
 \* Sin `document` se crea una transacción de estimación de edad.
 
@@ -98,11 +100,31 @@ curl --request POST '<unicus-server-api-url>/init-api-transaction' \
 * Guarda el `tid` junto a tu usuario: el [webhook](webhooks.md) y
   `query-transaction` se refieren a él.
 * La `url` lleva un token de un solo uso: cuando la persona la abre, el mismo
-  enlace no vuelve a abrir. Si hace falta, envía uno nuevo con otra llamada.
+  enlace no vuelve a abrir. Para que la persona continúe (cerró la página, o tu
+  aplicación muestra "abrir de nuevo"), pide un enlace nuevo para la **misma**
+  transacción con `reissueLink` (abajo) en lugar de reutilizar la URL anterior.
 * `resultMessage` indica si se creó un enrolamiento o una verificación.
 * Si falla, `success` es `false` y `resultCode` / `resultMessage` dicen por qué
   (por ejemplo `2002`: no hay flujo asignado). Consulta
   [Códigos de resultado](result-codes.md).
+
+### Un enlace nuevo para una transacción abierta
+
+{% code overflow="wrap" %}
+```bash
+curl --request POST '<unicus-server-api-url>/init-api-transaction' \
+  --header 'Authorization: Bearer <API_KEY>' \
+  --header 'Content-Type: application/json' \
+  --data '{ "reissueLink": true, "tid": "<TID>" }'
+```
+{% endcode %}
+
+* Responde como una creación (`success`, `tid`, `url`), con el **mismo** `tid` y
+  un enlace nuevo de un solo uso. No se crea nada: la persona continúa donde iba.
+* Los enlaces anteriores de esa transacción que no se abrieron dejan de
+  funcionar: solo abre el último.
+* `2051` cuando la transacción no es de tu empresa, ya terminó o venció: crea una
+  nueva con una llamada normal.
 
 ## `query-transaction`
 

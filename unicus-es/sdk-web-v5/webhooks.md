@@ -208,6 +208,7 @@ static bool IsValid(string secret, string timestamp, string signature, byte[] ra
     "finalized_by": "PROCESS",
     "created_at": "2026-10-05T14:51:10Z",
     "started_at": "2026-10-05T14:52:02Z",
+    "last_activity_at": "2026-10-05T15:04:05Z",
     "finalized_at": "2026-10-05T15:04:05Z",
     "attempts": { "face": 0, "document_front": 1, "document_back": 0, "document": 0,
                   "face_captures": 1, "document_front_captures": 2, "document_back_captures": 1 },
@@ -227,7 +228,8 @@ static bool IsValid(string secret, string timestamp, string signature, byte[] ra
       "unexpectedMediaEncounteredAtLeastOnce": false
     },
     "biometrics": { "ageEstimateGroup": 4, "livenessCheck": true },
-    "flow": { "id": "onboarding", "version": 3 }
+    "flow": { "id": "onboarding", "version": 3, "steps": [ … ],
+              "completed_steps": ["consent", "liveness", "document", "signature"], "pending_steps": [] }
   }
 }
 ```
@@ -256,6 +258,7 @@ static bool IsValid(string secret, string timestamp, string signature, byte[] ra
 | `finalized_by` | string | Qué la terminó: `PROCESS` (el resultado de una captura), `FLOW` (el último paso del flujo o un paso fallido), `INACTIVITY`, `NOT_STARTED`, `CANCEL`, `DELETE`. |
 | `created_at` | string | Cuándo se creó la transacción. |
 | `started_at` | string | Cuándo el usuario la abrió por primera vez. Ausente si nunca se abrió. |
+| `last_activity_at` | string | La última actividad de la persona en la transacción (una pantalla, un paso, el resultado de una captura). Junto con `pending_steps` indica cuándo y dónde se quedó una verificación abandonada. |
 | `finalized_at` | string | Cuándo terminó. |
 | `attempts` | object | Intentos fallidos por captura: `face`, `document_front`, `document_back`, `document` (rostro contra documento). Los errores técnicos del lado de Unicus no se cuentan. Además, todas las capturas hechas, incluida la exitosa: `face_captures` (capturas del rostro, por ejemplo las selfies de una verificación), `document_front_captures`, `document_back_captures`. |
 | `last_failure` | object | `{ code, message, step }` del último intento fallido. Ausente cuando se aprueba o cuando nada falló. |
@@ -263,7 +266,8 @@ static bool IsValid(string secret, string timestamp, string signature, byte[] ra
 | `location` | string | Texto JSON `{"latitude":…,"longitude":…}` cuando el usuario compartió su ubicación. Ausente en otro caso. |
 | `document` | object | Datos y validaciones del documento, cuando se capturó un documento (ver más abajo). |
 | `biometrics` | object | Resultados faciales, cuando se capturó el rostro: `ageEstimateGroup`, `livenessCheck`, `matchLevel` (verificación). |
-| `flow` | object | `{ id, version }` del flujo del portal que ejecutó la transacción. Ausente en transacciones sin flujo. |
+| `flow` | object | El flujo del portal que ejecutó la transacción: `id`, `version`, `steps` (cada paso con resultado registrado y los datos que dio la persona), `completed_steps` y `pending_steps` (ids de los pasos en el orden del flujo: lo que la persona terminó y lo que le faltó). Ausente en transacciones sin flujo. |
+| `last_sdk_event` | object | Solo cuando el resultado no es `APPROVED`: `{ process, status }` del último evento que reportó el SDK de Unicus, por ejemplo `pagehide` / `tab hidden on <pantalla>, resumable` cuando la persona salió de la página. Hasta 200 caracteres. Solo informativo. |
 | `images` | object | Solo si Tekbees habilitó las imágenes para tu empresa: `document_front`, `document_back` (JPEG en base64). En otro caso, obtenlas con [Consultar el estado de una transacción](transaction-status.md). |
 
 **`document`** puede contener: `idType`, `idNumberOCR` (el número leído del
@@ -286,6 +290,15 @@ necesitas asegurarte de que el documento pertenece a la persona que esperabas.
 | `EXPIRED` | Se abrió y luego se abandonó durante 20 minutos sin una falla pendiente, o el enlace nunca se abrió en 24 horas (`finalized_by: NOT_STARTED`). `result_code` `6003`. | Crea una nueva transacción si el usuario regresa. |
 | `CANCELLED` | El usuario canceló la verificación (`2041`). | Ofrece empezar de nuevo. |
 | `DELETED` | La transacción fue eliminada. | — |
+
+Para contactar a una persona que se fue ("solo te faltó la firma"), usa
+`pending_steps`, `last_activity_at` y `last_sdk_event` de un evento `EXPIRED` o
+`REJECTED`.
+
+Un **enrolamiento** que termina `REJECTED` o `EXPIRED` deja a la persona **sin
+enrolar**, también cuando los pasos de cámara pasaron y un paso posterior (un
+OTP, una firma) no se completó: la siguiente transacción de esa persona vuelve a
+ser un enrolamiento, nunca una verificación contra un enrolamiento que no terminó.
 
 Mientras la transacción no sea final, un intento fallido **no** es final: el usuario puede
 reintentar con el mismo enlace (hasta 10 intentos por captura). Una vez enviado el evento,
