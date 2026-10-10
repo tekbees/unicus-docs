@@ -193,19 +193,25 @@ rendered button discards the current transaction and creates a new one.
 
 You do not need to create the transaction yourself to let the user try again:
 
-* After `OnUnicus:finished` or `OnUnicus:exit`, the next click (or
-  `button.open()`) creates a **new** transaction, emits `OnUnicus:loaded` with
-  the new `tid` and opens the flow.
+* After `OnUnicus:finished`, the next click (or `button.open()`) creates a
+  **new** transaction, emits `OnUnicus:loaded` with the new `tid` and opens the
+  flow.
+* After `OnUnicus:exit`, the next click **resumes** the same transaction while
+  it is open: the user continues where they left off, without repeating the
+  steps already done. `OnUnicus:loaded` is emitted again with the same `tid`.
+  If the transaction already expired, a new one is created.
 * After `OnUnicus:error` from the button (state `error`, label *Retry*), a
   click or `button.open()` retries the creation.
 * A button whose state is `no_flow` does not open. Fix the flow assignment in
   the portal, then reload the page or render a new element.
 
 Reloading your page while the verification is open closes it: no
-`finished` or `exit` reaches the reloaded page and the new page load creates a
-new transaction. Use your webhook or
-[Get a transaction status](transaction-status.md) with the previous `tid` to
-know how that transaction ended.
+`finished` or `exit` reaches the reloaded page. The button on the reloaded page
+resumes the same transaction while it is open (same `tid`), so the user
+continues where they left off; if it expired, a new one is created. The button
+remembers the open transaction in the browser, so this works on the same
+browser only. Your webhook or [Get a transaction status](transaction-status.md)
+always has the final result.
 
 ## Framework notes
 
@@ -214,7 +220,7 @@ know how that transaction ended.
 * Keep the element mounted while the verification is open. Removing it from
   the DOM (route change, conditional rendering, a list re-keyed) closes the
   verification **without** `OnUnicus:finished` or `OnUnicus:exit`; the next
-  click on a re-mounted button creates a new transaction.
+  click on a re-mounted button resumes the same transaction while it is open.
 * Do not change `customerid`, `clientid`, `transactiontype` or `data-flow-id`
   while the verification is open: each change creates a new transaction.
 * Re-rendering with the same attribute values does nothing: the transaction is

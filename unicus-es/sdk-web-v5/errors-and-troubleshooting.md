@@ -17,20 +17,20 @@ un botón **Reintentar**; en el iframe también muestran **Cerrar**.
 | El usuario ve | Código | Causa | Qué hacer |
 | --- | --- | --- | --- |
 | El enlace no es válido | — | La URL no tenía transacción ni token de traspaso al celular (hand-off). | Abre el flujo desde el botón o desde un enlace generado por Unicus. |
-| La sesión expiró o ya fue usada | `2051` (o `401`) | La transacción expiró, ya se completó o se reabrió desde un enlace antiguo. | Crea una nueva transacción (cierra y vuelve a hacer clic en el botón). |
+| La sesión expiró o ya fue utilizada | `2051` (o `401`) | La transacción expiró, ya se completó o se reabrió desde un enlace antiguo. | Crea una nueva transacción (cierra y vuelve a hacer clic en el botón). |
 | El enlace expiró o ya fue usado | `2051` | El enlace de traspaso de un solo uso se abrió dos veces o después de expirar. | Genera un nuevo QR/SMS/WhatsApp desde el computador. |
-| No pudimos continuar en este momento. Por favor intenta de nuevo | `2054` | Unicus no pudo procesar la solicitud en ese momento. El enlace y la transacción siguen siendo válidos. | El usuario presiona **Reintentar** en la misma pantalla. No se necesita una nueva transacción, QR ni mensaje. |
-| Esta transacción no tiene un flujo de verificación configurado | `2002` | No hay flujo para esta empresa y tipo de transacción. Por lo general se detecta antes: el propio botón muestra "Validación no configurada". | Asigna un flujo en el portal. |
-| Esta verificación tiene una configuración que no reconocemos | — | El flujo contiene algo que esta versión de la aplicación web no puede ejecutar. | Revisa el flujo en el portal; contacta a soporte. |
+| No pudimos continuar en este momento. Inténtalo de nuevo | `2054` | Unicus no pudo procesar la solicitud en ese momento. El enlace y la transacción siguen siendo válidos. | El usuario presiona **Reintentar** en la misma pantalla. No se necesita una nueva transacción, QR ni mensaje. |
+| Esta validación no está configurada | `2002` | No hay flujo para esta empresa y tipo de transacción. Por lo general se detecta antes: el propio botón muestra "Validación no configurada". | Asigna un flujo en el portal. |
+| Esta validación tiene una configuración que no reconocemos | — | El flujo contiene algo que esta versión de la aplicación web no puede ejecutar. | Revisa el flujo en el portal; contacta a soporte. |
 | Este paso no pudo continuar | `2052` | El servidor rechazó un paso (por ejemplo, fuera de orden o no incluido en el flujo); se muestra el motivo. Sin botón Reintentar. | Por lo general el flujo cambió mientras la transacción estaba abierta: inicia una nueva transacción. |
 | Demasiados intentos | `429` | Demasiadas solicitudes desde el mismo dispositivo en poco tiempo. | Espera un momento y presiona **Reintentar**. |
-| Tu sesión no corresponde a esta verificación | `403` | La sesión pertenece a otra transacción. | Vuelve a abrir desde un enlace nuevo. |
+| Tu sesión no corresponde a esta validación | `403` | La sesión pertenece a otra transacción. | Vuelve a abrir desde un enlace nuevo. |
 | No pudimos conectarnos | — | Sin conexión, o una respuesta inesperada de Unicus. | Presiona **Reintentar**. |
 | No pudimos iniciar la cámara segura | `9997`, `9004` | No se pudieron cargar los componentes de la cámara o el servicio biométrico no respondió. | Presiona **Reintentar**; revisa el navegador y la red. |
 | Se denegó el permiso de cámara (pantalla de resultado) | `9996` | El usuario rechazó el acceso a la cámara. El flujo termina con una falla: `OnUnicus:finished` con `9996`. | Pide al usuario que permita la cámara en la configuración del navegador y que empiece de nuevo. |
-| Gira tu celular a vertical para continuar (pantalla de cámara) | — | El celular se giró durante la captura. | Vuelve a ponerlo en vertical; la captura continúa. |
-| No pudimos verificar tu identidad (pantalla de resultado) | código del paso | Un paso obligatorio falló, o el usuario canceló la cámara (`2041`). | Muestra al usuario una opción de reintento; el código indica el motivo. |
-| En revisión manual | `2013` | Revisión manual pendiente. | Espera el webhook. |
+| Se interrumpió la cámara (pantalla de cámara) | — | El celular se giró durante la captura, o la cámara se cerró sin un resultado. | El usuario sostiene el celular en vertical y toca **Continuar**; la captura se retoma sin empezar de cero. |
+| No pudimos validar tu identidad (pantalla de resultado) | código del paso | Un paso obligatorio falló, o el usuario canceló la cámara (`2041`). | Muestra al usuario una opción de reintento; el código indica el motivo. |
+| En revisión | `2013` | Revisión manual pendiente. | Espera el webhook. |
 
 ## Diagnóstico de problemas de integración
 
@@ -45,7 +45,7 @@ un botón **Reintentar**; en el iframe también muestran **Cerrar**.
 | La cámara nunca se abre | El sitio debe servirse por HTTPS; el iframe necesita el permiso `camera` (lo define el botón; un encabezado `Permissions-Policy` de la página padre que deniegue `camera` lo anula). En un computador la cámara nunca se usa: el flujo hace el traspaso a un celular. |
 | Los eventos nunca se disparan | Los listeners deben registrarse en el elemento presente en el DOM (o en `document`, ya que los eventos se propagan). Con React, regístralos en `useEffect` mediante un `ref`. Los nombres de los eventos distinguen mayúsculas y minúsculas: `OnUnicus:finished`. |
 | La verificación se cierra sola, sin `finished` ni `exit` | Tu página eliminó o volvió a crear el elemento `<unicus-btn>` (cambio de ruta, renderizado condicional, lista con nueva key). Mantenlo montado mientras la verificación esté abierta. |
-| `OnUnicus:loaded` se dispara varias veces | Es lo esperado después de un cambio de `customerid`, `clientid`, `transactiontype` o `data-flow-id`, y en el primer clic después de `finished` / `exit`. Conserva siempre el `tid` más reciente. |
+| `OnUnicus:loaded` se dispara varias veces | Es lo esperado después de un cambio de `customerid`, `clientid`, `transactiontype` o `data-flow-id`, y en el primer clic después de `finished` / `exit` (después de `exit` o de recargar la página puede ser el mismo `tid`: se retomó la transacción abierta). Conserva siempre el `tid` más reciente. |
 | `finished` llega con `success: false` y `resultCode: 2013` | No es un error: la transacción está en revisión manual. |
 | El espejo en el computador deja de actualizarse | El computador también consulta la transacción a Unicus periódicamente, y de inmediato cuando recupera la conexión, y muestra el resultado cuando Unicus lo tiene. En cualquier caso, el resultado queda en Unicus y llega a tu webhook. |
 | El logo o los colores de la empresa no aparecen | La marca se configura en el portal en el mismo ambiente que el Customer Token. Los colores deben estar en hexadecimal (`#rrggbb`). |

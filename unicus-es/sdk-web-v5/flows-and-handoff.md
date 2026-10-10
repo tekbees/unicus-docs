@@ -59,7 +59,8 @@ en el celular.
   uno nuevo desde el computador, y el nuevo enlace retoma en el primer paso
   incompleto.
 * Recargar **tu** página mientras la verificación está abierta la cierra; el
-  botón de la página recargada crea una nueva transacción.
+  botón de la página recargada retoma la misma transacción mientras siga
+  abierta.
 * Una transacción finaliza con `success` solo cuando todos los pasos
   obligatorios fueron aprobados. Un paso configurado como opcional puede fallar
   sin que falle la transacción. La prueba de vida, el documento y el cotejo

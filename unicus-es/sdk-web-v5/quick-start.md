@@ -196,19 +196,26 @@ ya renderizado descarta la transacción actual y crea una nueva.
 No necesitas crear la transacción tú mismo para que el usuario vuelva a
 intentarlo:
 
-* Después de `OnUnicus:finished` u `OnUnicus:exit`, el siguiente clic (o
-  `button.open()`) crea una transacción **nueva**, emite `OnUnicus:loaded` con
-  el nuevo `tid` y abre el flujo.
+* Después de `OnUnicus:finished`, el siguiente clic (o `button.open()`) crea una
+  transacción **nueva**, emite `OnUnicus:loaded` con el nuevo `tid` y abre el
+  flujo.
+* Después de `OnUnicus:exit`, el siguiente clic **retoma** la misma transacción
+  mientras siga abierta: el usuario continúa donde iba, sin repetir los pasos
+  ya hechos. `OnUnicus:loaded` se emite de nuevo con el mismo `tid`. Si la
+  transacción ya venció, se crea una nueva.
 * Después de un `OnUnicus:error` del botón (estado `error`, texto del botón
   *Reintentar*), un clic o `button.open()` reintenta la creación.
 * Un botón cuyo estado es `no_flow` no se abre. Corrige la asignación del flujo
   en el portal y luego recarga la página o renderiza un elemento nuevo.
 
 Recargar tu página mientras la verificación está abierta la cierra: ni
-`finished` ni `exit` llegan a la página recargada, y la nueva carga de la página
-crea una transacción nueva. Usa tu webhook o
-[Consultar el estado de una transacción](transaction-status.md) con el `tid`
-anterior para saber cómo terminó esa transacción.
+`finished` ni `exit` llegan a la página recargada. El botón de la página
+recargada retoma la misma transacción mientras siga abierta (mismo `tid`), así
+que el usuario continúa donde iba; si venció, se crea una nueva. El botón
+recuerda la transacción abierta en el navegador, así que esto funciona solo en
+el mismo navegador. Tu webhook o
+[Consultar el estado de una transacción](transaction-status.md) siempre tienen
+el resultado final.
 
 ## Notas para frameworks
 
@@ -217,7 +224,8 @@ anterior para saber cómo terminó esa transacción.
 * Mantén el elemento montado mientras la verificación está abierta. Quitarlo
   del DOM (cambio de ruta, renderizado condicional, una lista con nuevas keys)
   cierra la verificación **sin** `OnUnicus:finished` ni `OnUnicus:exit`; el
-  siguiente clic en un botón montado de nuevo crea una transacción nueva.
+  siguiente clic en un botón montado de nuevo retoma la misma transacción
+  mientras siga abierta.
 * No cambies `customerid`, `clientid`, `transactiontype` ni `data-flow-id`
   mientras la verificación está abierta: cada cambio crea una transacción nueva.
 * Volver a renderizar con los mismos valores de atributos no hace nada: la
