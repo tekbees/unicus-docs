@@ -208,6 +208,7 @@ static bool IsValid(string secret, string timestamp, string signature, byte[] ra
     "finalized_by": "PROCESS",
     "created_at": "2026-10-05T14:51:10Z",
     "started_at": "2026-10-05T14:52:02Z",
+    "last_activity_at": "2026-10-05T15:04:05Z",
     "finalized_at": "2026-10-05T15:04:05Z",
     "attempts": { "face": 0, "document_front": 1, "document_back": 0, "document": 0,
                   "face_captures": 1, "document_front_captures": 2, "document_back_captures": 1 },
@@ -227,7 +228,8 @@ static bool IsValid(string secret, string timestamp, string signature, byte[] ra
       "unexpectedMediaEncounteredAtLeastOnce": false
     },
     "biometrics": { "ageEstimateGroup": 4, "livenessCheck": true },
-    "flow": { "id": "onboarding", "version": 3 }
+    "flow": { "id": "onboarding", "version": 3, "steps": [ … ],
+              "completed_steps": ["consent", "liveness", "document", "signature"], "pending_steps": [] }
   }
 }
 ```
@@ -256,6 +258,7 @@ static bool IsValid(string secret, string timestamp, string signature, byte[] ra
 | `finalized_by` | string | What ended it: `PROCESS` (a capture result), `FLOW` (the flow's last step or a failed step), `INACTIVITY`, `NOT_STARTED`, `CANCEL`, `DELETE`. |
 | `created_at` | string | When the transaction was created. |
 | `started_at` | string | When the user first opened it. Absent if never opened. |
+| `last_activity_at` | string | The person's last activity on the transaction (a screen, a step, a capture result). With `pending_steps`, it tells when and where an abandoned verification stopped. |
 | `finalized_at` | string | When it ended. |
 | `attempts` | object | Failed attempts per capture: `face`, `document_front`, `document_back`, `document` (face against document). Technical errors on Unicus' side are not counted. Also every capture made, the successful one included: `face_captures` (face captures, for example the selfies of a verification), `document_front_captures`, `document_back_captures`. |
 | `last_failure` | object | `{ code, message, step }` of the last failed attempt. Absent when approved or when nothing failed. |
@@ -263,7 +266,8 @@ static bool IsValid(string secret, string timestamp, string signature, byte[] ra
 | `location` | string | JSON text `{"latitude":…,"longitude":…}` when the user shared their location. Absent otherwise. |
 | `document` | object | Document data and checks, when a document was captured (see below). |
 | `biometrics` | object | Face results, when the face was captured: `ageEstimateGroup`, `livenessCheck`, `matchLevel` (verification). |
-| `flow` | object | `{ id, version }` of the portal flow the transaction ran. Absent for transactions without a flow. |
+| `flow` | object | The portal flow the transaction ran: `id`, `version`, `steps` (each step with a recorded result and the data the person gave), `completed_steps` and `pending_steps` (step ids in flow order: what the person finished and what was left). Absent for transactions without a flow. |
+| `last_sdk_event` | object | Only when the outcome is not `APPROVED`: `{ process, status }` of the last event the Unicus SDK reported, for example `pagehide` / `tab hidden on <screen>, resumable` when the person left the page. Up to 200 characters. Informative only. |
 | `images` | object | Only if Tekbees enabled images for your company: `document_front`, `document_back` (base64 JPEG). Otherwise get them with [Get a transaction status](transaction-status.md). |
 
 **`document`** can contain: `idType`, `idNumberOCR` (the number read from the
@@ -286,6 +290,15 @@ you need to make sure the document belongs to the person you expected.
 | `EXPIRED` | Opened and then abandoned for 20 minutes without a pending failure, or the link was never opened in 24 hours (`finalized_by: NOT_STARTED`). `result_code` `6003`. | Create a new transaction if the user comes back. |
 | `CANCELLED` | The user cancelled the verification (`2041`). | Offer to start again. |
 | `DELETED` | The transaction was deleted. | — |
+
+To contact a person who left ("you only had the signature left"), use
+`pending_steps`, `last_activity_at` and `last_sdk_event` of an `EXPIRED` or
+`REJECTED` event.
+
+An **enrollment** that ends `REJECTED` or `EXPIRED` leaves the person **not
+enrolled**, also when the camera steps passed and a later step (an OTP, a
+signature) was not completed: the person's next transaction is an enrollment
+again, never a verification against an enrollment that did not finish.
 
 Until the transaction is final, a failed attempt is **not** final: the user can
 retry with the same link (up to 10 attempts per capture). Once the event is
