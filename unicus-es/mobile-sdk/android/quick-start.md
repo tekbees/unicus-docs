@@ -153,7 +153,7 @@ cámara. Los callbacks siempre llegan en el hilo principal.
 | `RESUMABLE` | `2003` | El usuario salió antes de terminar. Si vuelves a llamar a `start` con el mismo documento, continúa donde quedó. |
 | `FAILED` | `2052`, `6xxx`, `9010`… | No verificado. `rejectionReason` trae el motivo legible por máquina. |
 | `CANCELED` | `2041`, `2051`, `2061`, `4001` | Cancelado, caducado o sin intentos. Ofrece empezar de nuevo. |
-| `ERROR` | `2054`, `4014`, `9xxx` | Falla técnica. Si `isRetryable` es `true`, basta con reintentar. |
+| `ERROR` | `2054`, `4014`, códigos `9xxx` técnicos | Falla técnica. Si `isRetryable` es `true`, basta con reintentar. |
 
 {% hint style="info" %}
 El resultado en la app es para la pantalla del usuario. **Otorga el acceso

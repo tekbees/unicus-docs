@@ -25,21 +25,15 @@ A business rejection is never an error: it arrives as a result.
 | `SUCCESS` | `2000` | Verified. Send the `tid` to your backend and confirm there. |
 | `WARNING` | `2013` | Possible duplicate identity: held for manual review. Treat as pending; the decision arrives with the webhook `TRANSACTION_REVIEW_RESOLVED`. |
 | `RESUMABLE` | `2003` | The transaction is still open: the user left, or steps are still pending. Offer to continue; see [Resuming](#resuming). |
-| `FAILED` | `2052`, `4011`, `9010`, `9011`, and other codes below `9000` | Not verified. Show a business message; `rejectionReason` explains a `2052`. |
+| `FAILED` | `2052`, `4011`, `9001`, `9002`, `9006`, `9010`, `9011`, `10001`, `10002`, `10020`, and other codes below `9000` | Not verified. Show a business message; `rejectionReason` explains a `2052`. |
 | `CANCELED` | `2041`, `2051`, `2061`, `4001` | Cancelled, expired, or no attempts left. Let the user start again. |
-| `ERROR` | `2054`, `4012`–`4014`, `9xxx` | Technical failure. When `isRetryable` is true (`2054`, `4014`) just try again. |
+| `ERROR` | `2054`, `4012`–`4014`, the other `9xxx` and `10xxx` codes | Technical failure. When `isRetryable` is true (`2054`, `4014`) just try again. |
 | `UNKNOWN` | none | No code could be determined. Retry, or contact support with the `tid`. |
 
 Every code is listed in [Result codes](result-codes.md). Native code shows the
 outcomes in the platform's style: `UnicusVerificationOutcome.SUCCESS` on
 Android, `.success` on iOS and Flutter.
 
-{% hint style="warning" %}
-Some rejections have codes of `9000` or higher (for example `9001`, the face
-does not match the document) and the SDK reports them with outcome `ERROR`.
-For those, use `resultCode` to tell the user that the person was not
-verified rather than "technical problem". See [Result codes](result-codes.md).
-{% endhint %}
 
 Useful fields of the result:
 

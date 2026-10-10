@@ -97,7 +97,7 @@ verifica si ya la conoce. Tu app pide solo el tipo y el número de documento.
 | `resumable` | 2003 | El usuario salió o faltan pasos. Llama `start` de nuevo con el mismo documento. |
 | `failed` | 2052, 4011, 6xxx… | No verificado. En 2052, `rejectionReason` dice por qué. |
 | `canceled` | 2041, 2051… | Cancelado, caducado o sin intentos. Permite empezar de nuevo. |
-| `error` | 2054, 4014, 9xxx | Falla técnica. Si `isRetryable` es `true`, basta con reintentar. |
+| `error` | 2054, 4014, códigos 9xxx técnicos | Falla técnica. Si `isRetryable` es `true`, basta con reintentar. |
 
 **Retomar.** Si el usuario sale, el siguiente `start` con el mismo documento
 continúa donde quedó (hasta 20 minutos sin actividad): `result.resumed` es

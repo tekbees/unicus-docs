@@ -10,8 +10,9 @@ The result of `start` carries a `resultCode` and an `outcome`. The codes are
 the same as in [Web SDK 5.0](../sdk-web-v5/result-codes.md), the final webhook
 and the transaction status, plus a few codes produced by the SDK itself.
 
-The outcome in the tables is the one the SDK reports. When it is `ERROR` for a
-rejection of the person (for example `9001`), route on the code.
+The outcome in the tables is the one the SDK reports. Rejections of the person
+(the face does not match, the age is not met, the document is rejected) are
+`FAILED`; `ERROR` is reserved for technical failures.
 
 ## Flow and transaction
 
@@ -46,7 +47,7 @@ rejection of the person (for example `9001`), route on the code.
 | --- | --- | --- |
 | `9010` | The face is not certified to be at least the flow's minimum age. | `FAILED` |
 | `9011` | The age could not be estimated from the face. | `FAILED` |
-| `10020` | The person was not verified because of an age restriction. | `ERROR` |
+| `10020` | The person was not verified because of an age restriction. | `FAILED` |
 
 ## Camera and document
 
@@ -67,8 +68,10 @@ attempt limits are reached, the user can retry inside the flow.
 | `7007` | Document marked as fraud in a duplicate review. | `FAILED` |
 | `8001`, `8002` | Not found or not verified in the official registry. | `FAILED` |
 | `8003`–`8006` | Official registry timeout, error or not available. | `FAILED` |
-| `9001` | The face does not match the document photo. | `ERROR` |
-| `9002` | The face does not match the enrolled face. | `ERROR` |
+| `9001` | The face does not match the document photo. | `FAILED` |
+| `9002` | The face does not match the enrolled face. | `FAILED` |
+| `9006` | The photo of the document could not be found. | `FAILED` |
+| `10001`, `10002` | The document classifier could not determine the document, or found it invalid. | `FAILED` |
 | `9004`, `9005`, `9007` | Biometric engine or processing error. | `ERROR` |
 | `10010`, `10011` | Document classifier error. | `ERROR` |
 

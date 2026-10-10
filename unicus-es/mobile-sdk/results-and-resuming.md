@@ -25,22 +25,15 @@ Un rechazo de negocio nunca es un error: llega como resultado.
 | `SUCCESS` | `2000` | Verificado. Envía el `tid` a tu backend y confírmalo allí. |
 | `WARNING` | `2013` | Posible identidad duplicada: en revisión manual. Trátalo como pendiente; la decisión llega con el webhook `TRANSACTION_REVIEW_RESOLVED`. |
 | `RESUMABLE` | `2003` | La transacción sigue abierta: el usuario salió, o aún hay pasos pendientes. Ofrece continuar; consulta [Retomar](#retomar). |
-| `FAILED` | `2052`, `4011`, `9010`, `9011` y otros códigos menores que `9000` | No verificado. Muestra un mensaje de negocio; `rejectionReason` explica un `2052`. |
+| `FAILED` | `2052`, `4011`, `9001`, `9002`, `9006`, `9010`, `9011`, `10001`, `10002`, `10020` y otros códigos menores que `9000` | No verificado. Muestra un mensaje de negocio; `rejectionReason` explica un `2052`. |
 | `CANCELED` | `2041`, `2051`, `2061`, `4001` | Cancelado, caducado o sin intentos. Permite que el usuario empiece de nuevo. |
-| `ERROR` | `2054`, `4012`–`4014`, `9xxx` | Falla técnica. Cuando `isRetryable` es `true` (`2054`, `4014`) basta con reintentar. |
+| `ERROR` | `2054`, `4012`–`4014`, los demás códigos `9xxx` y `10xxx` | Falla técnica. Cuando `isRetryable` es `true` (`2054`, `4014`) basta con reintentar. |
 | `UNKNOWN` | ninguno | No se pudo determinar un código. Reintenta, o contacta a soporte con el `tid`. |
 
 Todos los códigos están en [Códigos de resultado](result-codes.md). El código
 nativo muestra los outcomes en el estilo de cada plataforma:
 `UnicusVerificationOutcome.SUCCESS` en Android, `.success` en iOS y Flutter.
 
-{% hint style="warning" %}
-Algunos rechazos tienen códigos de `9000` o más (por ejemplo `9001`, el rostro
-no coincide con el documento) y el SDK los reporta con outcome `ERROR`. Para
-ellos, usa `resultCode` para decirle al usuario que la persona no quedó
-verificada en lugar de "problema técnico". Consulta
-[Códigos de resultado](result-codes.md).
-{% endhint %}
 
 Campos útiles del resultado:
 

@@ -97,7 +97,7 @@ verifies them if it does. Your app asks only for the document type and number.
 | `resumable` | 2003 | The user left or steps remain. Call `start` again with the same document. |
 | `failed` | 2052, 4011, 6xxx… | Not verified. On 2052, `rejectionReason` says why. |
 | `canceled` | 2041, 2051… | Cancelled, expired or out of attempts. Let the user start again. |
-| `error` | 2054, 4014, 9xxx | Technical failure. When `isRetryable` is true, simply try again. |
+| `error` | 2054, 4014, technical 9xxx codes | Technical failure. When `isRetryable` is true, simply try again. |
 
 **Resuming.** If the user leaves, the next `start` with the same document
 continues where they left off (up to 20 minutes without activity):

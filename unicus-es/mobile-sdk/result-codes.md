@@ -11,8 +11,9 @@ El resultado de `start` trae un `resultCode` y un `outcome`. Los códigos son lo
 mismos de [Web SDK 5.0](../sdk-web-v5/result-codes.md), del webhook final y del
 estado de la transacción, más algunos códigos que produce el propio SDK.
 
-El outcome de las tablas es el que reporta el SDK. Cuando es `ERROR` para un
-rechazo de la persona (por ejemplo `9001`), decide según el código.
+El outcome de las tablas es el que reporta el SDK. Los rechazos de la persona
+(el rostro no coincide, no cumple la edad, el documento es rechazado) son
+`FAILED`; `ERROR` queda para las fallas técnicas.
 
 ## Flujo y transacción
 
@@ -47,7 +48,7 @@ rechazo de la persona (por ejemplo `9001`), decide según el código.
 | --- | --- | --- |
 | `9010` | No se certifica que el rostro tenga al menos la edad mínima del flujo. | `FAILED` |
 | `9011` | No se pudo estimar la edad a partir del rostro. | `FAILED` |
-| `10020` | La persona no se verificó por una restricción de edad. | `ERROR` |
+| `10020` | La persona no se verificó por una restricción de edad. | `FAILED` |
 
 ## Cámara y documento
 
@@ -69,8 +70,10 @@ dentro del flujo.
 | `7007` | Documento marcado como fraude en una revisión de duplicado. | `FAILED` |
 | `8001`, `8002` | No encontrado o no verificado en el registro oficial. | `FAILED` |
 | `8003`–`8006` | Tiempo agotado, error o registro oficial no disponible. | `FAILED` |
-| `9001` | El rostro no coincide con la foto del documento. | `ERROR` |
-| `9002` | El rostro no coincide con el rostro enrolado. | `ERROR` |
+| `9001` | El rostro no coincide con la foto del documento. | `FAILED` |
+| `9002` | El rostro no coincide con el rostro enrolado. | `FAILED` |
+| `9006` | No se encontró la foto del documento. | `FAILED` |
+| `10001`, `10002` | El clasificador no pudo determinar el documento o lo encontró inválido. | `FAILED` |
 | `9004`, `9005`, `9007` | Error del motor biométrico o del procesamiento. | `ERROR` |
 | `10010`, `10011` | Error del clasificador de documentos. | `ERROR` |
 

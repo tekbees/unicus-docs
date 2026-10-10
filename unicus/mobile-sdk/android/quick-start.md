@@ -153,7 +153,7 @@ camera. Callbacks always arrive on the main thread.
 | `RESUMABLE` | `2003` | The user left before finishing. Calling `start` again with the same document continues where they left off. |
 | `FAILED` | `2052`, `6xxx`, `9010`… | Not verified. `rejectionReason` gives the machine-readable reason. |
 | `CANCELED` | `2041`, `2051`, `2061`, `4001` | Cancelled, expired or out of attempts. Offer to start again. |
-| `ERROR` | `2054`, `4014`, `9xxx` | Technical failure. When `isRetryable` is true, just try again. |
+| `ERROR` | `2054`, `4014`, technical `9xxx` codes | Technical failure. When `isRetryable` is true, just try again. |
 
 {% hint style="info" %}
 The result in the app is for the user's screen. **Grant access from your
