@@ -67,7 +67,11 @@ observe it (`button.getAttribute('state')`).
    to the Unicus origin only). Where the browser supports it the iframe is
    shown inside a modal `<dialog>`: the page behind becomes inert, focus stays
    in the verification and the Escape key does not close it (the verification
-   has its own close button). Your page stays loaded underneath.
+   has its own close button). Your page stays loaded underneath. On a computer
+   it stays visible behind the verification, blurred and dimmed, so the user
+   sees they are still on your site (where the browser cannot blur, or the user
+   asked for less transparency, it is only dimmed). On a phone or tablet the
+   verification fills the screen.
 3. **Events.** Progress arrives through `OnUnicus:details`; the end through
    `OnUnicus:finished` or `OnUnicus:exit`. The iframe is removed when either of
    them is emitted and focus returns to the button. If the verification does

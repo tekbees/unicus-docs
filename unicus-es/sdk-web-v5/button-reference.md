@@ -69,7 +69,10 @@ estilos u observarlo (`button.getAttribute('state')`).
    se muestra dentro de un `<dialog>` modal: la página de fondo queda inerte, el
    foco permanece en la verificación y la tecla Escape no la cierra (la
    verificación tiene su propio botón de cierre). Tu página sigue cargada
-   debajo.
+   debajo. En un computador sigue visible detrás de la verificación, desenfocada
+   y oscurecida, para que el usuario vea que sigue en tu sitio (si el navegador
+   no puede desenfocar, o el usuario pidió menos transparencia, solo se
+   oscurece). En un celular o tableta la verificación ocupa toda la pantalla.
 3. **Eventos.** El progreso llega a través de `OnUnicus:details`; el final, a
    través de `OnUnicus:finished` o `OnUnicus:exit`. El iframe se quita cuando se
    emite cualquiera de los dos y el foco vuelve al botón. Si la verificación no

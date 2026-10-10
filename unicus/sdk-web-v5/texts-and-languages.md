@@ -39,7 +39,7 @@ flowchart LR
 | Button label | `label` attribute of `<unicus-btn>` (default "Validar identidad" / "Verify identity"). | Per page. |
 | Company name, logo, colours | Portal → Company → Settings. | — |
 | Step title and description | Portal → flow editor, on each step. Shown as the screen heading, in the desktop mirror and in the progress list. | Spanish and English fields; a single value is used for both. |
-| Consent text and privacy notice link | Flow editor, `consent` step. When the consent text is left empty, the Unicus default text is shown with your company name in it; when the privacy link is left empty (or is not an `https://` address), the Unicus privacy notice is linked. The list of what will be captured is generated from the steps of the flow. | Spanish and English. |
+| Consent text and privacy notice link | Flow editor, `consent` step. When the consent text is left empty, the Unicus default text is shown with your company name in it (it asks to process biometric data only when the flow has camera steps, otherwise personal data); when the privacy link is left empty (or is not an `https://` address), the Tekbees privacy policy is linked, in the user's language. The list of what will be captured is generated from the steps of the flow. | Spanish and English. |
 | Instructions before the camera | Flow editor, `info` step (bulleted items). | Spanish and English. |
 | Agreement shown with the electronic signature | Flow editor, `signature` step: agreement text and an optional document URL to display. | Spanish and English. |
 | Form field labels and option labels | Flow editor, `form` step. | Spanish and English. |
