@@ -23,28 +23,12 @@
 * [Versioning](sdk-web-v5/versioning.md)
 * [Support](sdk-web-v5/support.md)
 
-## WEB SDK 4.x INTEGRATION PROCESS (LEGACY) <a href="#sdk-web" id="sdk-web"></a>
-
-* [Integration overview](sdk-web/integration.md)
-* [Unicus Button](sdk-web/unicus-button.md)
-* [Events](sdk-web/eventos.md)
-* [Unicus Link](sdk-web/unicus-link.md)
-* [How to get Customer Token?](sdk-web/how-to-get-customer-token.md)
-* [Compatibility](sdk-web/compatibilidad.md)
-* [Appearance configuration](sdk-web/configuracion.md)
-* [Encryption](sdk-web/encryption.md)
-* [Result Codes and References](sdk-web/result-codes-and-references.md)
-* [Webhooks](sdk-web/types-webhook.md)
-* [Get a transaction status](sdk-web/get-a-transaction-status.md)
-* [Support](sdk-web/support.md)
-* [Versioning](sdk-web/releases.md)
-
 ## MOBILE SDK INTEGRATION PROCESS <a href="#mobile-sdk" id="mobile-sdk"></a>
 
 * [Overview](mobile-sdk/overview.md)
 * [Flows and UI steps](mobile-sdk/flows-and-ui-steps.md)
 * [Results and resuming](mobile-sdk/results-and-resuming.md)
-* [ANDROID INTEGRATION](mobile-sdk/android-integration.md)
+* [Android](mobile-sdk/android-integration.md)
   * [Quick start](mobile-sdk/android/quick-start.md)
   * [Installation](mobile-sdk/android/installation.md)
   * [Configuration](mobile-sdk/android/configuration.md)
@@ -53,7 +37,7 @@
   * [Custom UI steps](mobile-sdk/android/custom-ui-steps.md)
   * [Texts and languages](mobile-sdk/android/texts-and-languages.md)
   * [Release checklist](mobile-sdk/android/release-checklist.md)
-* [IOS INTEGRATION](mobile-sdk/ios-integration.md)
+* [iOS](mobile-sdk/ios-integration.md)
   * [Quick start](mobile-sdk/ios/quick-start.md)
   * [Installation](mobile-sdk/ios/installation.md)
   * [Configuration](mobile-sdk/ios/configuration.md)
@@ -63,7 +47,7 @@
   * [Texts and languages](mobile-sdk/ios/texts-and-languages.md)
   * [Objective-C](mobile-sdk/ios/objective-c.md)
   * [Release checklist](mobile-sdk/ios/release-checklist.md)
-* [FLUTTER INTEGRATION](mobile-sdk/flutter-integration.md)
+* [Flutter](mobile-sdk/flutter-integration.md)
   * [Quick start](mobile-sdk/flutter/quick-start.md)
   * [Installation](mobile-sdk/flutter/installation.md)
   * [Configuration](mobile-sdk/flutter/configuration.md)
