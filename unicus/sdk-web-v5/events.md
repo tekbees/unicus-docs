@@ -212,7 +212,8 @@ recover from, the computer shows a failure and `finished` carries that code.
 Same envelope as `finished`; `transaction.state` is
 `{ "exited": true, "success": false }`, without `resultCode`. The user closed
 the verification with its close button before a final state, or closed an
-error screen. The next click on the button creates a new transaction.
+error screen. The next click on the button resumes the same transaction while
+it is open (a new one if it expired).
 
 Closing never cancels the transaction: it stays open and the user can resume
 it while it is valid; if nobody does, it expires in Unicus. On a computer, the

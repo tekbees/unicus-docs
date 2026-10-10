@@ -39,7 +39,7 @@ stateDiagram-v2
   loading --> error: creation failed
   loading --> no_flow: no flow assigned (2002)
   ready --> active: click (or click during loading)
-  active --> ready: finished / exit → next click creates a new transaction
+  active --> ready: finished (next click creates a new one) or exit (next click resumes it)
   active --> error: verification did not load within 20 s
   error --> loading: click (retry)
 ```
@@ -67,7 +67,11 @@ observe it (`button.getAttribute('state')`).
    to the Unicus origin only). Where the browser supports it the iframe is
    shown inside a modal `<dialog>`: the page behind becomes inert, focus stays
    in the verification and the Escape key does not close it (the verification
-   has its own close button). Your page stays loaded underneath.
+   has its own close button). Your page stays loaded underneath. On a computer
+   it stays visible behind the verification, blurred and dimmed, so the user
+   sees they are still on your site (where the browser cannot blur, or the user
+   asked for less transparency, it is only dimmed). On a phone or tablet the
+   verification fills the screen.
 3. **Events.** Progress arrives through `OnUnicus:details`; the end through
    `OnUnicus:finished` or `OnUnicus:exit`. The iframe is removed when either of
    them is emitted and focus returns to the button. If the verification does
@@ -80,8 +84,8 @@ observe it (`button.getAttribute('state')`).
    holds the previous `tid`.
 5. **Removal.** If the element is removed from the DOM while the
    verification is open, the iframe is removed with it and no `finished` or
-   `exit` is emitted. A button that is connected again creates a new
-   transaction on the next click.
+   `exit` is emitted. A button that is connected again resumes the same
+   transaction on the next click while it is open.
 
 The flow is not rendered in a popup window, so popup blockers do not affect it.
 

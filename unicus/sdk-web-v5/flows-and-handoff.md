@@ -55,7 +55,7 @@ camera step on, the rest of the flow (including later non-camera steps such as
   hand-off link does not: the user requests a new one from the computer, and
   the new link resumes at the first incomplete step.
 * Reloading **your** page while the verification is open closes it; the
-  button on the reloaded page creates a new transaction.
+  button on the reloaded page resumes the same transaction while it is open.
 * A transaction ends with `success` only when every required step passed. A
   step configured as optional can fail without failing the transaction.
   Liveness, document and face match are always required.

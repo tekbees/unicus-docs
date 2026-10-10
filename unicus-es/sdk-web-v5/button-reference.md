@@ -39,7 +39,7 @@ stateDiagram-v2
   loading --> error: falló la creación
   loading --> no_flow: sin flujo asignado (2002)
   ready --> active: clic (o clic durante loading)
-  active --> ready: finished / exit → el siguiente clic crea una transacción nueva
+  active --> ready: finished (el siguiente clic crea una nueva) o exit (el siguiente clic la retoma)
   active --> error: la verificación no cargó en 20 s
   error --> loading: clic (reintento)
 ```
@@ -69,7 +69,10 @@ estilos u observarlo (`button.getAttribute('state')`).
    se muestra dentro de un `<dialog>` modal: la página de fondo queda inerte, el
    foco permanece en la verificación y la tecla Escape no la cierra (la
    verificación tiene su propio botón de cierre). Tu página sigue cargada
-   debajo.
+   debajo. En un computador sigue visible detrás de la verificación, desenfocada
+   y oscurecida, para que el usuario vea que sigue en tu sitio (si el navegador
+   no puede desenfocar, o el usuario pidió menos transparencia, solo se
+   oscurece). En un celular o tableta la verificación ocupa toda la pantalla.
 3. **Eventos.** El progreso llega a través de `OnUnicus:details`; el final, a
    través de `OnUnicus:finished` o `OnUnicus:exit`. El iframe se quita cuando se
    emite cualquiera de los dos y el foco vuelve al botón. Si la verificación no
@@ -82,8 +85,8 @@ estilos u observarlo (`button.getAttribute('state')`).
    conserva el `tid` anterior.
 5. **Eliminación.** Si el elemento se quita del DOM mientras la verificación
    está abierta, el iframe se quita con él y no se emite `finished` ni `exit`.
-   Un botón que se vuelve a conectar crea una transacción nueva en el siguiente
-   clic.
+   Un botón que se vuelve a conectar retoma la misma transacción en el
+   siguiente clic mientras siga abierta.
 
 El flujo no se muestra en una ventana emergente, así que los bloqueadores de
 ventanas emergentes no lo afectan.

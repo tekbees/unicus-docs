@@ -93,7 +93,9 @@ Permissions-Policy: camera=(self "https://id.idunicus.com"), geolocation=(self "
   resumes expires.
 * **Local storage.** The button keeps the company colours in `localStorage`
   (key `unicus-btn:brand:<Customer Token>`) to paint the brand colour on the
-  first frame of later visits. No personal data is stored.
+  first frame of later visits, and the key that lets it resume an open
+  transaction (under a hashed name: the document number is not stored; the
+  entry is removed when the transaction ends). No personal data is stored.
 
 ## Data usage
 
