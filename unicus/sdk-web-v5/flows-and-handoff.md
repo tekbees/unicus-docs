@@ -27,13 +27,13 @@ portal applies to the next transaction without touching your page.
 | --- | --- | --- |
 | `consent` | Reads what will be captured and why, and accepts. Always before the first camera step (the portal does not publish a flow with the consent after a camera step); added automatically if the flow does not include it. | Any device |
 | `info` | Reads instructions (good light, document at hand). | Any device |
-| `liveness` | Video selfie. Proves a live person is present and captures the face. | Phone or laptop camera |
-| `document` | Photographs the front and back of the document and confirms the data read by OCR. Server-side validations configured per flow: document classifier, id number match, official registry lookup. | Phone or laptop camera |
+| `liveness` | Video selfie. Proves a live person is present and captures the face. | Phone or tablet camera |
+| `document` | Photographs the front and back of the document and confirms the data read by OCR. Server-side validations configured per flow: document classifier, id number match, official registry lookup, and document material (rejects a capture of a photocopy, a screen or a printout; the user captures it again). | Phone or tablet camera |
 | `face_match` | The face from the selfie is compared against the document photo, or against the face enrolled earlier. | Server, inside the camera session |
 | `signature` | Draws an electronic signature on screen after reading the document shown. | Any device |
 | `otp` | Receives a one-time code by SMS, WhatsApp or email and types it. | Any device |
 | `form` | Fills a data form defined in the portal (fields, types, validation rules). | Any device |
-| `age_check` | No screen: Unicus checks the estimated age against a threshold. | Server |
+| `age_check` | No screen: Unicus checks the age estimated from the liveness selfie against a threshold (8, 13, 16, 18, 21, 25 or 30). Placed right after the camera session that captures the liveness. | Server |
 
 <div><figure><img src="../.gitbook/assets/web-sdk-5-consent.jpg" alt="Consent screen on a phone" width="280"><figcaption><p>Consent: what will be captured and why.</p></figcaption></figure> <figure><img src="../.gitbook/assets/web-sdk-5-before-start.jpg" alt="Preparation screen before the camera opens" width="280"><figcaption><p>Preparation before the camera opens.</p></figcaption></figure></div>
 
@@ -41,19 +41,29 @@ Screens use the logo and colours of your company; the examples show a sample
 company.
 
 Consecutive camera steps (`liveness`, `document`, `face_match`) run in one
-camera session, so the user opens the camera once. Steps that need no camera
-can be completed on the computer before handing off to the phone.
+camera session, so the user opens the camera once. On a computer, the steps
+that come before the first camera step are completed there; from the first
+camera step on, the rest of the flow (including later non-camera steps such as
+`signature`, `otp` or `form`) runs on the phone.
 
 ### Rules the integrator can rely on
 
 * The order of steps is enforced by Unicus. A step cannot be skipped or
   submitted out of order.
-* Progress is server-side. If the user reloads the page or reopens the link,
-  the flow resumes at the first incomplete step.
+* Progress is server-side. If the verification tab on the phone is reloaded,
+  the flow resumes at the first incomplete step. Reopening an already used
+  hand-off link does not: the user requests a new one from the computer, and
+  the new link resumes at the first incomplete step.
+* Reloading **your** page while the verification is open closes it; the
+  button on the reloaded page resumes the same transaction while it is open.
 * A transaction ends with `success` only when every required step passed. A
   step configured as optional can fail without failing the transaction.
-* `OnUnicus:details` reports every step by its `stepId`, so your page can show
+  Liveness, document and face match are always required.
+* `OnUnicus:details` reports steps by their `stepId`, so your page can show
   progress for the steps that exist in your flow instead of a fixed list.
+  `consent` and `info` steps are not reported, and steps completed on the
+  computer before a hand-off are not reported either (see
+  [Events](events.md)).
 
 ### Flow variants
 
@@ -79,27 +89,47 @@ sequenceDiagram
   U-->>D: final result → OnUnicus:finished on your page
 ```
 
-Document capture needs a phone camera. When the flow is opened from a device
-without a usable camera (a desktop or laptop), the web app offers the hand-off
-channels enabled for your company:
+Camera steps run on a phone or tablet. When the flow is opened on a desktop
+or laptop computer, it always hands the camera steps off, even if the computer
+has a webcam. Phones and tablets are recognised by their browser, not by the
+size of the window. When the flow reaches its first camera step, the web app
+offers the hand-off channels enabled for your company:
 
 | Channel | What happens |
 | --- | --- |
-| QR code | The user scans it with the phone camera. |
-| WhatsApp | The user types the phone number; Unicus sends a template message with the link. |
-| SMS | The user types the phone number; Unicus sends a text message with the link. |
+| QR code | The user scans it with the phone camera. Always available. |
+| WhatsApp | The user types the phone number; Unicus sends a template message with the link. Enabled per company. |
+| SMS | The user types the phone number; Unicus sends a text message with the link. Enabled per company. |
+
+When the QR code is the only channel of your company, the computer goes
+straight to the QR code. Each WhatsApp or SMS message carries a new link; the
+QR code keeps its link while it is valid. If a message does not arrive, the
+user can send it again after a few seconds; Unicus limits how many messages
+one transaction and one phone number can receive, and says so on the screen
+when the limit is reached (the user can still use the QR code).
 
 <figure><img src="../.gitbook/assets/web-sdk-5-handoff-options.jpg" alt="Hand-off options on a computer: QR code, WhatsApp and SMS" width="563"><figcaption><p>The channels enabled for the company, offered on the computer.</p></figcaption></figure>
 
 The computer screen then becomes a **mirror**: it shows each step the phone
 completes (front of the document, face match, back, data confirmation…) in real
 time and finally the result. The customer page keeps receiving `OnUnicus:*`
-events from the computer, so your integration does not change: `finished`
-arrives on the computer when the phone finishes.
+events from the computer, so your integration does not change: the result
+screen appears on the computer when the phone finishes and Unicus confirms the
+result, and `finished` is emitted when the user closes it. Besides the live
+updates, the computer checks the transaction with Unicus regularly, so
+the result still arrives if a live update is lost.
+
+If the page is closed on the phone by mistake, nothing is lost: the computer
+offers **Send the link again**, and the new link resumes at the first pending
+step. If the transaction expires while the computer is waiting, the computer
+shows "the session expired" and emits `OnUnicus:error`; the next click on the
+button starts a new verification.
 
 {% hint style="info" %}
-If the phone finishes but the computer tab was closed, the result is still
-recorded in Unicus. Your webhook or `query-transaction` has it.
+If the phone finishes but the computer tab was closed (or the user closed the
+verification on the computer, which emits `exit`), the result is still
+recorded in Unicus. Closing the computer side never cancels the transaction.
+Your webhook or `query-transaction` has the result.
 {% endhint %}
 
 ### One-time links
@@ -122,15 +152,17 @@ does not build verification links.
 
 ## Running everything on the phone
 
-When the button is pressed on a phone, the whole flow runs there, in the same
-iframe. No hand-off screen is shown.
+When the button is pressed on a phone or tablet, the whole flow runs there, in
+the same iframe. No hand-off screen is shown.
 
 ## Timing and data usage
 
-* The biometric engine is downloaded while the user reads the consent and
-  instruction screens and is cached by the browser for later transactions on
-  the same device, so a first visit on a slow connection takes longer than the
-  following ones.
+* On the device that runs the camera, the biometric engine is downloaded
+  while the user reads the consent and instruction screens and is cached by
+  the browser for later transactions on the same device, so a first visit on a
+  slow connection takes longer than the following ones. When the browser has
+  data saving enabled or reports a 2G connection, the download waits until the
+  camera step starts. Flows without camera steps never download it.
 * A complete enrolment (selfie plus two document sides) uploads about 1.5 MB.
 * A transaction left open expires in Unicus; reopening the link after expiry
   shows "the session expired".

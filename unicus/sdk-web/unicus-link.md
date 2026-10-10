@@ -6,6 +6,12 @@ description: >-
 
 # Unicus Link
 
+{% hint style="warning" %}
+**Web SDK 4.x (legacy).** Unicus Link continues with Web SDK 5.0: see
+[Unicus Link](../sdk-web-v5/unicus-link.md) in the 5.0 section. When 5.0 is
+released, links open the 5.0 verification.
+{% endhint %}
+
 Unicus Link lets you create a verification URL that can be sent to a user by
 email, SMS, WhatsApp, or another communication channel.
 

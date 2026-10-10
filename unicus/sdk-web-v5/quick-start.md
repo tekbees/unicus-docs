@@ -8,9 +8,9 @@ description: >-
 
 {% hint style="warning" %}
 **Coming soon.** Web SDK 5.0 is not yet available in production. Tekbees will
-announce the release date; until then the production script URL shown in this
-documentation is not active and Web SDK 4.x remains the version to use. Ask
-Tekbees for access to the sandbox environment to start your integration.
+announce the release date. On that date Web SDK 4.x stops working and every
+integration runs 5.0, including pages that still load the current script URL.
+Until then, ask Tekbees for access to the sandbox environment to prepare.
 {% endhint %}
 
 ```mermaid
@@ -45,7 +45,7 @@ optional attributes). A breaking change will be published under a new path.
 ```
 {% endcode %}
 
-<figure><img src="../.gitbook/assets/web-sdk-5-button.jpg" alt="The Unicus button on a customer page: default size and large size with a custom label" width="563"><figcaption><p>The button on a page, in the company colour: default, and large with a custom label.</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/web-sdk-5-button.jpg" alt="The Unicus button on a customer page: default, and large with a custom label and square corners" width="563"><figcaption><p>The button on a page, in the company colour: default, and large with a custom label and square corners.</p></figcaption></figure>
 
 * `customerid`: your company's Customer Token (Company → Settings in the
   administrative portal).
@@ -53,13 +53,24 @@ optional attributes). A breaking change will be published under a new path.
   know them yet and verifies them if it does. `liveness` runs a liveness-only
   flow and needs no `clientid`.
 * `clientid`: document type and number separated by `:` (`ID`, `FD`, `PP`,
-  `DL`).
+  `DL`). Required for `enrollment-verify`; without a number after the `:` the
+  button goes to *Retry* and emits `OnUnicus:error`.
 
-The button creates the transaction as soon as it is in the page. It is painted
-neutral until Unicus answers with your company colours, then it shows the brand
-colour and the label. One click opens the verification; if the user clicks
+The button creates the transaction as soon as it is in the page. On the first
+visit it is painted neutral until Unicus answers with your company colours;
+the colours are then remembered in the browser (`localStorage`), so later
+visits show the brand colour from the first paint. One click opens the verification; if the user clicks
 while the transaction is still being created, the flow opens as soon as it is
 ready.
+
+To avoid a layout jump while the script loads, reserve the button's space in
+your stylesheet:
+
+{% code overflow="wrap" %}
+```css
+unicus-btn:not(:defined) { display: inline-block; min-width: 200px; height: 48px; }
+```
+{% endcode %}
 
 ## 3. Listen to the events
 
@@ -74,7 +85,7 @@ ready.
   });
 
   button.addEventListener('OnUnicus:details', ({ detail }) => {
-    // Progress: one event per step the user completes (or retries).
+    // Progress only (step started, completed, retried, failed). Never the final result.
     console.log('step', detail.transaction.state);
   });
 
@@ -90,11 +101,12 @@ ready.
   });
 
   button.addEventListener('OnUnicus:exit', () => {
-    // The user closed the verification before finishing.
+    // The user closed the verification before a final state.
   });
 
   button.addEventListener('OnUnicus:error', ({ detail }) => {
-    // The transaction could not be created or the flow could not continue.
+    // The transaction could not be created, or the flow stopped on an error screen
+    // (in that case the verification stays open and OnUnicus:exit follows).
     console.error(detail.message, detail.resultCode);
   });
 </script>
@@ -177,7 +189,44 @@ container.appendChild(button);
 Changing `customerid`, `clientid`, `transactiontype` or `data-flow-id` on a
 rendered button discards the current transaction and creates a new one.
 
+## Starting over
+
+You do not need to create the transaction yourself to let the user try again:
+
+* After `OnUnicus:finished`, the next click (or `button.open()`) creates a
+  **new** transaction, emits `OnUnicus:loaded` with the new `tid` and opens the
+  flow.
+* After `OnUnicus:exit`, the next click **resumes** the same transaction while
+  it is open: the user continues where they left off, without repeating the
+  steps already done. `OnUnicus:loaded` is emitted again with the same `tid`.
+  If the transaction already expired, a new one is created.
+* After `OnUnicus:error` from the button (state `error`, label *Retry*), a
+  click or `button.open()` retries the creation.
+* A button whose state is `no_flow` does not open. Fix the flow assignment in
+  the portal, then reload the page or render a new element.
+
+Reloading your page while the verification is open closes it: no
+`finished` or `exit` reaches the reloaded page. The button on the reloaded page
+resumes the same transaction while it is open (same `tid`), so the user
+continues where they left off; if it expired, a new one is created. The button
+remembers the open transaction in the browser, so this works on the same
+browser only. Your webhook or [Get a transaction status](transaction-status.md)
+always has the final result.
+
 ## Framework notes
+
+### Single-page applications
+
+* Keep the element mounted while the verification is open. Removing it from
+  the DOM (route change, conditional rendering, a list re-keyed) closes the
+  verification **without** `OnUnicus:finished` or `OnUnicus:exit`; the next
+  click on a re-mounted button resumes the same transaction while it is open.
+* Do not change `customerid`, `clientid`, `transactiontype` or `data-flow-id`
+  while the verification is open: each change creates a new transaction.
+* Re-rendering with the same attribute values does nothing: the transaction is
+  kept.
+* Attach listeners to the element (or to `document`) and remove them when the
+  component unmounts.
 
 ### React
 
@@ -222,6 +271,9 @@ declare module 'react' {
         language?: 'es' | 'en';
         label?: string;
         size?: 'lg';
+        radius?: string;
+        'data-flow-id'?: string;
+        disabled?: boolean;
       };
     }
   }

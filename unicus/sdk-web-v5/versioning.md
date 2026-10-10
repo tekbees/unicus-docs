@@ -6,19 +6,21 @@ description: Versioning policy and release notes of Unicus Web SDK 5.0.
 
 {% hint style="warning" %}
 **Coming soon.** Web SDK 5.0 is not yet available in production. Tekbees will
-announce the release date; until then the production script URL shown in this
-documentation is not active and Web SDK 4.x remains the version to use. Ask
-Tekbees for access to the sandbox environment to start your integration.
+announce the release date. On that date Web SDK 4.x stops working and every
+integration runs 5.0, including pages that still load the current script URL.
+Until then, ask Tekbees for access to the sandbox environment to prepare.
 {% endhint %}
 
 The script is published under a major-version path:
 
 | Path | Receives |
 | --- | --- |
-| `https://unicusbtn.idunicus.com/v5/sdkButton.js` | Every compatible 5.x update (bug fixes, new optional attributes, new events). Pages pick it up on the next load; no action needed. |
+| `https://unicusbtn.idunicus.com/v5/sdkButton.js` | Every compatible 5.x update (bug fixes, new optional attributes, new events). Browsers may keep the previous copy for a few minutes; pages pick the update up on a later load with no action needed. |
+| `https://unicusbtn.idunicus.com/sdkButton.js` | The address of 4.x integrations. From the 5.0 release date it serves the same script as `/v5/`, so existing pages move to 5.0 without changes. |
 | `https://unicusbtn.idunicus.com/v6/…` (future) | Breaking changes. Announced in advance; the previous path keeps working during the transition. |
 
-`customElements.get('unicus-btn').version` returns the exact version loaded.
+`customElements.get('unicus-btn').version` returns the exact version loaded
+(include it when you contact [Support](support.md)).
 
 ## 5.0.0
 
@@ -31,25 +33,16 @@ The script is published under a major-version path:
   progress and the final result on the computer.
 * One-time hand-off tokens in the URL fragment; the transaction id never
   travels in a link.
-* Button redesign: brand colours applied automatically and remembered, `label`
-  and `size` attributes, visible states, click during loading honoured, new
+* Button redesign: one piece with the Unicus mark, brand colours applied
+  automatically and remembered, `label`, `size` and `radius` attributes, visible states, click during loading honoured, new
   transaction after every finished or exited flow.
 * Events: `stepProgress` payloads per step, `resultCode` in `finished` and
-  `error`, `2002` *not configured*, `2013` *under review*.
-* Texts per flow in Spanish and English; language selector on every screen;
-  `label` attribute on the button.
+  `error`, `2002` *not configured*, `2013` *under review*. Events bubble and
+  are `composed`, so a listener on `document` receives them.
+* Texts per flow in Spanish and English; language selector on the step
+  screens; `label` attribute on the button.
 * Security: short-lived sessions bound to one transaction, origin-checked
   messaging, strict iframe permissions, no referrer leakage.
 * Public contract (attributes, events, `transactionId`) compatible with 4.x.
-
-**When the 5.0 API is deployed in your environment**
-
-* Sessions issued before the deployment stop working: transactions that were open at that
-  moment must be started again (the user sees an expired session and a new transaction is
-  needed).
-* No domain registration: the API accepts calls from any origin, you do not need to send
-  Tekbees the domain of your site.
-* Webhooks: new processes `CANCEL_TRANSACTION` and `DELETE_TRANSACTION`, document-stage failures
-  as `MATCH_DOCUMENT`, expiration sent once. See [Webhooks](webhooks.md#changes-from-october-2026).
-* A camera capture without a recorded consent is refused (`2052` with
-  `CONSENT_NOT_RECORDED`); flows built in the portal always put the consent first.
+* Replaces 4.x for every integration on the release date; the 4.x script URL
+  serves 5.0 from then on.

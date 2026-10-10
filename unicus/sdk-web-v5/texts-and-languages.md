@@ -39,7 +39,7 @@ flowchart LR
 | Button label | `label` attribute of `<unicus-btn>` (default "Validar identidad" / "Verify identity"). | Per page. |
 | Company name, logo, colours | Portal → Company → Settings. | — |
 | Step title and description | Portal → flow editor, on each step. Shown as the screen heading, in the desktop mirror and in the progress list. | Spanish and English fields; a single value is used for both. |
-| Consent text and privacy notice link | Flow editor, `consent` step. The company name is inserted automatically. | Spanish and English. |
+| Consent text and privacy notice link | Flow editor, `consent` step. When the consent text is left empty, the Unicus default text is shown with your company name in it (it asks to process biometric data only when the flow has camera steps, otherwise personal data); when the privacy link is left empty (or is not an `https://` address), the Tekbees privacy policy is linked, in the user's language. The list of what will be captured is generated from the steps of the flow. | Spanish and English. |
 | Instructions before the camera | Flow editor, `info` step (bulleted items). | Spanish and English. |
 | Agreement shown with the electronic signature | Flow editor, `signature` step: agreement text and an optional document URL to display. | Spanish and English. |
 | Form field labels and option labels | Flow editor, `form` step. | Spanish and English. |
@@ -50,20 +50,27 @@ A text left empty in the flow falls back to the Unicus default for that step.
 
 ## How the language is chosen
 
-1. The `language` attribute of the button (`es` or `en`), when present.
+1. The `language` attribute of the button, when present (`es`, `en`, or a
+   regional variant such as `en-US`). Any other value means Spanish.
 2. Otherwise the browser language, when it is one of the supported ones.
 3. Otherwise Spanish.
 
-The user can switch between Spanish and English at any time with the selector
-in the top bar of the verification screens; the choice applies to every text,
-including the camera guidance, and travels with the link when the flow
-continues on the phone. Messages sent to the phone (SMS, WhatsApp, OTP) use the
-language active at the moment of sending.
+The same language is used for the button label and for the verification
+screens.
+
+The user can switch between Spanish and English with the selector in the top
+bar of the step screens, the hand-off options and the error screens; the choice applies to the screen
+texts and the flow texts, and travels with the link when the flow continues on
+the phone. The camera guidance takes the language active when the camera
+opens. Messages sent to the phone (SMS, WhatsApp, OTP) use the language active
+at the moment of sending. The selector does not change the label of the button
+on your page.
 
 {% hint style="info" %}
 Flow texts accept either one value or one value per language. When only one
-value is provided it is shown as is in both languages, so it is worth filling
-both when your users mix languages.
+value is provided it is shown as is in both languages (a text filled only in
+Spanish is shown in Spanish to English users too), so it is worth filling both
+when your users mix languages.
 {% endhint %}
 
 ## Example

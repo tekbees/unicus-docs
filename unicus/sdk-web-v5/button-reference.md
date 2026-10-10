@@ -12,18 +12,22 @@ description: >-
 | --- | --- | --- | --- |
 | `customerid` | Yes | Customer Token | Public token of the company (Company → Settings in the administrative portal). Sent as the `X-Customer-ID` header when the transaction is created. |
 | `transactiontype` | Yes | `enrollment-verify`, `liveness` | `enrollment-verify` enrols a person Unicus does not know and verifies one it already knows; the decision is made by Unicus. `liveness` runs a liveness-only flow. The portal assigns a flow to each transaction type. |
-| `clientid` | For `enrollment-verify` | `TYPE:NUMBER` | Document type and number, for example `ID:123456789`. Types: `ID` national id, `FD` foreign document, `PP` passport, `DL` driver licence. Sent as `documentType` and `externalDatabaseRefID`. |
-| `language` | No | `es`, `en` | Language of the button label and of the verification screens. Defaults to the browser language when supported, otherwise Spanish. |
+| `clientid` | For `enrollment-verify` | `TYPE:NUMBER` | Document type and number, for example `ID:123456789`. Types: `ID` national id, `FD` foreign document, `PP` passport, `DL` driver licence. Sent as `documentType` and `externalDatabaseRefID`. The button only checks that a number follows the `:`; the type is validated by Unicus. Ignored for `liveness`. |
+| `language` | No | `es`, `en` | Language of the button label and of the verification screens. Regional variants are accepted (`en-US` → `en`). Without the attribute the browser language is used when supported; any unsupported value (attribute or browser) means Spanish. |
 | `data-flow-id` | No | flow slug | Runs a specific flow variant instead of the one assigned to the transaction type (for example an A/B variant or a flow for a specific product). The slug is shown in the portal. An unknown slug leaves the button in the *not configured* state (`2002`). |
 | `label` | No | text | Replaces the default label ("Validar identidad" / "Verify identity"), for example `Ingresar con mi rostro` on a login screen. |
-| `size` | No | `lg` | Larger button (56 px pill instead of 44 px). |
-| `color` | No | `#rrggbb` | Forces the brand colour. When absent, the colour configured for the company in the portal is applied as soon as the transaction is created and remembered in the browser for the next visits. |
+| `size` | No | `lg` | Larger button (58 px tall instead of 48 px). |
+| `radius` | No | number of pixels, or `pill` | Corner rounding, so the button matches the buttons of your site: `0` for square corners, `4`, `8`… or `pill` for fully round ends. Default `12`. The CSS variable `--unicus-radius` does the same. |
+| `color` | No | `#rrggbb` | Forces the brand colour. When absent, the colour configured for the company in the portal is applied as soon as the transaction is created and remembered in the browser (`localStorage`, per Customer Token) for the next visits. |
 | `textcolor` | No | `#rrggbb` | Forces the label colour. |
-| `disabled` | No | — | Prevents opening the flow. |
+| `disabled` | No | — | Prevents opening the flow (the transaction is still created on mount). Remove the attribute to enable the button. |
 
 Attributes are read when the element is connected and whenever they change.
 Changing `customerid`, `clientid`, `transactiontype` or `data-flow-id` discards
 the current transaction and creates a new one; `OnUnicus:loaded` fires again.
+If an answer for the previous values arrives afterwards, it is discarded.
+Changing `language`, `label`, `size`, `radius`, `color` or `textcolor` only
+repaints the button.
 
 ## States
 
@@ -35,7 +39,8 @@ stateDiagram-v2
   loading --> error: creation failed
   loading --> no_flow: no flow assigned (2002)
   ready --> active: click (or click during loading)
-  active --> ready: finished / exit → next click creates a new transaction
+  active --> ready: finished (next click creates a new one) or exit (next click resumes it)
+  active --> error: verification did not load within 20 s
   error --> loading: click (retry)
 ```
 
@@ -44,12 +49,12 @@ observe it (`button.getAttribute('state')`).
 
 | State | What the user sees | Meaning |
 | --- | --- | --- |
-| `idle` | Neutral button | Waiting for the required attributes. |
-| `loading` | Brand mark animating in the badge | The transaction is being created. A click during this state is honoured: the flow opens as soon as the transaction is ready. |
+| `idle` | Neutral button with the default label | Waiting for the required attributes. A click in this state emits `OnUnicus:error` naming the missing attributes. |
+| `loading` | Unicus mark animating inside the button | The transaction is being created. A click during this state is honoured: the flow opens as soon as the transaction is ready. |
 | `ready` | Brand colour, label | Transaction created (`OnUnicus:loaded` was emitted). |
-| `active` | Label "Validando…" / "Verifying…" | The verification is open in the iframe. |
-| `error` | Grey button, label "Reintentar" / "Retry" | The transaction could not be created (`OnUnicus:error`). A click retries. |
-| `no_flow` | Grey button, label "Verificación no configurada" | No flow is assigned to this company and transaction type, or `data-flow-id` is unknown (result code `2002`). Fix it in the portal. |
+| `active` | Label "Validando…" / "Verifying…", disabled | The verification is open in the iframe. Errors inside the flow do not change this state. |
+| `error` | Grey button, label "Reintentar" / "Retry" | The transaction could not be created, or the verification did not load within 20 seconds (`OnUnicus:error`). A click creates a new transaction and opens the flow. |
+| `no_flow` | Grey button, label "Validación no configurada" / "Verification not configured", disabled | No flow is assigned to this company and transaction type, or `data-flow-id` is unknown (result code `2002`). Clicks are ignored. Fix it in the portal, then reload the page or change an attribute that creates a new transaction. |
 
 ## Lifecycle
 
@@ -58,12 +63,29 @@ observe it (`button.getAttribute('state')`).
    on its own in Unicus; nothing is recorded against the person.
 2. **Click.** The button opens the Unicus verification in a full-screen iframe
    over your page, with permission for camera, microphone, geolocation and
-   fullscreen. Your page stays loaded underneath.
+   fullscreen (`allow="camera; microphone; geolocation; fullscreen"`, granted
+   to the Unicus origin only). Where the browser supports it the iframe is
+   shown inside a modal `<dialog>`: the page behind becomes inert, focus stays
+   in the verification and the Escape key does not close it (the verification
+   has its own close button). Your page stays loaded underneath. On a computer
+   it stays visible behind the verification, blurred and dimmed, so the user
+   sees they are still on your site (where the browser cannot blur, or the user
+   asked for less transparency, it is only dimmed). On a phone or tablet the
+   verification fills the screen.
 3. **Events.** Progress arrives through `OnUnicus:details`; the end through
-   `OnUnicus:finished` or `OnUnicus:exit`. The iframe is removed when the flow
-   ends.
+   `OnUnicus:finished` or `OnUnicus:exit`. The iframe is removed when either of
+   them is emitted and focus returns to the button. If the verification does
+   not answer within 20 seconds (blocked by a CSP or an extension, no
+   network), the overlay is removed and the button goes to *Retry* with
+   `OnUnicus:error`.
 4. **Again.** After `finished` or `exit` the next click creates a **new**
-   transaction. A transaction is never reused.
+   transaction, emits `OnUnicus:loaded` with the new `tid` and opens the flow.
+   A transaction is never reused. Until that click, `transactionId` still
+   holds the previous `tid`.
+5. **Removal.** If the element is removed from the DOM while the
+   verification is open, the iframe is removed with it and no `finished` or
+   `exit` is emitted. A button that is connected again resumes the same
+   transaction on the next click while it is open.
 
 The flow is not rendered in a popup window, so popup blockers do not affect it.
 
@@ -74,27 +96,27 @@ The flow is not rendered in a popup window, so popup blockers do not affect it.
 | Member | Description |
 | --- | --- |
 | `button.transactionId` | Current `tid`, or `null` before `OnUnicus:loaded`. Also available as `button.__transactionId` for compatibility with 4.x code. |
-| `button.open()` | Opens the flow programmatically, same as a click. |
+| `button.open()` | Opens the flow programmatically, same as a click (ignored while `active`, in `no_flow` or with `disabled`). |
 | `customElements.get('unicus-btn').version` | Version string of the loaded script. |
 
 ## Appearance
 
-<figure><img src="../.gitbook/assets/web-sdk-5-button.jpg" alt="Default and large Unicus buttons" width="563"><figcaption><p>Default button and `size="lg"` with a custom `label`.</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/web-sdk-5-button.jpg" alt="Default Unicus button and a large one with square corners" width="563"><figcaption><p>Default button, and <code>size="lg"</code> with a custom <code>label</code> and <code>radius="0"</code>.</p></figcaption></figure>
 
-The button is a hexagonal white badge with the Unicus mark over a pill in your
-brand colour, the same design as Web SDK 4.x. Colours come from the company configuration in the portal
-(`windowColor`, `textColor`); you can override them per page with attributes or
-CSS custom properties on the element:
+The button is one piece in your brand colour: the Unicus mark, a thin divider
+and the label, all in the text colour. Colours come from the company
+configuration in the portal (`windowColor`, `textColor`); you can override them
+per page with attributes or CSS custom properties on the element. Use `radius`
+(or `--unicus-radius`) to give it the same corners as the other buttons of your
+site:
 
 {% code overflow="wrap" %}
 ```css
 unicus-btn {
-  --unicus-color: #1e3163;        /* pill background */
-  --unicus-text-color: #ffffff;   /* label */
-  --unicus-badge: #ffffff;        /* hexagon */
-  --unicus-mark: #1e3163;         /* Unicus mark inside the hexagon */
-  --unicus-accent: #f9ab01;       /* sweep colour of the loading animation */
-  --unicus-radius: 14px;
+  --unicus-color: #1e3163;        /* background */
+  --unicus-text-color: #ffffff;   /* label, divider and Unicus mark */
+  --unicus-accent: #f9ab01;       /* sweep colour of the loading animation on the mark */
+  --unicus-radius: 4px;           /* corners; same as radius="4" */
   --unicus-font: inherit;
 }
 ```

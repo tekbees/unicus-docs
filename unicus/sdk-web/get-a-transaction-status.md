@@ -1,5 +1,12 @@
 # Get a transaction status
 
+{% hint style="warning" %}
+**Web SDK 4.x (legacy).** This section documents the previous web SDK. When
+Web SDK 5.0 is released, 4.x stops working and every integration runs 5.0. For
+new integrations use [Web SDK 5.0](../sdk-web-v5/overview.md); for existing
+ones, read [Migration from Web SDK 4.x](../sdk-web-v5/migration-from-v4.md).
+{% endhint %}
+
 Use this endpoint from your backend to query the current or final status of a
 Unicus transaction. The request requires the transaction id, called `tid`, and
 the Customer Token assigned to the company.
