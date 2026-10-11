@@ -190,8 +190,25 @@ curl --request POST '<unicus-server-api-url>/delete-transaction' \
 | --- | --- | --- |
 | `401` | No API key, a key with the wrong format, revoked or expired, or only the Customer Token was sent. Comes with `WWW-Authenticate: Bearer`. | Check the `Authorization` header and the key's status in the portal. |
 | `429` | More than 600 requests per minute for your key (default). | Wait the seconds in `Retry-After`. |
-| `400` | The body is not valid JSON. | Send a JSON object with the fields above. |
+| `400` | The body is not valid JSON, or a field is missing or not valid. For fields the body carries `success: false`, `resultCode: 4000` and `fieldErrors` (one entry per field). | Send a JSON object with the fields above; fix the fields listed in `fieldErrors`. Do not retry the same request. |
 | `5xx` | Temporary failure. | Retry with backoff. |
+
+Example of a field error:
+
+```json
+{
+  "status": 400,
+  "title": "Method argument not valid",
+  "success": false,
+  "resultCode": 4000,
+  "resultMessage": "INVALID_REQUEST",
+  "message": "error.validation",
+  "fieldErrors": [{ "objectName": "initApiTransactionRequest", "field": "documentNumber", "message": "must not be blank" }]
+}
+```
+
+Until October 2026 field errors answered HTTP `202` with the same `fieldErrors`;
+treat any `2xx` without `success: true` as an error.
 
 Business answers (transaction not found, not enrolled in `query-transaction`,
 flow not configured) come with HTTP `200` and `success: false`, except

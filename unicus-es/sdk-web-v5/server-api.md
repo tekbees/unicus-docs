@@ -191,8 +191,25 @@ curl --request POST '<unicus-server-api-url>/delete-transaction' \
 | --- | --- | --- |
 | `401` | Sin API key, una key con formato incorrecto, revocada o vencida, o se envió solo el Customer Token. Viene con `WWW-Authenticate: Bearer`. | Revisa el header `Authorization` y el estado de la key en el portal. |
 | `429` | Más de 600 solicitudes por minuto con tu key (valor por defecto). | Espera los segundos de `Retry-After`. |
-| `400` | El cuerpo no es un JSON válido. | Envía un objeto JSON con los campos de arriba. |
+| `400` | El cuerpo no es un JSON válido, o falta un campo o no es válido. Para los campos, el cuerpo trae `success: false`, `resultCode: 4000` y `fieldErrors` (una entrada por campo). | Envía un objeto JSON con los campos de arriba; corrige los campos de `fieldErrors`. No reintentes la misma solicitud. |
 | `5xx` | Falla temporal. | Reintenta con espera progresiva. |
+
+Ejemplo de un error de campos:
+
+```json
+{
+  "status": 400,
+  "title": "Method argument not valid",
+  "success": false,
+  "resultCode": 4000,
+  "resultMessage": "INVALID_REQUEST",
+  "message": "error.validation",
+  "fieldErrors": [{ "objectName": "initApiTransactionRequest", "field": "documentNumber", "message": "must not be blank" }]
+}
+```
+
+Hasta octubre de 2026 los errores de campos respondían HTTP `202` con los mismos
+`fieldErrors`; trata cualquier `2xx` sin `success: true` como un error.
 
 Las respuestas de negocio (transacción no encontrada, no enrolada en
 `query-transaction`, flujo no configurado) llegan con HTTP `200` y

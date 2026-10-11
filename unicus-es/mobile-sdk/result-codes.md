@@ -30,6 +30,7 @@ El outcome de las tablas es el que reporta el SDK. Los rechazos de la persona
 | `2052` | Unicus rechazó un paso. `rejectionReason` trae el motivo (ver abajo). Al crear la transacción: usuario bloqueado. | `FAILED` | Consulta [Paso rechazado](#paso-rechazado-2052). |
 | `2054` | Falla temporal de Unicus. No se procesó nada. | `ERROR` | Reintenta (`isRetryable`). |
 | `2061` | Se agotaron los intentos de una cara del documento. | `CANCELED` | Inicia una nueva verificación. |
+| `4000` | Unicus rechazó una solicitud con campos no válidos (HTTP `400`). Un error de integración o un SDK desactualizado, no algo que hizo el usuario. | `ERROR` | Actualiza el SDK; si persiste, contacta a soporte con el `requestId`. |
 | `4001` | El paso OTP se quedó sin intentos. | `CANCELED` | Inicia una nueva verificación. |
 | `9020` | El flujo asignado no puede correr en esta app (consulta [Reglas de flujo en móvil](flows-and-ui-steps.md)). Normalmente se reporta como el error `flow_not_supported`. | `ERROR` | Corrige el flujo o el `uiStepMode`. |
 
