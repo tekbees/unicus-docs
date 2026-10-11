@@ -201,8 +201,9 @@ campos técnicos según el paso.
 
 `finished` se emite cuando el usuario sale de la pantalla de resultado (con su botón o con el
 botón de cerrar), cualquiera que sea el resultado. También es el evento que recibes cuando el
-usuario cancela la cámara en un paso obligatorio (`resultCode` `2041`) o deniega el
-acceso a la cámara (`9996`): estos casos terminan el flujo con una falla y una pantalla de resultado.
+usuario cancela la cámara en un paso obligatorio (`resultCode` `2041`): eso termina el flujo con
+una falla y una pantalla de resultado. Negar el acceso a la cámara no lo termina: al usuario se le
+muestra cómo permitirla y el flujo se retoma.
 En un computador con traspaso al celular, la pantalla de resultado aparece cuando el celular termina
 y Unicus confirma el resultado; si el celular se detiene en un error del que no puede
 recuperarse, el computador muestra una falla y `finished` lleva ese código.

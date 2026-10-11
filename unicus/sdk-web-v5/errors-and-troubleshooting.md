@@ -27,7 +27,7 @@ a **Retry** button; in the iframe they also show **Close**.
 | Your session does not match this verification | `403` | The session belongs to another transaction. | Reopen from a fresh link. |
 | We could not connect | — | No connection, or an unexpected answer from Unicus. | Press **Retry**. |
 | We could not start the secure camera | `9997`, `9004` | The camera components could not be loaded or the biometric service did not answer. | Press **Retry**; check the browser and network. |
-| Camera permission was denied (result screen) | `9996` | The user refused camera access. The flow ends with a failure: `OnUnicus:finished` with `9996`. | Ask the user to allow the camera in the browser settings and start again. |
+| We need your camera | `9996` (reported, not final) | The user refused camera access. | The screen shows how to allow it on that phone (iPhone Safari, other iPhone browsers, Android) with **I allowed it, continue** and **Reload the page**. The transaction stays open and the flow resumes where it was; the step does not fail. |
 | The camera was interrupted (camera screen) | — | The phone was rotated during the capture, or the camera closed without a result. | The user holds the phone upright and taps **Continue**; the capture resumes without starting over. |
 | We could not verify your identity (result screen) | step code | A required step failed, or the user cancelled the camera (`2041`). | Show the user a retry option; the code says why. |
 | Under review | `2013` | Manual review pending. | Wait for the webhook. |

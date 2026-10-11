@@ -104,7 +104,7 @@ sequenceDiagram
 | 4 | Haz fallar una captura y cierra la página. | Después de 20 minutos, webhook `REJECTED` con `last_failure`. |
 | 5 | Abre la verificación y abandónala sin que falle nada. | Después de 20 minutos, webhook `EXPIRED` (`6003`). |
 | 6 | Cancela la cámara dentro de la verificación. | `OnUnicus:finished` con `success: false` y `resultCode` `2041`; webhook `CANCELLED`. |
-| 7 | Niega el permiso de cámara. | Una pantalla de resultado explica cómo permitirlo; `OnUnicus:finished` con `resultCode` `9996`. |
+| 7 | Niega el permiso de cámara. | Una pantalla explica cómo permitirlo; después de permitirlo y tocar **Ya la permití, continuar**, la captura se retoma en la misma transacción (sin `finished`). |
 | 7b | En un computador, cierra la ventana de verificación antes de terminar. | `OnUnicus:exit`. La transacción sigue abierta (el usuario aún puede terminar en el celular); si nadie lo hace, el webhook llega después de 20 minutos. En un celular, cerrar tampoco la cancela: al volver a abrir, el flujo se retoma. |
 | 8 | Elimina la asignación de flujo del tipo de transacción. | `OnUnicus:error` con `2002` y el botón muestra "Verification not configured" (validación no configurada). |
 | 9 | Haz que tu endpoint responda `500` una vez. | El mismo `event_id` llega de nuevo; lo procesas una sola vez. |

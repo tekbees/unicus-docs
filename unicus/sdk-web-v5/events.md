@@ -201,8 +201,9 @@ technical fields depending on the step.
 
 `finished` is emitted when the user leaves the result screen (its button or the
 close button), whatever the result. It is also the event you receive when the
-user cancels the camera on a required step (`resultCode` `2041`) or denies
-camera access (`9996`): those end the flow with a failure and a result screen.
+user cancels the camera on a required step (`resultCode` `2041`): that ends the
+flow with a failure and a result screen. Denying camera access does not end it:
+the user is shown how to allow the camera and the flow resumes.
 On a computer with hand-off, the result screen appears when the phone finishes
 and Unicus confirms the result; if the phone stops on an error it cannot
 recover from, the computer shows a failure and `finished` carries that code.

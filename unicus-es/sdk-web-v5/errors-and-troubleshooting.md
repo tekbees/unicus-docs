@@ -27,7 +27,7 @@ un botón **Reintentar**; en el iframe también muestran **Cerrar**.
 | Tu sesión no corresponde a esta validación | `403` | La sesión pertenece a otra transacción. | Vuelve a abrir desde un enlace nuevo. |
 | No pudimos conectarnos | — | Sin conexión, o una respuesta inesperada de Unicus. | Presiona **Reintentar**. |
 | No pudimos iniciar la cámara segura | `9997`, `9004` | No se pudieron cargar los componentes de la cámara o el servicio biométrico no respondió. | Presiona **Reintentar**; revisa el navegador y la red. |
-| Se denegó el permiso de cámara (pantalla de resultado) | `9996` | El usuario rechazó el acceso a la cámara. El flujo termina con una falla: `OnUnicus:finished` con `9996`. | Pide al usuario que permita la cámara en la configuración del navegador y que empiece de nuevo. |
+| Necesitamos tu cámara | `9996` (se reporta, no es final) | El usuario rechazó el acceso a la cámara. | La pantalla muestra cómo permitirla en ese celular (Safari en iPhone, otros navegadores en iPhone, Android) con **Ya la permití, continuar** y **Recargar la página**. La transacción sigue abierta y el flujo se retoma donde iba; el paso no falla. |
 | Se interrumpió la cámara (pantalla de cámara) | — | El celular se giró durante la captura, o la cámara se cerró sin un resultado. | El usuario sostiene el celular en vertical y toca **Continuar**; la captura se retoma sin empezar de cero. |
 | No pudimos validar tu identidad (pantalla de resultado) | código del paso | Un paso obligatorio falló, o el usuario canceló la cámara (`2041`). | Muestra al usuario una opción de reintento; el código indica el motivo. |
 | En revisión | `2013` | Revisión manual pendiente. | Espera el webhook. |

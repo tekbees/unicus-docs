@@ -14,7 +14,7 @@ description: >-
 | JavaScript and custom elements | The button is a web component. |
 | No domain registration | Your page can be served from any domain. The Customer Token identifies your company; you do not need to send the domain of your site to Tekbees. |
 | Third-party iframe allowed | The flow runs in an iframe of the Unicus domain. |
-| Camera permission | Liveness and document steps, on the phone or tablet that runs them. Before the camera opens the web app asks the browser for the location, which is recorded with the transaction; the user can refuse and the flow continues without it. |
+| Camera permission | Liveness and document steps, on the phone or tablet that runs them. The web app tells the user the browser will ask for the camera before it does; if the user refuses, it shows how to allow it and the flow resumes. Only when the camera step includes a document does it also ask for the location (to validate the document's country); the user can refuse and the flow continues without it. |
 | Stable connection during capture | Uploads are small (about 1.5 MB per enrolment) but must complete. |
 
 ## Supported browsers
