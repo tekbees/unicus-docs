@@ -116,6 +116,16 @@ usuario puede enviarlo de nuevo después de unos segundos; Unicus limita cuánto
 mensajes pueden recibir una transacción y un número de celular, y lo indica en
 la pantalla cuando se alcanza el límite (el usuario aún puede usar el código QR).
 
+La pantalla le explica al usuario por qué el celular (su cámara toma mejores
+fotos) y cuántos pasos le faltan ahí. Cuando tu empresa tiene WhatsApp, aparece
+primero y marcado como recomendado. Si después de un minuto y medio en la
+pantalla del QR o del mensaje el celular no ha empezado, una sugerencia le indica
+qué intentar (acercar el celular, enviar el mensaje de nuevo o usar otro canal).
+
+En un celular abierto desde un código QR o un mensaje, la pantalla de resultado
+devuelve al usuario al computador, donde se muestra el resultado y tu página
+continúa.
+
 <figure><img src="../.gitbook/assets/web-sdk-5-handoff-options.jpg" alt="Opciones de traspaso en un computador: código QR, WhatsApp y SMS" width="563"><figcaption><p>Los canales habilitados para la empresa, ofrecidos en el computador.</p></figcaption></figure>
 
 La pantalla del computador se convierte entonces en un **espejo**: muestra en

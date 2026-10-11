@@ -108,6 +108,15 @@ user can send it again after a few seconds; Unicus limits how many messages
 one transaction and one phone number can receive, and says so on the screen
 when the limit is reached (the user can still use the QR code).
 
+The screen tells the user why the phone (its camera takes better pictures) and
+how many steps are left there. When your company has WhatsApp, it comes first
+and is marked as recommended. If the phone has not started after a minute and a
+half on the QR or message screen, a hint suggests what to try (move the phone
+closer, send the message again, or use another channel).
+
+On a phone opened from a QR code or a message, the result screen sends the user
+back to the computer, where the result is shown and your page continues.
+
 <figure><img src="../.gitbook/assets/web-sdk-5-handoff-options.jpg" alt="Hand-off options on a computer: QR code, WhatsApp and SMS" width="563"><figcaption><p>The channels enabled for the company, offered on the computer.</p></figcaption></figure>
 
 The computer screen then becomes a **mirror**: it shows each step the phone
