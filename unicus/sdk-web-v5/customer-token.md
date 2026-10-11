@@ -1,6 +1,6 @@
 # Customer Token
 
-When you log in to the [administration panel](https://app.idunicus.com) you will find a tab called **Company**, select it followed by the option **Settings** and you will be able to view your token and click to copy it or generate a new one if necessary.
+In the [administrative portal](https://app.idunicus.com), the Customer Token is the **Company ID**: you find it in **Settings → Company → Integration**, where you can copy it or generate a new one if needed (see [Integration](../administrative-portal/integration.md)).
 
 In Unicus Button integrations, this value is passed in the `customerid`
 attribute:
@@ -48,5 +48,5 @@ is stored as a test:
 
 Test credentials are created and revoked by Tekbees only (ask
 [Support](support.md)); your company admins can see them in
-Company → Settings → API keys. When the last one is revoked, test mode ends
+Settings → Company → Integration → API keys. When the last one is revoked, test mode ends
 and **Show tests** disappears.
