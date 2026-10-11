@@ -14,4 +14,6 @@ Choose the integration that best fits your processes:
 2. Without a page of your own, by sending the user a verification link with [Unicus Link](sdk-web-v5/unicus-link.md).
 3. In a mobile app, with the [Flutter](mobile-sdk/flutter-integration.md), [Android](mobile-sdk/android-integration.md) or [iOS](mobile-sdk/ios-integration.md) SDK.
 
+To set up your company, your flows and your team, see the [Administrative portal](administrative-portal/overview.md).
+
 Already integrated with Web SDK 4.x? Read [Migration from Web SDK 4.x](sdk-web-v5/migration-from-v4.md).

@@ -10,7 +10,7 @@ description: >-
 
 | Attribute | Required | Values | Description |
 | --- | --- | --- | --- |
-| `customerid` | Yes | Customer Token | Public token of the company (Company → Settings in the administrative portal). Sent as the `X-Customer-ID` header when the transaction is created. |
+| `customerid` | Yes | Customer Token | Public token of the company (in the administrative portal, Settings → Company → Integration → **Company ID**). Sent as the `X-Customer-ID` header when the transaction is created. |
 | `transactiontype` | Yes | `enrollment-verify`, `liveness` | `enrollment-verify` enrols a person Unicus does not know and verifies one it already knows; the decision is made by Unicus. `liveness` runs a liveness-only flow. The portal assigns a flow to each transaction type. |
 | `clientid` | For `enrollment-verify` | `TYPE:NUMBER` | Document type and number, for example `ID:123456789`. Types: `ID` national id, `FD` foreign document, `PP` passport, `DL` driver licence. Sent as `documentType` and `externalDatabaseRefID`. The button only checks that a number follows the `:`; the type is validated by Unicus. Ignored for `liveness`. |
 | `language` | No | `es`, `en` | Language of the button label and of the verification screens. Regional variants are accepted (`en-US` → `en`). Without the attribute the browser language is used when supported; any unsupported value (attribute or browser) means Spanish. |
@@ -138,7 +138,7 @@ by Unicus and not by your site, which is part of the consent the user gives.
 ## Verification screens
 
 Colours and logo of the verification screens are configured in the
-administrative portal (Company → Settings) and applied to every screen,
+administrative portal (Settings → Company → Appearance) and applied to every screen,
 including the camera screens: frame, buttons, progress, result animations and
 the document capture guidance. The customer page does not pass any appearance
 values for the screens. Texts are configured with the flow; see

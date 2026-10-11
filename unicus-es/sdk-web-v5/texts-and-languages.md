@@ -38,7 +38,7 @@ flowchart LR
 | Texto | Dónde cambiarlo | Idiomas |
 | --- | --- | --- |
 | Texto del botón | Atributo `label` de `<unicus-btn>` (por defecto "Validar identidad" / "Verify identity"). | Por página. |
-| Nombre, logo y colores de la empresa | Portal → Compañía → Configuraciones. | — |
+| Nombre, logo y colores de la empresa | Portal → Configuración → Compañía (General y Apariencia). | — |
 | Título y descripción del paso | Portal → editor de flujos, en cada paso. Se muestran como encabezado de la pantalla, en el espejo del computador y en la lista de progreso. | Campos en español e inglés; un único valor se usa para ambos. |
 | Texto de consentimiento y enlace al aviso de privacidad | Editor de flujos, paso `consent`. Cuando el texto de consentimiento se deja vacío, se muestra el texto por defecto de Unicus con el nombre de tu empresa (pide autorización para tratar datos biométricos solo si el flujo tiene pasos con cámara; si no, datos personales); cuando el enlace de privacidad se deja vacío (o no es una dirección `https://`), se enlaza la política de privacidad de Tekbees, en el idioma del usuario. La lista de lo que se capturará se genera a partir de los pasos del flujo. | Español e inglés. |
 | Instrucciones antes de la cámara | Editor de flujos, paso `info` (elementos con viñetas). | Español e inglés. |

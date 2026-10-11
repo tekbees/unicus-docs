@@ -17,7 +17,7 @@ flowchart LR
 ## 1. In the administrative portal (sandbox first)
 
 - [ ] Ask Tekbees for a **sandbox** company and the sandbox script URL.
-- [ ] Copy the [Customer Token](customer-token.md) (Company → Settings).
+- [ ] Copy the [Customer Token](customer-token.md) (Settings → Company → Integration → Company ID).
 - [ ] Create a **flow** and assign it to the transaction type you will use
       (`enrollment-verify` or `liveness`). Without it the button shows
       "Verification not configured" (`2002`). See
