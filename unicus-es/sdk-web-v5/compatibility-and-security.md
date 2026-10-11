@@ -14,7 +14,7 @@ description: >-
 | JavaScript y custom elements | El botón es un web component. |
 | Sin registro de dominio | Tu página puede servirse desde cualquier dominio. El Customer Token identifica a tu empresa; no necesitas enviar el dominio de tu sitio a Tekbees. |
 | Iframe de terceros permitido | El flujo se ejecuta en un iframe del dominio de Unicus. |
-| Permiso de cámara | Pasos de prueba de vida y de documento, en el celular o tableta que los ejecuta. Antes de abrir la cámara, la aplicación web solicita al navegador la ubicación, que se registra con la transacción; el usuario puede rechazarla y el flujo continúa sin ella. |
+| Permiso de cámara | Pasos de prueba de vida y de documento, en el celular o tableta que los ejecuta. La aplicación web le avisa al usuario que el navegador le pedirá la cámara antes de que lo haga; si la rechaza, le muestra cómo permitirla y el flujo se retoma. Solo cuando el paso de cámara incluye un documento pide también la ubicación (para validar el país del documento); el usuario puede rechazarla y el flujo continúa sin ella. |
 | Conexión estable durante la captura | Las cargas son pequeñas (aproximadamente 1.5 MB por enrolamiento), pero deben completarse. |
 
 ## Navegadores soportados
