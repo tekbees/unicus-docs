@@ -199,6 +199,10 @@ intentarlo:
 * Después de `OnUnicus:finished`, el siguiente clic (o `button.open()`) crea una
   transacción **nueva**, emite `OnUnicus:loaded` con el nuevo `tid` y abre el
   flujo.
+* Cuando una validación falla, su pantalla de resultado ofrece **Intentar de
+  nuevo**: el botón recibe `OnUnicus:finished` con `transaction.state.retry: true`
+  y abre de inmediato una validación nueva (nuevo `tid`, nuevo `OnUnicus:loaded`).
+  No se ofrece cuando se alcanzó el límite de intentos.
 * Después de `OnUnicus:exit`, el siguiente clic **retoma** la misma transacción
   mientras siga abierta: el usuario continúa donde iba, sin repetir los pasos
   ya hechos. `OnUnicus:loaded` se emite de nuevo con el mismo `tid`. Si la

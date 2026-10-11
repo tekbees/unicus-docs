@@ -126,6 +126,17 @@ En un celular abierto desde un código QR o un mensaje, la pantalla de resultado
 devuelve al usuario al computador, donde se muestra el resultado y tu página
 continúa.
 
+**Otro celular.** Si la cámara del celular no funciona bien (o el usuario la
+negó), el celular puede pasar los pasos de cámara a otro celular: ofrece el
+código QR, WhatsApp o SMS para la misma transacción y luego sigue al otro
+celular como lo hace un computador. El computador, mientras sigue a un celular,
+también ofrece **Usar otro celular** en cualquier momento. Los pasos completados
+se conservan.
+
+**Inactividad.** Una transacción se cierra tras 20 minutos sin actividad. Tres
+minutos antes, en los pasos y en la elección de canal, se le pregunta al usuario
+"¿Sigues ahí?"; si continúa, la sesión sigue abierta.
+
 <figure><img src="../.gitbook/assets/web-sdk-5-handoff-options.jpg" alt="Opciones de traspaso en un computador: código QR, WhatsApp y SMS" width="563"><figcaption><p>Los canales habilitados para la empresa, ofrecidos en el computador.</p></figcaption></figure>
 
 La pantalla del computador se convierte entonces en un **espejo**: muestra en

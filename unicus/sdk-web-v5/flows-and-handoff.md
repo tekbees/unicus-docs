@@ -117,6 +117,16 @@ closer, send the message again, or use another channel).
 On a phone opened from a QR code or a message, the result screen sends the user
 back to the computer, where the result is shown and your page continues.
 
+**Another phone.** If the camera of the phone does not work well (or the user
+denied it), the phone can hand the camera steps over to another phone: it
+offers the QR code, WhatsApp or SMS for the same transaction and then follows
+the other phone like a computer does. The computer, while it follows a phone,
+also offers **Use another phone** at any time. Completed steps are kept.
+
+**Inactivity.** A transaction closes after 20 minutes without activity. Three
+minutes before, on steps and on the channel choice, the user is asked "Are you
+still there?"; continuing keeps the session open.
+
 <figure><img src="../.gitbook/assets/web-sdk-5-handoff-options.jpg" alt="Hand-off options on a computer: QR code, WhatsApp and SMS" width="563"><figcaption><p>The channels enabled for the company, offered on the computer.</p></figcaption></figure>
 
 The computer screen then becomes a **mirror**: it shows each step the phone
