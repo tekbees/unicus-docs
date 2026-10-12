@@ -17,8 +17,8 @@ un botón **Reintentar**; en el iframe también muestran **Cerrar**.
 | El usuario ve | Código | Causa | Qué hacer |
 | --- | --- | --- | --- |
 | El enlace no es válido | — | La URL no tenía transacción ni token de traspaso al celular (hand-off). | Abre el flujo desde el botón o desde un enlace generado por Unicus. |
-| La sesión expiró o ya fue utilizada | `2051` (o `401`) | La transacción expiró, ya se completó o se reabrió desde un enlace antiguo. | Crea una nueva transacción (cierra y vuelve a hacer clic en el botón). |
-| El enlace expiró o ya fue usado | `2051` | El enlace de traspaso de un solo uso se abrió dos veces o después de expirar. | Genera un nuevo QR/SMS/WhatsApp desde el computador. |
+| Este enlace ya no está activo. Pide uno nuevo a {cliente} | `2051` (o `401`) | La transacción expiró, ya se completó o se reabrió desde un enlace antiguo. | Crea una nueva transacción (cierra y vuelve a hacer clic en el botón). |
+| Este enlace ya no está activo. Pide uno nuevo desde la pantalla donde empezaste | `2051` | El enlace de traspaso de un solo uso se abrió dos veces o después de expirar. | Genera un nuevo QR/SMS/WhatsApp desde el computador. |
 | No pudimos continuar en este momento. Inténtalo de nuevo | `2054` | Unicus no pudo procesar la solicitud en ese momento. El enlace y la transacción siguen siendo válidos. | El usuario presiona **Reintentar** en la misma pantalla. No se necesita una nueva transacción, QR ni mensaje. |
 | Esta validación no está configurada | `2002` | No hay flujo para esta empresa y tipo de transacción. Por lo general se detecta antes: el propio botón muestra "Validación no configurada". | Asigna un flujo en el portal. |
 | Esta validación tiene una configuración que no reconocemos | — | El flujo contiene algo que esta versión de la aplicación web no puede ejecutar. | Revisa el flujo en el portal; contacta a soporte. |
@@ -26,7 +26,7 @@ un botón **Reintentar**; en el iframe también muestran **Cerrar**.
 | Demasiados intentos | `429` | Demasiadas solicitudes desde el mismo dispositivo en poco tiempo. | Espera un momento y presiona **Reintentar**. |
 | Tu sesión no corresponde a esta validación | `403` | La sesión pertenece a otra transacción. | Vuelve a abrir desde un enlace nuevo. |
 | No pudimos conectarnos | — | Sin conexión, o una respuesta inesperada de Unicus. | Presiona **Reintentar**. |
-| No pudimos iniciar la cámara segura | `9997`, `9004` | No se pudieron cargar los componentes de la cámara o el servicio biométrico no respondió. | Presiona **Reintentar**; revisa el navegador y la red. |
+| No pudimos abrir la cámara | `9997`, `9004` | No se pudieron cargar los componentes de la cámara o el servicio biométrico no respondió. | Presiona **Reintentar**; revisa el navegador y la red. |
 | Necesitamos tu cámara | `9996` (se reporta, no es final) | El usuario rechazó el acceso a la cámara. | La pantalla muestra cómo permitirla en ese celular (Safari en iPhone, otros navegadores en iPhone, Android) con **Ya la permití, continuar** y **Recargar la página**. La transacción sigue abierta y el flujo se retoma donde iba; el paso no falla. |
 | Se interrumpió la cámara (pantalla de cámara) | — | El celular se giró durante la captura, o la cámara se cerró sin un resultado. | El usuario sostiene el celular en vertical y toca **Continuar**; la captura se retoma sin empezar de cero. |
 | No pudimos validar tu identidad (pantalla de resultado) | código del paso | Un paso obligatorio falló, o el usuario canceló la cámara (`2041`). | Muestra al usuario una opción de reintento; el código indica el motivo. |

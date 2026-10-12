@@ -106,8 +106,8 @@ and the result query refer to it.
   [Flows and hand-off](flows-and-handoff.md)).
 * The address bar is cleaned as soon as the link is read: the transaction id
   does not stay in the browser history.
-* Reopening the link after the transaction finished or expired shows "the
-  session expired or was already used".
+* Reopening the link after the transaction finished or expired shows "This
+  link is no longer active".
 
 ## Getting the result
 
