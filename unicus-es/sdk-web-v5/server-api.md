@@ -28,9 +28,9 @@ Token: no usan estos endpoints.
 
 ## 1. Crea una API key
 
-En el [portal administrativo](https://app.idunicus.com/), entra a la
-configuración de tu compañía → **API keys** y crea una (requiere el rol ADMIN
-de la compañía).
+En el [portal administrativo](https://app.idunicus.com/), entra a
+**Configuración → Compañía → Integración → API keys** y crea una (solo los administradores de la compañía; ver
+[Integración](../administrative-portal/integration.md#api-keys)).
 
 * La key tiene la forma `unk_<8 caracteres>_<32 caracteres>`.
 * El portal la muestra **una sola vez**. Guárdala en el gestor de secretos o

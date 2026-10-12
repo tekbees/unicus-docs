@@ -62,7 +62,15 @@
 * [Versiones](mobile-sdk/versioning.md)
 * [Soporte](mobile-sdk/support.md)
 
-## Portal administrativo
+## Portal administrativo <a href="#administrative-portal" id="administrative-portal"></a>
 
+* [Descripción general](administrative-portal/overview.md)
+* [Registro de tu empresa](administrative-portal/sign-up.md)
+* [Acceso y tu cuenta](administrative-portal/access-and-account.md)
+* [Panel de control](administrative-portal/dashboard.md)
+* [Transacciones y reportes](administrative-portal/transactions.md)
+* [Flujos de verificación](administrative-portal/flows.md)
+* [Integración](administrative-portal/integration.md)
+* [Configuración de la compañía](administrative-portal/company-settings.md)
+* [Usuarios, roles y aprobaciones](administrative-portal/users-roles-and-approvals.md)
 * [Glosario](administrative-portal/glossary.md)
-* [Registro](administrative-portal/sign-up.md)

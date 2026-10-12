@@ -10,7 +10,7 @@ description: >-
 
 | Atributo | Obligatorio | Valores | Descripción |
 | --- | --- | --- | --- |
-| `customerid` | Sí | Customer Token | Token público de la empresa (Compañía → Configuraciones en el portal administrativo). Se envía como el header `X-Customer-ID` cuando se crea la transacción. |
+| `customerid` | Sí | Customer Token | Token público de la empresa (en el portal administrativo, Configuración → Compañía → Integración → **ID de la compañía**). Se envía como el header `X-Customer-ID` cuando se crea la transacción. |
 | `transactiontype` | Sí | `enrollment-verify`, `liveness` | `enrollment-verify` enrola a una persona que Unicus no conoce y verifica a una que ya conoce; la decisión la toma Unicus. `liveness` ejecuta un flujo solo de prueba de vida. El portal asigna un flujo a cada tipo de transacción. |
 | `clientid` | Para `enrollment-verify` | `TYPE:NUMBER` | Tipo y número de documento, por ejemplo `ID:123456789`. Tipos: `ID` documento nacional de identidad, `FD` documento extranjero, `PP` pasaporte, `DL` licencia de conducir. Se envía como `documentType` y `externalDatabaseRefID`. El botón solo valida que haya un número después de `:`; el tipo lo valida Unicus. Se ignora para `liveness`. |
 | `language` | No | `es`, `en` | Idioma del texto del botón y de las pantallas de verificación. Se aceptan variantes regionales (`en-US` → `en`). Sin el atributo se usa el idioma del navegador cuando es compatible; cualquier valor no compatible (del atributo o del navegador) significa español. |
@@ -141,7 +141,7 @@ usuario.
 ## Pantallas de verificación
 
 Los colores y el logo de las pantallas de verificación se configuran en el
-portal administrativo (Compañía → Configuraciones) y se aplican a todas las
+portal administrativo (Configuración → Compañía → Apariencia) y se aplican a todas las
 pantallas, incluidas las de la cámara: marco, botones, progreso, animaciones de
 resultado y la guía de captura del documento. La página del cliente no envía
 ningún valor de apariencia para las pantallas. Los textos se configuran con el

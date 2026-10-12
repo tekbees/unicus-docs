@@ -28,7 +28,7 @@ longer sent. Your endpoint receives only the events on this page. See
 ## 1. Configure your endpoint
 
 In the [administrative portal](https://app.idunicus.com/), go to
-**Company → Settings → Webhook** and enter your endpoint URL, for example
+**Settings → Company → Integration → Webhook** and enter your endpoint URL, for example
 `https://api.example.com/unicus/webhook`.
 
 <figure><img src="../.gitbook/assets/image (25).png" alt="Webhook settings in the administrative portal" width="563"><figcaption><p>Webhook settings in the administrative portal.</p></figcaption></figure>
@@ -347,4 +347,6 @@ sent, the transaction is closed and its link no longer works.
   inactivity you receive an `EXPIRED` (or `REJECTED`) event, which is the case
   most integrations forget.
 * If nothing arrives, check in the portal that the webhook is active and that
-  the URL answers `2xx` to a `POST` with a JSON body.
+  the URL answers `2xx` to a `POST` with a JSON body. **Platform → Webhooks**
+  shows every delivery with its response and lets you retry failed ones (see
+  [Integration](../administrative-portal/integration.md#delivery-log)).

@@ -49,8 +49,8 @@ publicará bajo una ruta nueva.
 
 <figure><img src="../.gitbook/assets/web-sdk-5-button.jpg" alt="El botón de Unicus en una página del cliente: por defecto, y grande con un texto del botón personalizado y esquinas cuadradas" width="563"><figcaption><p>El botón en una página, con el color de la empresa: por defecto, y grande con un texto del botón personalizado y esquinas cuadradas.</p></figcaption></figure>
 
-* `customerid`: el Customer Token de tu empresa (Compañía → Configuraciones en el
-  portal administrativo).
+* `customerid`: el Customer Token de tu empresa (en el portal administrativo,
+  Configuración → Compañía → Integración → ID de la compañía).
 * `transactiontype`: `enrollment-verify` enrola a la persona si Unicus aún no
   la conoce y la verifica si ya la conoce. `liveness` ejecuta un flujo solo de
   prueba de vida y no necesita `clientid`.

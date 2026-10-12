@@ -47,7 +47,7 @@ optional attributes). A breaking change will be published under a new path.
 
 <figure><img src="../.gitbook/assets/web-sdk-5-button.jpg" alt="The Unicus button on a customer page: default, and large with a custom label and square corners" width="563"><figcaption><p>The button on a page, in the company colour: default, and large with a custom label and square corners.</p></figcaption></figure>
 
-* `customerid`: your company's Customer Token (Company → Settings in the
+* `customerid`: your company's Customer Token (Settings → Company → Integration → Company ID in the
   administrative portal).
 * `transactiontype`: `enrollment-verify` enrols the person if Unicus does not
   know them yet and verifies them if it does. `liveness` runs a liveness-only

@@ -141,8 +141,9 @@ the result still arrives if a live update is lost.
 If the page is closed on the phone by mistake, the transaction is not lost:
 when the phone has sent nothing for a minute and a half, the computer offers
 **Send the link again**, and the new link resumes at the first unfinished step.
-Steps already completed are kept; a camera capture that was cut off is repeated. If the transaction expires while the computer is waiting, the computer
-shows "the session expired" and emits `OnUnicus:error`; the next click on the
+Steps already completed are kept; a camera capture that was cut off is repeated.
+If the transaction expires while the computer is waiting, the computer shows
+"This link is no longer active" and emits `OnUnicus:error`; the next click on the
 button starts a new verification.
 
 {% hint style="info" %}
@@ -159,8 +160,8 @@ hand-off token** in the URL fragment (`https://id.idunicus.com/#h=…`):
 
 * The fragment is never sent to any server, not in the request, not in the
   `Referer`, not in access logs.
-* The link works once. Opening it a second time shows "the link expired or was
-  already used".
+* The link works once. Opening it a second time shows "This link is no
+  longer active".
 * The link expires if it is not used; the transaction has its own expiry.
 * If Unicus cannot open the link at that moment, the phone shows "try again"
   with a **Retry** button. The same link stays valid: no new QR code or message
@@ -185,4 +186,4 @@ the same iframe. No hand-off screen is shown.
   camera step starts. Flows without camera steps never download it.
 * A complete enrolment (selfie plus two document sides) uploads about 1.5 MB.
 * A transaction left open expires in Unicus; reopening the link after expiry
-  shows "the session expired".
+  shows "This link is no longer active".

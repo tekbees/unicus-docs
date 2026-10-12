@@ -19,7 +19,7 @@ flowchart LR
 
 - [ ] Solicita a Tekbees una empresa de **ambiente de pruebas (sandbox)** y la
       URL del script de sandbox.
-- [ ] Copia el [Customer Token](customer-token.md) (Compañía → Configuraciones).
+- [ ] Copia el [Customer Token](customer-token.md) (Configuración → Compañía → Integración → ID de la compañía).
 - [ ] Crea un **flujo** y asígnalo al tipo de transacción que usarás
       (`enrollment-verify` o `liveness`). Sin él, el botón muestra
       "Verification not configured" (validación no configurada) (`2002`).

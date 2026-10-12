@@ -102,7 +102,7 @@ Detalle por plataforma: [Compatibilidad y seguridad](compatibility-and-security.
 | Valor | Dónde va | Descripción |
 | --- | --- | --- |
 | Paquete del SDK | Tu proyecto | ZIP entregado por Tekbees con el SDK, un inicio rápido y una app de ejemplo. Los repositorios alojados de Maven, Swift Package Manager y CocoaPods llegarán próximamente. |
-| [Customer Token](../sdk-web-v5/customer-token.md) | `apiKey` en la configuración del SDK | Token de tu empresa, en el portal administrativo (Compañía → Configuración). Uno por ambiente. Es el único valor que entrega tu app: el SDK trae todo lo demás. |
+| [Customer Token](../sdk-web-v5/customer-token.md) | `apiKey` en la configuración del SDK | Token de tu empresa, en el portal administrativo (Configuración → Compañía → Integración → ID de la compañía). Uno por ambiente. Es el único valor que entrega tu app: el SDK trae todo lo demás. |
 | Ambiente | `environment` en la configuración del SDK | `DEV` hoy. `STAGING` y `PRODUCTION` se habilitarán en una versión posterior del SDK; mientras tanto el SDK responde `environment_not_available`. |
 | Flujo | Portal administrativo | Al menos un flujo asignado a tu empresa y publicado para móvil. Sin él, la transacción se rechaza (código de resultado `2002`). |
 

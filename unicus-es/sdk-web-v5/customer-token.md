@@ -1,6 +1,6 @@
 # Customer Token
 
-Al iniciar sesión en el [panel de administración](https://app.idunicus.com) encontrarás una pestaña llamada **Compañía**; selecciónala, luego elige la opción **Configuraciones** y podrás ver tu token, hacer clic para copiarlo o generar uno nuevo si es necesario.
+En el [portal administrativo](https://app.idunicus.com), el Customer Token es el **ID de la compañía**: lo encuentras en **Configuración → Compañía → Integración**, donde puedes copiarlo o generar uno nuevo si es necesario (ver [Integración](../administrative-portal/integration.md)).
 
 En las integraciones del botón Unicus, este valor se envía en el atributo
 `customerid`:
@@ -48,5 +48,5 @@ transacción se guarda como prueba:
 
 Solo Tekbees crea y revoca las credenciales de prueba (pídelas a
 [Soporte](support.md)); los administradores de tu empresa las ven en
-Compañía → Configuraciones → API keys. Cuando se revoca la última, el modo de
+Configuración → Compañía → Integración → API keys. Cuando se revoca la última, el modo de
 prueba termina y **Ver pruebas** desaparece.
