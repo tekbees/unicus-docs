@@ -131,7 +131,7 @@ resultado llega aunque se pierda una actualización en vivo.
 Si la página se cierra por error en el celular, no se pierde nada: el
 computador ofrece **Enviar el enlace de nuevo**, y el enlace nuevo retoma en el
 primer paso pendiente. Si la transacción expira mientras el computador espera,
-el computador muestra "La sesión expiró o ya fue utilizada" y emite
+el computador muestra "Este enlace ya no está activo" y emite
 `OnUnicus:error`; el siguiente clic en el botón inicia una validación nueva.
 
 {% hint style="info" %}
@@ -149,8 +149,8 @@ Los enlaces para el celular nunca contienen el id de la transacción. Llevan un
 
 * El fragmento nunca se envía a ningún servidor: ni en la solicitud, ni en el
   `Referer`, ni en los logs de acceso.
-* El enlace funciona una sola vez. Abrirlo por segunda vez muestra "the link
-  expired or was already used" (el enlace expiró o ya fue usado).
+* El enlace funciona una sola vez. Abrirlo por segunda vez muestra "Este
+  enlace ya no está activo".
 * El enlace expira si no se usa; la transacción tiene su propia expiración.
 * Si Unicus no puede abrir el enlace en ese momento, el celular muestra "try
   again" (inténtalo de nuevo) con un botón **Retry** (Reintentar). El mismo
@@ -178,4 +178,4 @@ allí, en el mismo iframe. No se muestra ninguna pantalla de traspaso.
 * Un enrolamiento completo (selfie más los dos lados del documento) sube
   aproximadamente 1.5 MB.
 * Una transacción que se deja abierta expira en Unicus; volver a abrir el enlace
-  después de la expiración muestra "the session expired" (la sesión expiró).
+  después de la expiración muestra "Este enlace ya no está activo".

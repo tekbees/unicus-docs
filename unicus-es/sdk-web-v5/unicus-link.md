@@ -109,8 +109,8 @@ webhook y la consulta del resultado se refieren a él.
   [Flujos y traspaso al celular](flows-and-handoff.md)).
 * La barra de direcciones se limpia apenas se lee el enlace: el identificador
   de la transacción no queda en el historial del navegador.
-* Si abre el enlace después de que la transacción terminó o expiró, ve "La
-  sesión expiró o ya fue utilizada".
+* Si abre el enlace después de que la transacción terminó o expiró, ve "Este
+  enlace ya no está activo".
 
 ## Cómo obtener el resultado
 
