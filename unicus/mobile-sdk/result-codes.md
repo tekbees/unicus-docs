@@ -29,6 +29,7 @@ The outcome in the tables is the one the SDK reports. Rejections of the person
 | `2052` | Unicus refused a step. `rejectionReason` holds the reason (see below). When creating the transaction: user blocked. | `FAILED` | See [Step rejected](#step-rejected-2052). |
 | `2054` | Temporary failure in Unicus. Nothing was processed. | `ERROR` | Retry (`isRetryable`). |
 | `2061` | The attempts on one side of the document were used up. | `CANCELED` | Start a new verification. |
+| `4000` | Unicus refused a request whose fields were not valid (HTTP `400`). An integration error or an outdated SDK, not something the user did. | `ERROR` | Update the SDK; if it persists, contact support with the `requestId`. |
 | `4001` | The OTP step ran out of attempts. | `CANCELED` | Start a new verification. |
 | `9020` | The assigned flow cannot run in this app (see [Flow rules](flows-and-ui-steps.md#flow-rules-for-mobile)). Normally reported as the error `flow_not_supported`. | `ERROR` | Fix the flow or the `uiStepMode`. |
 

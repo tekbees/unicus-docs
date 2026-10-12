@@ -83,6 +83,7 @@ created.
 | --- | --- | --- |
 | `2051` | The transaction was not found, is already final, or the link expired. | Create a new transaction. |
 | `2054` | Temporary failure in Unicus. Nothing was used up: the same link and transaction remain valid. | The web app offers **Retry**. Do not create a new transaction; if it persists, contact support. |
+| `4000` | A request's fields were not valid (HTTP `400`, details in `fieldErrors`). It points to an integration error or an outdated SDK, not to something the user did. | Fix the fields; update the SDK. If it persists, contact support with the `requestId`. |
 | `2003` | The camera steps finished but the flow has more required steps (signature, OTP, form). Seen in step results, never as a final code. | Nothing; the flow continues. |
 
 ## Step rejected by the server (`2052` during the flow)

@@ -83,6 +83,7 @@ transacción.
 | --- | --- | --- |
 | `2051` | La transacción no se encontró, ya es final o el enlace expiró. | Crea una nueva transacción. |
 | `2054` | Falla temporal en Unicus. No se consumió nada: el mismo enlace y la misma transacción siguen siendo válidos. | La aplicación web ofrece **Retry** (Reintentar). No crees una nueva transacción; si persiste, contacta a soporte. |
+| `4000` | Los campos de una solicitud no son válidos (HTTP `400`, detalle en `fieldErrors`). Indica un error de integración o un SDK desactualizado, no algo que hizo el usuario. | Corrige los campos; actualiza el SDK. Si persiste, contacta a soporte con el `requestId`. |
 | `2003` | Los pasos de cámara terminaron, pero el flujo tiene más pasos obligatorios (firma, OTP, formulario). Se ve en los resultados de los pasos, nunca como código final. | Nada; el flujo continúa. |
 
 ## Paso rechazado por el servidor (`2052` durante el flujo)
