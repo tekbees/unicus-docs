@@ -108,6 +108,25 @@ user can send it again after a few seconds; Unicus limits how many messages
 one transaction and one phone number can receive, and says so on the screen
 when the limit is reached (the user can still use the QR code).
 
+The screen tells the user why the phone (its camera takes better pictures) and
+how many steps are left there. When your company has WhatsApp, it comes first
+and is marked as recommended. If the phone has not started after a minute and a
+half on the QR or message screen, a hint suggests what to try (move the phone
+closer, send the message again, or use another channel).
+
+On a phone opened from a QR code or a message, the result screen sends the user
+back to the computer, where the result is shown and your page continues.
+
+**Another phone.** If the camera of the phone does not work well (or the user
+denied it), the phone can hand the camera steps over to another phone: it
+offers the QR code, WhatsApp or SMS for the same transaction and then follows
+the other phone like a computer does. The computer, while it follows a phone,
+also offers **Use another phone** at any time. Completed steps are kept.
+
+**Inactivity.** A transaction closes after 20 minutes without activity. Three
+minutes before, on steps and on the channel choice, the user is asked "Are you
+still there?"; continuing keeps the session open.
+
 <figure><img src="../.gitbook/assets/web-sdk-5-handoff-options.jpg" alt="Hand-off options on a computer: QR code, WhatsApp and SMS" width="563"><figcaption><p>The channels enabled for the company, offered on the computer.</p></figcaption></figure>
 
 The computer screen then becomes a **mirror**: it shows each step the phone
@@ -119,10 +138,12 @@ result, and `finished` is emitted when the user closes it. Besides the live
 updates, the computer checks the transaction with Unicus regularly, so
 the result still arrives if a live update is lost.
 
-If the page is closed on the phone by mistake, nothing is lost: the computer
-offers **Send the link again**, and the new link resumes at the first pending
-step. If the transaction expires while the computer is waiting, the computer
-shows "This link is no longer active" and emits `OnUnicus:error`; the next click on the
+If the page is closed on the phone by mistake, the transaction is not lost:
+when the phone has sent nothing for a minute and a half, the computer offers
+**Send the link again**, and the new link resumes at the first unfinished step.
+Steps already completed are kept; a camera capture that was cut off is repeated.
+If the transaction expires while the computer is waiting, the computer shows
+"This link is no longer active" and emits `OnUnicus:error`; the next click on the
 button starts a new verification.
 
 {% hint style="info" %}

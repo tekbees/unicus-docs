@@ -196,6 +196,10 @@ You do not need to create the transaction yourself to let the user try again:
 * After `OnUnicus:finished`, the next click (or `button.open()`) creates a
   **new** transaction, emits `OnUnicus:loaded` with the new `tid` and opens the
   flow.
+* When a verification fails, its result screen offers **Try again**: the
+  button receives `OnUnicus:finished` with `transaction.state.retry: true` and
+  opens a new verification right away (new `tid`, new `OnUnicus:loaded`). It is
+  not offered when the attempts limit was reached.
 * After `OnUnicus:exit`, the next click **resumes** the same transaction while
   it is open: the user continues where they left off, without repeating the
   steps already done. `OnUnicus:loaded` is emitted again with the same `tid`.

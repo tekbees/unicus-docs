@@ -116,6 +116,27 @@ usuario puede enviarlo de nuevo después de unos segundos; Unicus limita cuánto
 mensajes pueden recibir una transacción y un número de celular, y lo indica en
 la pantalla cuando se alcanza el límite (el usuario aún puede usar el código QR).
 
+La pantalla le explica al usuario por qué el celular (su cámara toma mejores
+fotos) y cuántos pasos le faltan ahí. Cuando tu empresa tiene WhatsApp, aparece
+primero y marcado como recomendado. Si después de un minuto y medio en la
+pantalla del QR o del mensaje el celular no ha empezado, una sugerencia le indica
+qué intentar (acercar el celular, enviar el mensaje de nuevo o usar otro canal).
+
+En un celular abierto desde un código QR o un mensaje, la pantalla de resultado
+devuelve al usuario al computador, donde se muestra el resultado y tu página
+continúa.
+
+**Otro celular.** Si la cámara del celular no funciona bien (o el usuario la
+negó), el celular puede pasar los pasos de cámara a otro celular: ofrece el
+código QR, WhatsApp o SMS para la misma transacción y luego sigue al otro
+celular como lo hace un computador. El computador, mientras sigue a un celular,
+también ofrece **Usar otro celular** en cualquier momento. Los pasos completados
+se conservan.
+
+**Inactividad.** Una transacción se cierra tras 20 minutos sin actividad. Tres
+minutos antes, en los pasos y en la elección de canal, se le pregunta al usuario
+"¿Sigues ahí?"; si continúa, la sesión sigue abierta.
+
 <figure><img src="../.gitbook/assets/web-sdk-5-handoff-options.jpg" alt="Opciones de traspaso en un computador: código QR, WhatsApp y SMS" width="563"><figcaption><p>Los canales habilitados para la empresa, ofrecidos en el computador.</p></figcaption></figure>
 
 La pantalla del computador se convierte entonces en un **espejo**: muestra en
@@ -128,9 +149,11 @@ cuando el usuario la cierra. Además de las actualizaciones en vivo, el
 computador consulta la transacción en Unicus periódicamente, de modo que el
 resultado llega aunque se pierda una actualización en vivo.
 
-Si la página se cierra por error en el celular, no se pierde nada: el
-computador ofrece **Enviar el enlace de nuevo**, y el enlace nuevo retoma en el
-primer paso pendiente. Si la transacción expira mientras el computador espera,
+Si la página se cierra por error en el celular, la transacción no se pierde:
+cuando el celular lleva un minuto y medio sin enviar nada, el computador ofrece
+**Enviar el enlace de nuevo**, y el enlace nuevo retoma en el primer paso sin
+terminar. Los pasos ya completados se conservan; una captura de cámara que se
+interrumpió se repite. Si la transacción expira mientras el computador espera,
 el computador muestra "Este enlace ya no está activo" y emite
 `OnUnicus:error`; el siguiente clic en el botón inicia una validación nueva.
 
