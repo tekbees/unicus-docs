@@ -34,7 +34,8 @@ let config = UnicusSdkConfig(
     uiStepMode: .webView,           // .webView (default) | .custom(provider) | .disabled
     resumeOpenTransactions: true,
     collectLocationOnStart: false,
-    enableApiLogging: false
+    enableApiLogging: false,
+    language: .spanish              // .auto (default) | .spanish | .english
 )
 UnicusSdk.shared.configure(config)
 ```
@@ -62,7 +63,8 @@ UnicusSdk.shared.configure(config)
 | `collectLocationOnStart` | `true` | `false` when your app must not request location. Can be overridden per request. |
 | `secureScreens` | `false` | `true` to cover the flow screens in the app switcher snapshot. |
 | `prependConsent` | `false` | `true` to show a Unicus consent screen first when the flow has no consent step. Mobile apps usually collect consent themselves. |
-| `verificationTextOverrides` | `[:]` | Wording or language of the camera screens. See [Texts and languages](texts-and-languages.md). |
+| `language` | `.auto` | Language of the camera screens, the document data labels, the flow screens, the exit dialog and `result.resultMessage`. `.auto` follows the device (Spanish when the first preferred language is Spanish, English otherwise); `.spanish` or `.english` fix it. See [Texts and languages](texts-and-languages.md). |
+| `verificationTextOverrides` | `[:]` | Your wording for some camera screen texts. They win over the built-in texts. See [Texts and languages](texts-and-languages.md). |
 | `verificationOcrLocalization` | `nil` | Labels of the document data confirmation screen. Leave `nil` unless Tekbees gives you a map. |
 | `requestTimeout` | `120` s | Timeout of each Unicus API call. Lower only if your UX needs it. |
 | `additionalHeaders` | `[:]` | Extra headers on every Unicus API call (for example a corporate proxy requirement). |

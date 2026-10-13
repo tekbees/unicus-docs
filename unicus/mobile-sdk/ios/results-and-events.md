@@ -50,7 +50,7 @@ Meaning of each code: [Result codes](../result-codes.md).
 | `success` | `Bool` | `outcome == .success`. |
 | `tid` | `String?` | Unicus transaction id. Store it with your user or case. |
 | `resultCode` | `Int?` | Unicus result code (2000, 2003, 2041…). |
-| `resultMessage` | `String?` | Spanish message of the code, or the server message. For logs; show your own texts. |
+| `resultMessage` | `String?` | Message of the code addressed to the user, in the language of `UnicusSdkConfig.language`, or the reason written by Unicus for a rejected step. Route by `outcome` and `resultCode`, never by this text. |
 | `isResumable` | `Bool` | 2003: the transaction is open and can be continued. |
 | `isRetryable` | `Bool` | 2054 or 4014: temporary failure, start again. |
 | `resumed` | `Bool` | `start` continued an open transaction instead of creating one. |
@@ -64,7 +64,9 @@ Meaning of each code: [Result codes](../result-codes.md).
 
 `UnicusResultCode` has the constants (`success`, `resumable`, `userCanceled`,
 `stepRejected`, `temporaryFailure`, `signDeclined`…) and
-`UnicusResultCode.messageFor(code)` returns the Spanish message of a code.
+`UnicusResultCode.messageFor(code)` returns the Spanish message of a code
+(`messageFor(code, language: .english)` the English one; see
+[Texts and languages](texts-and-languages.md#result-messages)).
 
 ## `UnicusSdkError`
 

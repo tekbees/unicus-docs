@@ -1,58 +1,106 @@
 ---
 description: >-
-  Qué textos muestra el SDK Android de Unicus, en qué idioma y cómo cambiarlos
-  con las llaves de texto Unicus_*.
+  La opción de idioma del SDK Android de Unicus (español, inglés o el idioma
+  del dispositivo), qué cubre y cómo cambiar algunos textos con las llaves
+  Unicus_*.
 ---
 
 # Textos e idiomas
 
-Una verificación muestra tres tipos de pantallas. Cada una toma sus textos de
-un lugar distinto:
+El SDK incluye todos sus textos en **español e inglés**. Una opción,
+`UnicusSdkConfig.language`, elige el idioma de todo lo que muestra el SDK:
+
+| `UnicusLanguage` | Idioma |
+| --- | --- |
+| `AUTO` (por defecto) | El idioma del dispositivo: español en un dispositivo en español, inglés en cualquier otro. |
+| `SPANISH` | Siempre español. |
+| `ENGLISH` | Siempre inglés. |
+
+{% tabs %}
+{% tab title="Kotlin" %}
+{% code overflow="wrap" %}
+```kotlin
+UnicusSdk.shared.configure(
+    UnicusSdkConfig(apiKey = "<CUSTOMER_TOKEN>", environment = UnicusEnvironment.DEV)
+        .copy(language = UnicusLanguage.SPANISH)
+)
+```
+{% endcode %}
+{% endtab %}
+
+{% tab title="Java" %}
+{% code overflow="wrap" %}
+```java
+UnicusSdk.getShared().configure(
+        new UnicusSdkConfig.Builder("<CUSTOMER_TOKEN>", UnicusEnvironment.DEV)
+                .language(UnicusLanguage.SPANISH)
+                .build());
+```
+{% endcode %}
+{% endtab %}
+{% endtabs %}
+
+La opción aplica a todas las pantallas de la verificación:
 
 | Pantallas | Los textos vienen de | Idioma |
 | --- | --- | --- |
-| **Pantallas del flujo** (consentimiento, información, formulario, firma, OTP, firma de documentos) en modo WebView | El flujo configurado en el portal administrativo (títulos, descripciones, consentimiento, acuerdo, etiquetas de formularios en español e inglés) más la app de flujo de Unicus. | Idioma del dispositivo: español cuando el dispositivo está en español, inglés en otro caso. |
-| **Pantallas de cámara** (liveness, captura del documento, confirmación de datos) | Los textos por defecto del SDK, reemplazados por tus `verificationTextOverrides`. | Inglés por defecto. Entrega tus propios textos para cualquier otro idioma. |
-| **Elementos nativos del SDK** ("Cerrar" en la barra superior, diálogo "¿Salir de la verificación?", error de carga) | Recursos Android del SDK. | Español o inglés, según el idioma de tu app. |
+| **Pantallas de cámara** (liveness, captura del documento, reintentos, permiso de cámara, progreso de carga) | Los textos incluidos en el SDK, reemplazados llave por llave por tus `verificationTextOverrides`. | `language`. Tus reemplazos se muestran tal como los entregas. |
+| **Confirmación de datos del documento** (etiquetas de los datos leídos del documento) | Las etiquetas incluidas en el SDK, o tu `verificationOcrLocalization`. | `language`. |
+| **Pantallas del flujo** (consentimiento, información, formulario, firma, OTP, firma de documentos) en modo WebView | El flujo configurado en el portal administrativo (títulos, descripciones, consentimiento, acuerdo, etiquetas de formularios en español e inglés) más la app de flujo de Unicus. | `language`. |
+| **Elementos nativos del SDK** ("Cerrar" en la barra superior, diálogo de salida, error de carga) | Recursos Android del SDK. | `language`. |
+| **`result.resultMessage`** | El catálogo de resultados de Unicus. | `language`. |
+
+El diálogo de salida pregunta «¿Salir de la validación?» / "Leave the
+verification?" e informa al usuario que su avance queda guardado y que puede
+retomar la validación más tarde (consulta
+[Resultados y reanudación](../results-and-resuming.md)).
 
 Con [Pasos de UI personalizados](custom-ui-steps.md) tu app muestra las
-pantallas del flujo: usa `context.language` (`es` o `en`) y los textos
-localizados del paso (`step.title`, `step.config`).
+pantallas del flujo: usa `context.language` (`es` o `en`, resuelto desde la
+misma opción) y los textos localizados del paso (`step.title`, `step.config`).
 
-## Textos de las pantallas de cámara
+{% hint style="info" %}
+Antes de esta versión las pantallas de cámara salían en inglés salvo que tu app
+entregara una tabla en español, y `resultMessage` siempre venía en español. Con
+el valor por defecto `AUTO`, un dispositivo en español ahora ve las pantallas
+de cámara en español y un dispositivo en inglés recibe `resultMessage` en
+inglés. Si tu app entregaba la tabla completa en español solo para traducir las
+pantallas, reemplázala por `language = UnicusLanguage.SPANISH`.
+{% endhint %}
 
-Entrega un mapa de llaves `Unicus_*` en `verificationTextOverrides`. Las llaves
-que no entregues conservan su valor por defecto. Las constantes están en
-`UnicusVerificationTextKey`.
+## Cambiar algunos textos de cámara
+
+Para cambiar la redacción de algunos textos, entrega un mapa de llaves
+`Unicus_*` en `verificationTextOverrides`. Tus textos ganan sobre los
+incluidos; las llaves que no entregues conservan el texto incluido en el idioma
+elegido. Las constantes están en `UnicusVerificationTextKey`.
 
 {% code overflow="wrap" %}
 ```kotlin
-val spanish = mapOf(
-    UnicusVerificationTextKey.ACTION_IM_READY to "ESTOY LISTO",
-    UnicusVerificationTextKey.ACTION_TRY_AGAIN to "INTENTAR DE NUEVO",
-    UnicusVerificationTextKey.INSTRUCTIONS_HEADER_READY_1 to "Prepárate para tu<br/>video selfie",
-    UnicusVerificationTextKey.FEEDBACK_CENTER_FACE to "Centra tu rostro",
-    "Unicus_idscan_capture_id_front_instruction_message" to "Muestra el frente de tu documento"
-)
-
 UnicusSdk.shared.configure(
     UnicusSdkConfig(apiKey = token, environment = UnicusEnvironment.DEV)
-        .copy(verificationTextOverrides = spanish)
+        .copy(
+            language = UnicusLanguage.SPANISH,
+            verificationTextOverrides = mapOf(
+                UnicusVerificationTextKey.ACTION_IM_READY to "COMENZAR",
+                UnicusVerificationTextKey.INSTRUCTIONS_HEADER_READY_1 to "Prepárate para tu<br/>video selfie",
+                "Unicus_idscan_capture_id_front_instruction_message" to "Muestra el frente de tu documento"
+            )
+        )
 )
 ```
 {% endcode %}
 
+* Un reemplazo tiene un solo texto, que se muestra en cualquier idioma. Con
+  `AUTO`, fija el idioma o arma el mapa según el idioma del dispositivo (por
+  ejemplo desde tus propios recursos con `getString(R.string.…)`).
 * Los saltos de línea HTML (`<br/>`) se convierten en saltos de línea; las demás
   etiquetas HTML se eliminan.
-* El proyecto `example/` del paquete trae catálogos completos en inglés y
-  español (`SampleUnicusTexts.kt`). Copia el que necesites como punto de
-  partida.
-* Para seguir el idioma del dispositivo, arma el mapa en tiempo de ejecución
-  desde tus propios recursos (`getString(R.string.…)`) y llama a `configure`
-  con él.
-* La pantalla de confirmación de los datos leídos del documento tiene su propio
-  diccionario, `verificationOcrLocalization`. Pide el formato a Tekbees si
-  necesitas cambiarlo.
+* El proyecto `example/` del paquete trae las tablas completas en inglés y
+  español (`SampleUnicusTexts.kt`) como referencia para tu propia redacción.
+* `verificationOcrLocalization` reemplaza las etiquetas de la pantalla de
+  confirmación de los datos del documento. Pide el formato a Tekbees si
+  necesitas cambiarlas.
 
 ## Principales grupos de llaves
 
@@ -81,11 +129,19 @@ etiquetas de formularios y demás textos de los pasos se escriben por flujo en
 el portal administrativo, en español e inglés. Cambiarlos no requiere publicar
 tu app. Consulta [Flujos y pasos de UI](../flows-and-ui-steps.md).
 
-## Mensajes para tus propias pantallas
+## Mensajes de resultado
 
-`result.resultMessage` es el mensaje de Unicus para el código, en español.
-Úsalo en logs; escribe tus propios textos para el usuario según `outcome` y
-`resultCode` ([Códigos de resultado](../result-codes.md)) en los idiomas de tu
-app.
+`result.resultMessage` es el mensaje de Unicus para el código en el idioma
+elegido. Le habla al usuario y le dice qué hacer, por ejemplo `4001` «Se
+agotaron los intentos.» / "No attempts left." o `1005` «Se perdió la conexión.
+Revisa tu internet e inténtalo de nuevo.» / "The connection was lost. Check
+your internet and try again.". Un motivo escrito por Unicus para un paso
+rechazado se entrega tal cual.
+
+`UnicusResultCode.messageFor(code)` devuelve el mensaje en español de un código
+y `UnicusResultCode.messageFor(code, UnicusLanguage.ENGLISH)` el mensaje en
+inglés. Decide qué hacer según `outcome` y `resultCode`
+([Códigos de resultado](../result-codes.md)), nunca comparando textos: la
+redacción puede cambiar entre versiones.
 
 Siguiente: [Lista de salida a producción](release-checklist.md).

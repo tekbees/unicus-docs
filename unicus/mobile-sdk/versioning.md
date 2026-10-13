@@ -75,6 +75,9 @@ on them.
 * **Results.** `rejectionReason` and `rejectionDetail` for `2052`,
   `isRetryable`, `isResumable`, `resumed`, per-step results.
 * **Country selection** for companies with several active countries.
+* **Spanish and English.** `UnicusSdkConfig.language` (device language by
+  default) for the camera screens, the flow screens, the exit dialog and
+  `resultMessage`; result messages addressed to the user.
 * **Security.** Locked-down WebView, sanitized API logs, encrypted resume key,
   obfuscated SDK, optional `secureScreens`.
 * **Objective-C** facade on iOS; Java-friendly API and Kotlin coroutines on
@@ -91,3 +94,6 @@ If you received an earlier package of `0.1.0`, review these changes:
 | Flutter: `rejectionReason` and `rejectionDetail` come from the native SDKs. | None. |
 | Flutter on Android: Kotlin Gradle Plugin 2.0 or newer (was 2.3). | None; older Kotlin versions are now accepted. |
 | Starting with a base URL is an advanced option. | Prefer `UnicusSdkConfig(apiKey, environment)`. |
+| Language option `UnicusSdkConfig.language` (default: device language). A Spanish device now gets the camera screens in Spanish without overrides, and an English device gets `resultMessage` in English. | To keep everything in Spanish, set the language to Spanish. If you passed the complete Spanish text table only to translate the screens, replace it with the option. Texts and languages: [Android](android/texts-and-languages.md), [iOS](ios/texts-and-languages.md), [Flutter](flutter/texts-and-languages.md). |
+| `resultMessage` / `messageFor` speak to the user (for example `4001` "Se agotaron los intentos."; it said "Proceso cancelado por el usuario." by mistake). Codes and outcomes are unchanged. | If your app compared message texts, compare `resultCode` instead. |
+| The exit dialog says «¿Salir de la validación?» and, on iOS too, that progress is kept and the verification can be resumed. Camera texts reworded. | None. Review the screenshots of your own guides. |

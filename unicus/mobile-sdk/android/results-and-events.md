@@ -29,7 +29,7 @@ With the `suspend` variants, `start` returns the result and throws
 | `resumed` | `Boolean` | `true` when this `start` continued an open transaction of the same person. |
 | `rejectionReason` | `String?` | Machine-readable reason of a `2052` (for example `STEP_OUT_OF_ORDER`, `SIGN_DECLINED`). Never a translated text. |
 | `rejectionDetail` | `String?` | Detail after the reason, when Unicus gives one. |
-| `resultMessage` | `String?` | Message of Unicus for the code (Spanish catalog). For logs; write your own user-facing texts. |
+| `resultMessage` | `String?` | Message of Unicus for the code, addressed to the user, in the language of `UnicusSdkConfig.language` (for example `4001`: "Se agotaron los intentos." / "No attempts left."). Route by `outcome` and `resultCode`, never by this text. See [Texts and languages](texts-and-languages.md#result-messages). |
 | `flowId` | `String?` | Id of the flow executed. |
 | `steps` | `List<UnicusStepResult>` | Result of each step in flow order: `stepId`, `outcome` (`COMPLETED`, `FAILED`, `SKIPPED`), `resultCode`, `validations`. |
 | `transactionResultCode` | `Int?` | Final code reported by Unicus for the transaction, when it answered. |

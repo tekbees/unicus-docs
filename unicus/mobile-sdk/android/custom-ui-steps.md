@@ -117,7 +117,7 @@ What the provider receives:
 | `step.required` | `false` lets the flow continue when the step fails. |
 | `step.config` | Step configuration from the portal (raw map, keys below). |
 | `context.tid`, `context.flowId` | Transaction and flow. |
-| `context.language` | `es` or `en`, from the device language. |
+| `context.language` | `es` or `en`, from `UnicusSdkConfig.language` (the device language with the default `AUTO`). |
 | `context.theme` | Company colours (`windowColor`, `buttonColor`, `textColor`, `backgroundColor`). |
 
 Configuration keys per step type (as composed in the portal):

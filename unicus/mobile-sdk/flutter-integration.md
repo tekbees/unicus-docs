@@ -47,7 +47,7 @@ final result = await unicus.start(
 | [Start a verification](flutter/start-a-verification.md) | Document types, country selection, existing transactions, location, cancelling, threading rules. |
 | [Results and events](flutter/results-and-events.md) | `UnicusVerificationResult`, outcomes, the `events` and `apiLogs` streams. |
 | [UI steps](flutter/ui-steps.md) | WebView (default) and Disabled modes; why Custom is native-only. |
-| [Texts and languages](flutter/texts-and-languages.md) | `Unicus_*` text keys, overrides and languages of the flow screens. |
+| [Texts and languages](flutter/texts-and-languages.md) | Language option (Spanish, English or the device language) and `Unicus_*` text keys. |
 | [Release checklist](flutter/release-checklist.md) | What to test and check before going live. |
 
 Shared by the three mobile SDKs: [Overview](overview.md),

@@ -1,54 +1,103 @@
 ---
 description: >-
-  Which texts the Unicus Android SDK shows, in which language, and how to
-  change them with the Unicus_* text keys.
+  The language option of the Unicus Android SDK (Spanish, English or the device
+  language), what it covers, and how to change some texts with the Unicus_*
+  keys.
 ---
 
 # Texts and languages
 
-A verification shows three kinds of screens. Each one takes its wording from a
-different place:
+The SDK ships every text in **Spanish and English**. One option,
+`UnicusSdkConfig.language`, picks the language of everything the SDK shows:
+
+| `UnicusLanguage` | Language |
+| --- | --- |
+| `AUTO` (default) | The device language: Spanish on a Spanish device, English on any other. |
+| `SPANISH` | Always Spanish. |
+| `ENGLISH` | Always English. |
+
+{% tabs %}
+{% tab title="Kotlin" %}
+{% code overflow="wrap" %}
+```kotlin
+UnicusSdk.shared.configure(
+    UnicusSdkConfig(apiKey = "<CUSTOMER_TOKEN>", environment = UnicusEnvironment.DEV)
+        .copy(language = UnicusLanguage.SPANISH)
+)
+```
+{% endcode %}
+{% endtab %}
+
+{% tab title="Java" %}
+{% code overflow="wrap" %}
+```java
+UnicusSdk.getShared().configure(
+        new UnicusSdkConfig.Builder("<CUSTOMER_TOKEN>", UnicusEnvironment.DEV)
+                .language(UnicusLanguage.SPANISH)
+                .build());
+```
+{% endcode %}
+{% endtab %}
+{% endtabs %}
+
+The option applies to every screen of the verification:
 
 | Screens | Wording comes from | Language |
 | --- | --- | --- |
-| **Flow screens** (consent, info, form, signature, OTP, document signing) in WebView mode | The flow configured in the administrative portal (titles, descriptions, consent, agreement, form labels in Spanish and English) plus the Unicus flow app. | Device language: Spanish when the device is in Spanish, English otherwise. |
-| **Camera screens** (liveness, document capture, data confirmation) | The SDK defaults, replaced by your `verificationTextOverrides`. | English by default. Pass your own texts for any other language. |
-| **SDK native elements** (top bar "Close", "Leave the verification?" dialog, load error) | Android resources of the SDK. | Spanish or English, following your app's locale. |
+| **Camera screens** (liveness, document capture, retries, camera permission, upload progress) | The SDK's built-in texts, replaced key by key by your `verificationTextOverrides`. | `language`. Your overrides are shown as you pass them. |
+| **Document data confirmation** (labels of the data read from the document) | The SDK's built-in labels, or your `verificationOcrLocalization`. | `language`. |
+| **Flow screens** (consent, info, form, signature, OTP, document signing) in WebView mode | The flow configured in the administrative portal (titles, descriptions, consent, agreement, form labels in Spanish and English) plus the Unicus flow app. | `language`. |
+| **SDK native elements** (top bar "Close", exit dialog, load error) | Android resources of the SDK. | `language`. |
+| **`result.resultMessage`** | The Unicus result catalog. | `language`. |
+
+The exit dialog asks "¿Salir de la validación?" / "Leave the verification?"
+and tells the user that their progress is saved and they can resume the
+verification later (see [Results and resuming](../results-and-resuming.md)).
 
 With [Custom UI steps](custom-ui-steps.md) your app renders the flow screens:
-use `context.language` (`es` or `en`) and the localized texts of the step
-(`step.title`, `step.config`).
+use `context.language` (`es` or `en`, resolved from the same option) and the
+localized texts of the step (`step.title`, `step.config`).
 
-## Camera screen texts
+{% hint style="info" %}
+Before this version the camera screens were in English unless your app passed
+a Spanish table, and `resultMessage` was always in Spanish. With the default
+`AUTO`, a Spanish device now gets Spanish camera screens and an English device
+gets `resultMessage` in English. If your app passed the complete Spanish table
+only to translate the screens, replace it with
+`language = UnicusLanguage.SPANISH`.
+{% endhint %}
 
-Pass a map of `Unicus_*` keys in `verificationTextOverrides`. Keys you do not
-pass keep their default. The constants are in `UnicusVerificationTextKey`.
+## Change some camera texts
+
+To change the wording of some texts, pass a map of `Unicus_*` keys in
+`verificationTextOverrides`. Your texts win over the built-in ones; keys you do
+not pass keep the built-in text in the selected language. The constants are in
+`UnicusVerificationTextKey`.
 
 {% code overflow="wrap" %}
 ```kotlin
-val spanish = mapOf(
-    UnicusVerificationTextKey.ACTION_IM_READY to "ESTOY LISTO",
-    UnicusVerificationTextKey.ACTION_TRY_AGAIN to "INTENTAR DE NUEVO",
-    UnicusVerificationTextKey.INSTRUCTIONS_HEADER_READY_1 to "Prepárate para tu<br/>video selfie",
-    UnicusVerificationTextKey.FEEDBACK_CENTER_FACE to "Centra tu rostro",
-    "Unicus_idscan_capture_id_front_instruction_message" to "Muestra el frente de tu documento"
-)
-
 UnicusSdk.shared.configure(
     UnicusSdkConfig(apiKey = token, environment = UnicusEnvironment.DEV)
-        .copy(verificationTextOverrides = spanish)
+        .copy(
+            language = UnicusLanguage.SPANISH,
+            verificationTextOverrides = mapOf(
+                UnicusVerificationTextKey.ACTION_IM_READY to "COMENZAR",
+                UnicusVerificationTextKey.INSTRUCTIONS_HEADER_READY_1 to "Prepárate para tu<br/>video selfie",
+                "Unicus_idscan_capture_id_front_instruction_message" to "Muestra el frente de tu documento"
+            )
+        )
 )
 ```
 {% endcode %}
 
+* An override has a single text, shown whatever the language. With `AUTO`,
+  either fix the language or build the map for the language of the device
+  (for example from your own resources with `getString(R.string.…)`).
 * HTML line breaks (`<br/>`) become line breaks; other HTML tags are removed.
-* The `example/` project of the package ships complete English and Spanish
-  catalogs (`SampleUnicusTexts.kt`). Copy the one you need as a starting point.
-* To follow the device language, build the map at runtime from your own
-  resources (`getString(R.string.…)`) and call `configure` with it.
-* The confirmation screen of the data read from the document has its own
-  dictionary, `verificationOcrLocalization`. Ask Tekbees for the format if you
-  need to change it.
+* The `example/` project of the package ships the complete English and Spanish
+  tables (`SampleUnicusTexts.kt`) as a reference for custom wording.
+* `verificationOcrLocalization` replaces the labels of the document data
+  confirmation screen. Ask Tekbees for the format if you need to change them.
 
 ## Main key groups
 
@@ -76,10 +125,19 @@ other step texts are written per flow in the administrative portal, in Spanish
 and English. Changing them needs no app release. See
 [Flows and UI steps](../flows-and-ui-steps.md).
 
-## Messages for your own screens
+## Result messages
 
-`result.resultMessage` is the Unicus message for the code, in Spanish. Use it
-in logs; write your own user-facing texts per `outcome` and `resultCode`
-([Result codes](../result-codes.md)) in the languages of your app.
+`result.resultMessage` is the Unicus message for the code in the selected
+language. It speaks to the user and says what to do next, for example `4001`
+"Se agotaron los intentos." / "No attempts left." or `1005` "Se perdió la
+conexión. Revisa tu internet e inténtalo de nuevo." / "The connection was lost.
+Check your internet and try again.". A reason written by Unicus for a rejected
+step is passed as it is.
+
+`UnicusResultCode.messageFor(code)` returns the Spanish message of a code and
+`UnicusResultCode.messageFor(code, UnicusLanguage.ENGLISH)` the English one.
+Decide what to do from `outcome` and `resultCode`
+([Result codes](../result-codes.md)), never by comparing message texts: the
+wording can change between versions.
 
 Next: [Release checklist](release-checklist.md).

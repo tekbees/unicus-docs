@@ -48,7 +48,7 @@ val config = UnicusSdkConfig(apiKey = "<CUSTOMER_TOKEN>", environment = UnicusEn
     .copy(
         secureScreens = true,
         enableApiLogging = BuildConfig.DEBUG,
-        verificationTextOverrides = mySpanishTexts
+        language = UnicusLanguage.SPANISH
     )
 UnicusSdk.shared.configure(config)
 ```
@@ -61,7 +61,7 @@ UnicusSdk.shared.configure(config)
 UnicusSdkConfig config = new UnicusSdkConfig.Builder("<CUSTOMER_TOKEN>", UnicusEnvironment.DEV)
         .secureScreens(true)
         .enableApiLogging(BuildConfig.DEBUG)
-        .verificationTextOverrides(mySpanishTexts)
+        .language(UnicusLanguage.SPANISH)
         .build();
 UnicusSdk.getShared().configure(config);
 ```
@@ -79,7 +79,8 @@ UnicusSdk.getShared().configure(config);
 | `secureScreens` | `false` | `true` blocks screenshots and screen recording (`FLAG_SECURE`) on the flow screens. Recommended in production. |
 | `resumeOpenTransactions` | `true` | When the user leaves and you call `start` again with the same document, the SDK continues the open transaction. Set `false` to always create a new one. See [Results and resuming](../results-and-resuming.md). |
 | `collectLocationOnStart` | `true` | `false` never asks for location, even if your app declares the permission. |
-| `verificationTextOverrides` | empty | `Unicus_*` keys to change the wording or language of the camera screens. See [Texts and languages](texts-and-languages.md). |
+| `language` | `UnicusLanguage.AUTO` | Language of the camera screens, the document data labels, the flow screens, the exit dialog and `result.resultMessage`. `AUTO` follows the device (Spanish on a Spanish device, English on any other); `SPANISH` or `ENGLISH` fix it. See [Texts and languages](texts-and-languages.md). |
+| `verificationTextOverrides` | empty | `Unicus_*` keys to change the wording of some camera screen texts. They win over the built-in texts. See [Texts and languages](texts-and-languages.md). |
 | `verificationOcrLocalization` | `null` | Localization of the screen where the user confirms the data read from the document. Ask Tekbees for the format. |
 | `prependConsent` | `false` | `true` adds a consent step at the start when the assigned flow has none. In WebView mode the flow screens show it; in Custom mode your provider must support `consent`. |
 | `requestTimeoutMillis` | `120000` | Timeout of each call to Unicus. |

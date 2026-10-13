@@ -39,6 +39,12 @@ if (error) {
 minúsculas). Igual que en Swift, hoy solo está disponible `dev`; los demás hacen
 que `start` falle con `environment_not_available`.
 
+La configuración desde Objective-C usa el idioma por defecto, el del
+dispositivo (español en un dispositivo en español, inglés en cualquier otro),
+para las pantallas y `resultMessage`. Para fijar el idioma, configura el SDK
+desde Swift con `UnicusSdkConfig.language` (consulta
+[Textos e idiomas](texts-and-languages.md)).
+
 ## Iniciar una verificación
 
 {% code overflow="wrap" %}
@@ -103,7 +109,7 @@ La reanudación automática con el mismo documento funciona igual que en Swift
 | `success` | `BOOL` | Identidad verificada. |
 | `outcome` | `NSString` | `success`, `warning`, `failed`, `canceled`, `error`, `resumable`, `unknown`. |
 | `resultCode` | `NSNumber *` (nullable) | Código de resultado de Unicus. Consulta [Códigos de resultado](../result-codes.md). |
-| `resultMessage` | `NSString *` (nullable) | Mensaje del código, para logs. |
+| `resultMessage` | `NSString *` (nullable) | Mensaje del código para el usuario, en el idioma de la verificación. |
 | `tid` | `NSString *` (nullable) | Id de la transacción. |
 | `resumable` | `BOOL` | 2003: la transacción está abierta. |
 | `retryable` | `BOOL` | Falla temporal: inicia de nuevo. |

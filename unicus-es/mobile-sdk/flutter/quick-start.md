@@ -88,6 +88,14 @@ Future<void> verify() async {
 `enrollmentVerify` enrola a la persona si Unicus aún no la conoce y la
 verifica si ya la conoce. Tu app pide solo el tipo y el número de documento.
 
+{% hint style="info" %}
+Por defecto el SDK habla el idioma del dispositivo (español en un dispositivo
+en español, inglés en cualquier otro): pantallas de cámara, pantallas del
+flujo, diálogo de salida y `result.resultMessage`. Para fijarlo, usa
+`language` (por ejemplo
+`language: UnicusLanguage.spanish` en `UnicusSdkConfig`). Consulta [Textos e idiomas](texts-and-languages.md).
+{% endhint %}
+
 ## 4. Maneja el resultado
 
 | `result.outcome` | Código | Qué hacer |

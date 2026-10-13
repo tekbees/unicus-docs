@@ -42,7 +42,7 @@ flowchart LR
 | [Start a verification](android/start-a-verification.md) | Document, country selection, existing transaction, location, cancelling, threading. |
 | [Results and events](android/results-and-events.md) | Result fields, outcome handling, progress events, API logs. |
 | [Custom UI steps](android/custom-ui-steps.md) | Your own screens for consent, form, signature, OTP and document signing. |
-| [Texts and languages](android/texts-and-languages.md) | `Unicus_*` text keys and the languages of each screen. |
+| [Texts and languages](android/texts-and-languages.md) | Language option (Spanish, English or the device language) and `Unicus_*` text keys. |
 | [Release checklist](android/release-checklist.md) | What to check before going live. |
 
 Shared by every mobile SDK: [Overview](overview.md),

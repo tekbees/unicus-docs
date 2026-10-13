@@ -62,6 +62,14 @@ UnicusSdk.shared.configure(
 ```
 {% endcode %}
 
+{% hint style="info" %}
+The SDK speaks the device language by default (Spanish on a Spanish device,
+English on any other): camera screens, flow screens, the exit dialog and
+`result.resultMessage`. To fix it, set `language` (for example
+`.copy(language = UnicusLanguage.SPANISH)`). See
+[Texts and languages](texts-and-languages.md).
+{% endhint %}
+
 ## 3. Start and handle the result
 
 {% tabs %}

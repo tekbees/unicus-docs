@@ -34,7 +34,8 @@ let config = UnicusSdkConfig(
     uiStepMode: .webView,           // .webView (por defecto) | .custom(provider) | .disabled
     resumeOpenTransactions: true,
     collectLocationOnStart: false,
-    enableApiLogging: false
+    enableApiLogging: false,
+    language: .spanish              // .auto (por defecto) | .spanish | .english
 )
 UnicusSdk.shared.configure(config)
 ```
@@ -63,7 +64,8 @@ UnicusSdk.shared.configure(config)
 | `collectLocationOnStart` | `true` | `false` cuando tu app no debe pedir ubicación. Se puede cambiar por solicitud. |
 | `secureScreens` | `false` | `true` para ocultar las pantallas del flujo en la vista previa del selector de apps. |
 | `prependConsent` | `false` | `true` para mostrar primero una pantalla de consentimiento de Unicus cuando el flujo no tiene paso de consentimiento. Las apps móviles suelen recoger el consentimiento por su cuenta. |
-| `verificationTextOverrides` | `[:]` | Textos o idioma de las pantallas de cámara. Consulta [Textos e idiomas](texts-and-languages.md). |
+| `language` | `.auto` | Idioma de las pantallas de cámara, las etiquetas de los datos del documento, las pantallas del flujo, el diálogo de salida y `result.resultMessage`. `.auto` sigue al dispositivo (español cuando el primer idioma preferido es español, inglés en otro caso); `.spanish` o `.english` lo fijan. Consulta [Textos e idiomas](texts-and-languages.md). |
+| `verificationTextOverrides` | `[:]` | Tu redacción para algunos textos de las pantallas de cámara. Ganan sobre los textos incluidos. Consulta [Textos e idiomas](texts-and-languages.md). |
 | `verificationOcrLocalization` | `nil` | Etiquetas de la pantalla de confirmación de datos del documento. Déjala en `nil` salvo que Tekbees te entregue un diccionario. |
 | `requestTimeout` | `120` s | Tiempo máximo de cada llamada a la API de Unicus. Redúcelo solo si tu experiencia lo requiere. |
 | `additionalHeaders` | `[:]` | Encabezados adicionales en cada llamada a la API de Unicus (por ejemplo, un requisito de un proxy corporativo). |

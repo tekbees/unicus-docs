@@ -84,7 +84,7 @@ flowchart LR
 | 7 | Modo avión antes de `start`. | `.failure` con `network_error`. |
 | 8 | Llamar a `start` dos veces seguidas. | La segunda falla con `session_active`. |
 | 9 | Quitar la asignación del flujo en el portal. | `.failure`, `transaction_refused`, `resultCode` 2002. |
-| 10 | Dispositivo en español y en inglés. | Las pantallas del flujo siguen el idioma del dispositivo; los textos de cámara coinciden con tus reemplazos. |
+| 10 | Dispositivo en español y en inglés. | Pantallas de cámara, pantallas del flujo, diálogo de salida y `resultMessage` en el idioma de `UnicusSdkConfig.language` (el del dispositivo con `.auto`); tus reemplazos donde los entregaste. |
 | 11 | Compilación Release en un dispositivo. | Se ejecuta con el binario de producción del motor (sin el reemplazo Debug). |
 
 ## 6. Salida a producción

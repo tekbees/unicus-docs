@@ -82,7 +82,7 @@ flowchart LR
 | 7 | Airplane mode before `start`. | `.failure` with `network_error`. |
 | 8 | Call `start` twice quickly. | The second fails with `session_active`. |
 | 9 | Remove the flow assignment in the portal. | `.failure`, `transaction_refused`, `resultCode` 2002. |
-| 10 | Device in Spanish and in English. | Flow screens follow the device language; camera texts match your overrides. |
+| 10 | Device in Spanish and in English. | Camera screens, flow screens, exit dialog and `resultMessage` in the language of `UnicusSdkConfig.language` (the device language with `.auto`); your overrides shown where you passed them. |
 | 11 | Release build on a device. | Runs with the production engine binary (no Debug swap). |
 
 ## 6. Go live

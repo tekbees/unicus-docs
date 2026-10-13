@@ -80,9 +80,13 @@ configurados por flujo en el portal. El WebView carga solo el dominio de la flow
 app de Unicus de tu ambiente, no conserva datos al cerrarse y recibe la sesión
 de la transacción por un canal privado con el SDK, nunca en una URL.
 
-El botón de cerrar y el botón atrás de Android le piden confirmación al usuario.
-Salir no es cancelar: la transacción sigue abierta y se puede retomar (consulta
-[Resultados y reanudación](results-and-resuming.md)).
+El botón de cerrar y el botón atrás de Android le piden confirmación al
+usuario: el diálogo («¿Salir de la validación?» / "Leave the verification?") le
+informa que su avance queda guardado y que puede retomar la validación más
+tarde. Salir no es cancelar: la transacción sigue abierta y se puede retomar
+(consulta [Resultados y reanudación](results-and-resuming.md)). Las pantallas
+del flujo y el diálogo usan el idioma de `UnicusSdkConfig.language` (por
+defecto, el idioma del dispositivo).
 
 ### Modo Custom
 

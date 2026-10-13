@@ -117,6 +117,24 @@ When the user cancels the face or document scan, the SDK reports `2041`.
 
 ## Messages
 
-`UnicusResultCode.messageFor(code)` returns a short Spanish message for each
-code, the same catalogue Unicus uses. Use your own texts if you need another
-language or wording.
+`result.resultMessage` carries the message of the code in the language of the
+verification (`UnicusSdkConfig.language`: the device language by default,
+Spanish or English). The messages speak to the user and say what to do next,
+with the same wording as the Web SDK:
+
+| Code | Spanish | English |
+| --- | --- | --- |
+| `2000` | Validación exitosa. | Verification successful. |
+| `2041` | Cancelaste la validación. | You canceled the verification. |
+| `4001` | Se agotaron los intentos. | No attempts left. |
+| `1005` | Se perdió la conexión. Revisa tu internet e inténtalo de nuevo. | The connection was lost. Check your internet and try again. |
+| `9002` | No pudimos comparar tu rostro con la foto del documento. | We could not compare your face with the photo on the document. |
+
+`UnicusResultCode.messageFor(code)` returns the Spanish message of any code;
+pass the language to get the English one (Android
+`messageFor(code, UnicusLanguage.ENGLISH)`, iOS
+`messageFor(code, language: .english)`, Flutter
+`messageFor(code, language: UnicusLanguage.english)`). A reason written by
+Unicus for a rejected step is passed as it is. Route by `outcome` and
+`resultCode`, never by the message text: the wording can change between
+versions. Use your own texts if you need another wording.

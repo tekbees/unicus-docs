@@ -59,7 +59,8 @@ tu código conserva el mismo valor de `environment`.
 | `collectLocationOnStart` | `true` | `false` para no pedir nunca la ubicación. Con `true`, se recoge solo si tu app declara el permiso y el usuario lo concede. |
 | `requestTimeout` | 2 minutos | Tiempo máximo de cada llamada a Unicus. Súbelo solo para redes muy lentas. |
 | `additionalHeaders` | `{}` | Encabezados HTTP extra en cada llamada a Unicus, por ejemplo uno que exige tu proxy corporativo. |
-| `verificationTextOverrides` | `{}` | Tu redacción o idioma para las pantallas de cámara. Consulta [Textos e idiomas](texts-and-languages.md). |
+| `language` | `UnicusLanguage.auto` | Idioma de las pantallas de cámara, las etiquetas de los datos del documento, las pantallas del flujo, el diálogo de salida y `result.resultMessage`. `auto` sigue al dispositivo (español en un dispositivo en español, inglés en cualquier otro); `UnicusLanguage.spanish` o `UnicusLanguage.english` lo fijan. Consulta [Textos e idiomas](texts-and-languages.md). |
+| `verificationTextOverrides` | `{}` | Tu redacción para algunos textos de las pantallas de cámara. Ganan sobre los textos incluidos. Consulta [Textos e idiomas](texts-and-languages.md). |
 | `verificationOcrLocalization` | `null` | Etiquetas de la pantalla de confirmación de datos del documento. Coordina el diccionario con soporte de Tekbees. |
 | `androidLogoResourceName` | `null` | Solo Android: nombre de un drawable de tu app que se muestra como logo en las pantallas de cámara (por ejemplo `customer_logo`). |
 | `enableApiLogging` | `false` | `true` en desarrollo para recibir logs sanitizados en `unicus.apiLogs`. |
@@ -74,7 +75,7 @@ await unicus.configure(UnicusSdkConfig(
   apiKey: customerToken, // cargado desde tu configuración
   environment: UnicusEnvironment.dev,
   secureScreens: true,
-  verificationTextOverrides: myUnicusTexts, // opcional, ver Textos e idiomas
+  language: UnicusLanguage.spanish, // opcional, por defecto UnicusLanguage.auto (idioma del dispositivo)
   androidLogoResourceName: 'customer_logo', // opcional, logo en Android
 ));
 ```

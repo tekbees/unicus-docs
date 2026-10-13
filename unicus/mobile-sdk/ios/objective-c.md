@@ -38,6 +38,11 @@ if (error) {
 only `dev` is available today; the others make `start` fail with
 `environment_not_available`.
 
+The Objective-C configuration uses the default language, the device language
+(Spanish on a Spanish device, English on any other), for the screens and
+`resultMessage`. To fix the language, configure the SDK from Swift with
+`UnicusSdkConfig.language` (see [Texts and languages](texts-and-languages.md)).
+
 ## Start a verification
 
 {% code overflow="wrap" %}
@@ -102,7 +107,7 @@ Automatic resume with the same document works as in Swift (see
 | `success` | `BOOL` | Identity verified. |
 | `outcome` | `NSString` | `success`, `warning`, `failed`, `canceled`, `error`, `resumable`, `unknown`. |
 | `resultCode` | `NSNumber *` (nullable) | Unicus result code. See [Result codes](../result-codes.md). |
-| `resultMessage` | `NSString *` (nullable) | Message of the code, for logs. |
+| `resultMessage` | `NSString *` (nullable) | Message of the code for the user, in the language of the verification. |
 | `tid` | `NSString *` (nullable) | Transaction id. |
 | `resumable` | `BOOL` | 2003: the transaction is open. |
 | `retryable` | `BOOL` | Temporary failure: start again. |

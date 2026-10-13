@@ -58,7 +58,8 @@ package: your code keeps the same `environment` value.
 | `collectLocationOnStart` | `true` | `false` to never ask for location. With `true`, location is collected only if your app declares the permission and the user grants it. |
 | `requestTimeout` | 2 minutes | Timeout of each call to Unicus. Raise it only for very slow networks. |
 | `additionalHeaders` | `{}` | Extra HTTP headers on every call to Unicus, for example one your corporate proxy requires. |
-| `verificationTextOverrides` | `{}` | Your wording or language for the camera screens. See [Texts and languages](texts-and-languages.md). |
+| `language` | `UnicusLanguage.auto` | Language of the camera screens, the document data labels, the flow screens, the exit dialog and `result.resultMessage`. `auto` follows the device (Spanish on a Spanish device, English on any other); `UnicusLanguage.spanish` or `UnicusLanguage.english` fix it. See [Texts and languages](texts-and-languages.md). |
+| `verificationTextOverrides` | `{}` | Your wording for some camera screen texts. They win over the built-in texts. See [Texts and languages](texts-and-languages.md). |
 | `verificationOcrLocalization` | `null` | Labels of the document data confirmation screen. Coordinate the dictionary with Tekbees support. |
 | `androidLogoResourceName` | `null` | Android only: name of a drawable of your app shown as the logo in the camera screens (for example `customer_logo`). |
 | `enableApiLogging` | `false` | `true` in development to receive sanitized logs on `unicus.apiLogs`. |
@@ -73,7 +74,7 @@ await unicus.configure(UnicusSdkConfig(
   apiKey: customerToken, // loaded from your configuration
   environment: UnicusEnvironment.dev,
   secureScreens: true,
-  verificationTextOverrides: myUnicusTexts, // optional, see Texts and languages
+  language: UnicusLanguage.spanish, // optional, default UnicusLanguage.auto (device language)
   androidLogoResourceName: 'customer_logo', // optional, Android logo
 ));
 ```

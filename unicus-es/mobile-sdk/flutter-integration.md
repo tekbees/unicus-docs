@@ -49,7 +49,7 @@ final result = await unicus.start(
 | [Iniciar una verificación](flutter/start-a-verification.md) | Tipos de documento, selección de país, transacciones existentes, ubicación, cancelación, reglas de hilos. |
 | [Resultados y eventos](flutter/results-and-events.md) | `UnicusVerificationResult`, resultados, los streams `events` y `apiLogs`. |
 | [Pasos de interfaz](flutter/ui-steps.md) | Modos WebView (por defecto) y Disabled; por qué Custom es solo nativo. |
-| [Textos e idiomas](flutter/texts-and-languages.md) | Llaves de texto `Unicus_*`, personalización e idiomas de las pantallas del flujo. |
+| [Textos e idiomas](flutter/texts-and-languages.md) | Opción de idioma (español, inglés o el idioma del dispositivo) y llaves de texto `Unicus_*`. |
 | [Lista de salida a producción](flutter/release-checklist.md) | Qué probar y revisar antes de publicar. |
 
 Compartidas por los tres SDK móviles: [Visión general](overview.md),

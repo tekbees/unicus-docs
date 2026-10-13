@@ -62,6 +62,14 @@ UnicusSdk.shared.configure(
 ```
 {% endcode %}
 
+{% hint style="info" %}
+Por defecto el SDK habla el idioma del dispositivo (español en un dispositivo
+en español, inglés en cualquier otro): pantallas de cámara, pantallas del
+flujo, diálogo de salida y `result.resultMessage`. Para fijarlo, usa
+`language` (por ejemplo
+`.copy(language = UnicusLanguage.SPANISH)`). Consulta [Textos e idiomas](texts-and-languages.md).
+{% endhint %}
+
 ## 3. Inicia y maneja el resultado
 
 {% tabs %}

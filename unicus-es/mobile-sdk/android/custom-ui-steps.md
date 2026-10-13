@@ -118,7 +118,7 @@ Qué recibe el proveedor:
 | `step.required` | `false` permite que el flujo continúe cuando el paso falla. |
 | `step.config` | Configuración del paso desde el portal (mapa sin tipar, llaves abajo). |
 | `context.tid`, `context.flowId` | Transacción y flujo. |
-| `context.language` | `es` o `en`, según el idioma del dispositivo. |
+| `context.language` | `es` o `en`, según `UnicusSdkConfig.language` (el idioma del dispositivo con el valor por defecto `AUTO`). |
 | `context.theme` | Colores de la empresa (`windowColor`, `buttonColor`, `textColor`, `backgroundColor`). |
 
 Llaves de configuración por tipo de paso (tal como se componen en el portal):

@@ -58,7 +58,7 @@ Future<void> verify(UnicusVerificationRequest request) async {
 | `outcome` | `UnicusVerificationOutcome` | `success`, `warning`, `failed`, `canceled`, `error`, `resumable` o `unknown`. Decide con este campo. |
 | `success` | `bool` | `true` solo para `success`. |
 | `resultCode` | `int?` | Código de resultado de Unicus (2000, 2003, 2041, 2052…). La respuesta final del servidor tiene prioridad sobre la salida de la cámara. |
-| `resultMessage` | `String?` | Mensaje del código. Para desarrolladores; no lo muestres tal cual. |
+| `resultMessage` | `String?` | Mensaje del código dirigido al usuario, en el idioma de `UnicusSdkConfig.language`. Decide según `outcome` y `resultCode`, nunca según este texto. Consulta [Textos e idiomas](texts-and-languages.md#mensajes-de-resultado). |
 | `tid` | `String?` | Id de la transacción. Envíalo a tu backend. |
 | `resumed` | `bool` | `true` cuando `start` continuó la transacción abierta del mismo documento. |
 | `isResumable` | `bool` | `true` para 2003: la transacción sigue abierta y se puede continuar. |

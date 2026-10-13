@@ -79,6 +79,10 @@ construido sobre ellos.
 * **Resultados.** `rejectionReason` y `rejectionDetail` para `2052`,
   `isRetryable`, `isResumable`, `resumed`, resultados por paso.
 * **Selección de país** para empresas con varios países activos.
+* **Español e inglés.** `UnicusSdkConfig.language` (por defecto el idioma del
+  dispositivo) para las pantallas de cámara, las pantallas del flujo, el
+  diálogo de salida y `resultMessage`; mensajes de resultado dirigidos al
+  usuario.
 * **Seguridad.** WebView restringido, logs del API sanitizados, llave de
   reanudación cifrada, SDK ofuscado, `secureScreens` opcional.
 * Fachada **Objective-C** en iOS; API amigable con Java y corrutinas de Kotlin
@@ -95,3 +99,6 @@ Si recibiste un paquete anterior de `0.1.0`, revisa estos cambios:
 | Flutter: `rejectionReason` y `rejectionDetail` vienen de los SDK nativos. | Ninguna. |
 | Flutter en Android: Kotlin Gradle Plugin 2.0 o superior (antes 2.3). | Ninguna; ahora se aceptan versiones de Kotlin más antiguas. |
 | Iniciar con una URL base es una opción avanzada. | Prefiere `UnicusSdkConfig(apiKey, environment)`. |
+| Opción de idioma `UnicusSdkConfig.language` (por defecto: idioma del dispositivo). Un dispositivo en español ahora ve las pantallas de cámara en español sin reemplazos, y un dispositivo en inglés recibe `resultMessage` en inglés. | Para mantener todo en español, fija el idioma en español. Si entregabas la tabla completa de textos en español solo para traducir las pantallas, reemplázala por la opción. Textos e idiomas: [Android](android/texts-and-languages.md), [iOS](ios/texts-and-languages.md), [Flutter](flutter/texts-and-languages.md). |
+| `resultMessage` / `messageFor` le hablan al usuario (por ejemplo `4001` «Se agotaron los intentos.»; por error decía «Proceso cancelado por el usuario.»). Los códigos y outcomes no cambian. | Si tu app comparaba textos de mensajes, compara `resultCode`. |
+| El diálogo de salida dice «¿Salir de la validación?» y, también en iOS, que el avance queda guardado y la validación se puede retomar. Textos de cámara con nueva redacción. | Ninguna. Revisa las capturas de pantalla de tus propias guías. |

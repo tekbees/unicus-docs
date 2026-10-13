@@ -58,7 +58,7 @@ exhaustive `switch` must include it. The meaning of every code is in
 | `outcome` | `UnicusVerificationOutcome` | `success`, `warning`, `failed`, `canceled`, `error`, `resumable` or `unknown`. Route by this. |
 | `success` | `bool` | `true` only for `success`. |
 | `resultCode` | `int?` | Unicus result code (2000, 2003, 2041, 2052…). The server's final answer takes priority over the camera exit. |
-| `resultMessage` | `String?` | Message of the result code. For developers; do not show it as is. |
+| `resultMessage` | `String?` | Message of the result code addressed to the user, in the language of `UnicusSdkConfig.language`. Route by `outcome` and `resultCode`, never by this text. See [Texts and languages](texts-and-languages.md#result-messages). |
 | `tid` | `String?` | Transaction id. Send it to your backend. |
 | `resumed` | `bool` | `true` when `start` continued the open transaction of the same document. |
 | `isResumable` | `bool` | `true` for 2003: the transaction is still open and can be continued. |

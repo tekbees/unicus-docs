@@ -43,7 +43,7 @@ flowchart LR
 | [Iniciar una verificación](android/start-a-verification.md) | Documento, selección de país, transacción existente, ubicación, cancelación, hilos. |
 | [Resultados y eventos](android/results-and-events.md) | Campos del resultado, manejo de cada outcome, eventos de progreso, logs del API. |
 | [Pasos de UI personalizados](android/custom-ui-steps.md) | Tus propias pantallas para consentimiento, formulario, firma, OTP y firma de documentos. |
-| [Textos e idiomas](android/texts-and-languages.md) | Llaves de texto `Unicus_*` y el idioma de cada pantalla. |
+| [Textos e idiomas](android/texts-and-languages.md) | Opción de idioma (español, inglés o el idioma del dispositivo) y llaves de texto `Unicus_*`. |
 | [Lista de salida a producción](android/release-checklist.md) | Qué revisar antes de salir a producción. |
 
 Comunes a todos los SDK móviles: [Descripción general](overview.md),

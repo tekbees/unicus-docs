@@ -78,6 +78,7 @@ and one recent device.
 | 10 | Remove the flow assignment in the portal. | `onError` with `transaction_refused` and `resultCode` `2002`. |
 | 11 | Configure `PRODUCTION` before it is announced. | `environment_not_available`. |
 | 12 | Corporate devices: run case 1 under your MDM / VPN / RASP. | Same as case 1. See [Compatibility and security](../compatibility-and-security.md). |
+| 13 | Device in Spanish and in English. | Camera screens, flow screens, exit dialog and `resultMessage` in the language of `UnicusSdkConfig.language` (the device language with `AUTO`). |
 
 ## 5. Go live
 

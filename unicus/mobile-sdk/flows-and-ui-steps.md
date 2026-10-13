@@ -78,9 +78,13 @@ configured per flow in the portal. The WebView loads only the Unicus flow app
 domain of your environment, keeps no data after it closes and receives the
 transaction session through a private channel with the SDK, never in a URL.
 
-The close button and the Android back button ask the user to confirm. Leaving is
-not a cancellation: the transaction stays open and can be resumed (see
-[Results and resuming](results-and-resuming.md)).
+The close button and the Android back button ask the user to confirm: the
+dialog ("Leave the verification?" / «¿Salir de la validación?») tells the user
+that their progress is saved and they can resume the verification later.
+Leaving is not a cancellation: the transaction stays open and can be resumed
+(see [Results and resuming](results-and-resuming.md)). The flow screens and
+the dialog use the language set in `UnicusSdkConfig.language` (the device
+language by default).
 
 ### Custom mode
 

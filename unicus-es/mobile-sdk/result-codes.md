@@ -120,6 +120,24 @@ Cuando el usuario cancela el escaneo del rostro o del documento, el SDK reporta
 
 ## Mensajes
 
-`UnicusResultCode.messageFor(code)` devuelve un mensaje corto en español para
-cada código, el mismo catálogo que usa Unicus. Usa tus propios textos si
-necesitas otro idioma o redacción.
+`result.resultMessage` trae el mensaje del código en el idioma de la
+verificación (`UnicusSdkConfig.language`: por defecto el idioma del
+dispositivo, español o inglés). Los mensajes le hablan al usuario y le dicen
+qué hacer, con la misma redacción que el Web SDK:
+
+| Código | Español | Inglés |
+| --- | --- | --- |
+| `2000` | Validación exitosa. | Verification successful. |
+| `2041` | Cancelaste la validación. | You canceled the verification. |
+| `4001` | Se agotaron los intentos. | No attempts left. |
+| `1005` | Se perdió la conexión. Revisa tu internet e inténtalo de nuevo. | The connection was lost. Check your internet and try again. |
+| `9002` | No pudimos comparar tu rostro con la foto del documento. | We could not compare your face with the photo on the document. |
+
+`UnicusResultCode.messageFor(code)` devuelve el mensaje en español de cualquier
+código; pasa el idioma para obtener el mensaje en inglés (Android
+`messageFor(code, UnicusLanguage.ENGLISH)`, iOS
+`messageFor(code, language: .english)`, Flutter
+`messageFor(code, language: UnicusLanguage.english)`). Un motivo escrito por
+Unicus para un paso rechazado se entrega tal cual. Decide según `outcome` y
+`resultCode`, nunca según el texto del mensaje: la redacción puede cambiar
+entre versiones. Usa tus propios textos si necesitas otra redacción.

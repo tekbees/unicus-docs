@@ -92,6 +92,14 @@ do {
   the SDK uses the top-most view controller.
 * Completions always arrive on the main queue.
 
+{% hint style="info" %}
+The SDK speaks the device language by default (Spanish on a Spanish device,
+English on any other): camera screens, flow screens, the exit dialog and
+`result.resultMessage`. To fix it, set `language` (for example
+`UnicusSdkConfig(apiKey: ..., environment: .dev, language: .spanish)`). See
+[Texts and languages](texts-and-languages.md).
+{% endhint %}
+
 ## 4. Handle the result
 
 `start` ends in `.success(UnicusVerificationResult)` whenever the verification

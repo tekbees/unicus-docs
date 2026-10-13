@@ -81,6 +81,7 @@ que soportes y uno reciente.
 | 10 | Quita la asignación del flujo en el portal. | `onError` con `transaction_refused` y `resultCode` `2002`. |
 | 11 | Configura `PRODUCTION` antes de que se anuncie. | `environment_not_available`. |
 | 12 | Dispositivos corporativos: ejecuta el caso 1 bajo tu MDM / VPN / RASP. | Igual que el caso 1. Consulta [Compatibilidad y seguridad](../compatibility-and-security.md). |
+| 13 | Dispositivo en español y en inglés. | Pantallas de cámara, pantallas del flujo, diálogo de salida y `resultMessage` en el idioma de `UnicusSdkConfig.language` (el del dispositivo con `AUTO`). |
 
 ## 5. Salida a producción
 

@@ -55,7 +55,7 @@ flowchart LR
 - [ ] `clearResumeData()` is called on logout.
 - [ ] `enableApiLogging` and `includeSensitiveApiLogData` are off in release
       builds; `secureScreens` decided.
-- [ ] Camera texts (`verificationTextOverrides`) in the languages of your app.
+- [ ] `language` chosen (`UnicusLanguage.auto` follows the device); `verificationTextOverrides` only for the texts whose wording you change.
 
 ## 3. In your backend
 
@@ -81,7 +81,7 @@ Test on at least one Android phone and one iPhone, with signed builds (not
 | 8 | Deny location (if declared). | The verification continues without location. |
 | 9 | Airplane mode before `start`. | `UnicusSdkException` `network_error`. |
 | 10 | Several active countries (if applicable). | Your selector appears before the camera. |
-| 11 | Device in Spanish and in English. | Flow screens and camera texts in the expected language. |
+| 11 | Device in Spanish and in English. | Camera screens, flow screens, exit dialog and `resultMessage` in the expected language. |
 | 12 | Android with an outdated WebView (if you support old devices). | `webview_unavailable`, handled with your message. |
 | 13 | Release build (R8 on Android, Release on iOS). | Same as case 1. |
 

@@ -94,6 +94,14 @@ do {
   SDK usa el view controller superior.
 * Los completion handlers siempre llegan en la cola principal (main queue).
 
+{% hint style="info" %}
+Por defecto el SDK habla el idioma del dispositivo (español en un dispositivo
+en español, inglés en cualquier otro): pantallas de cámara, pantallas del
+flujo, diálogo de salida y `result.resultMessage`. Para fijarlo, usa
+`language` (por ejemplo
+`UnicusSdkConfig(apiKey: ..., environment: .dev, language: .spanish)`). Consulta [Textos e idiomas](texts-and-languages.md).
+{% endhint %}
+
 ## 4. Maneja el resultado
 
 `start` termina en `.success(UnicusVerificationResult)` siempre que la

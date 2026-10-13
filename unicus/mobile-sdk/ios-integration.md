@@ -45,7 +45,7 @@ UnicusSdk.shared.start(
 | [Start a verification](ios/start-a-verification.md) | Document, country selection, existing transaction, location, cancelling, threading. |
 | [Results and events](ios/results-and-events.md) | `UnicusVerificationResult`, outcomes, errors, progress events, API logs. |
 | [Custom UI steps](ios/custom-ui-steps.md) | Render the flow screens with your own UI (`.custom` provider), including `sign_document`. |
-| [Texts and languages](ios/texts-and-languages.md) | `Unicus_*` text keys and the language of each screen. |
+| [Texts and languages](ios/texts-and-languages.md) | Language option (Spanish, English or the device language) and `Unicus_*` text keys. |
 | [Objective-C](ios/objective-c.md) | The `UnicusSdkObjC` facade. |
 | [Release checklist](ios/release-checklist.md) | What to check before going live. |
 

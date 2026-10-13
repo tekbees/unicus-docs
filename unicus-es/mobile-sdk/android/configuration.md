@@ -47,7 +47,7 @@ val config = UnicusSdkConfig(apiKey = "<CUSTOMER_TOKEN>", environment = UnicusEn
     .copy(
         secureScreens = true,
         enableApiLogging = BuildConfig.DEBUG,
-        verificationTextOverrides = misTextosEnEspanol
+        language = UnicusLanguage.SPANISH
     )
 UnicusSdk.shared.configure(config)
 ```
@@ -60,7 +60,7 @@ UnicusSdk.shared.configure(config)
 UnicusSdkConfig config = new UnicusSdkConfig.Builder("<CUSTOMER_TOKEN>", UnicusEnvironment.DEV)
         .secureScreens(true)
         .enableApiLogging(BuildConfig.DEBUG)
-        .verificationTextOverrides(misTextosEnEspanol)
+        .language(UnicusLanguage.SPANISH)
         .build();
 UnicusSdk.getShared().configure(config);
 ```
@@ -78,7 +78,8 @@ UnicusSdk.getShared().configure(config);
 | `secureScreens` | `false` | `true` bloquea capturas y grabación de pantalla (`FLAG_SECURE`) en las pantallas del flujo. Recomendado en producción. |
 | `resumeOpenTransactions` | `true` | Cuando el usuario sale y vuelves a llamar a `start` con el mismo documento, el SDK continúa la transacción abierta. Usa `false` para crear siempre una nueva. Consulta [Resultados y reanudación](../results-and-resuming.md). |
 | `collectLocationOnStart` | `true` | `false` nunca pide la ubicación, aunque tu app declare el permiso. |
-| `verificationTextOverrides` | vacío | Llaves `Unicus_*` para cambiar los textos o el idioma de las pantallas de cámara. Consulta [Textos e idiomas](texts-and-languages.md). |
+| `language` | `UnicusLanguage.AUTO` | Idioma de las pantallas de cámara, las etiquetas de los datos del documento, las pantallas del flujo, el diálogo de salida y `result.resultMessage`. `AUTO` sigue al dispositivo (español en un dispositivo en español, inglés en cualquier otro); `SPANISH` o `ENGLISH` lo fijan. Consulta [Textos e idiomas](texts-and-languages.md). |
+| `verificationTextOverrides` | vacío | Llaves `Unicus_*` para cambiar la redacción de algunos textos de las pantallas de cámara. Ganan sobre los textos incluidos. Consulta [Textos e idiomas](texts-and-languages.md). |
 | `verificationOcrLocalization` | `null` | Textos de la pantalla donde el usuario confirma los datos leídos del documento. Pide el formato a Tekbees. |
 | `prependConsent` | `false` | `true` agrega un paso de consentimiento al inicio cuando el flujo asignado no tiene uno. En modo WebView lo muestran las pantallas del flujo; en modo Custom tu proveedor debe soportar `consent`. |
 | `requestTimeoutMillis` | `120000` | Tiempo máximo de cada llamada a Unicus. |

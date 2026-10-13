@@ -51,7 +51,7 @@ para el `tid`. Significado de cada código:
 | `success` | `Bool` | `outcome == .success`. |
 | `tid` | `String?` | Id de la transacción de Unicus. Guárdalo con tu usuario o caso. |
 | `resultCode` | `Int?` | Código de resultado de Unicus (2000, 2003, 2041…). |
-| `resultMessage` | `String?` | Mensaje en español del código, o el mensaje del servidor. Para logs; muestra tus propios textos. |
+| `resultMessage` | `String?` | Mensaje del código dirigido al usuario, en el idioma de `UnicusSdkConfig.language`, o el motivo escrito por Unicus para un paso rechazado. Decide según `outcome` y `resultCode`, nunca según este texto. |
 | `isResumable` | `Bool` | 2003: la transacción está abierta y se puede continuar. |
 | `isRetryable` | `Bool` | 2054 o 4014: falla temporal, inicia de nuevo. |
 | `resumed` | `Bool` | `start` continuó una transacción abierta en lugar de crear una. |
@@ -65,7 +65,9 @@ para el `tid`. Significado de cada código:
 
 `UnicusResultCode` tiene las constantes (`success`, `resumable`, `userCanceled`,
 `stepRejected`, `temporaryFailure`, `signDeclined`…) y
-`UnicusResultCode.messageFor(code)` devuelve el mensaje en español de un código.
+`UnicusResultCode.messageFor(code)` devuelve el mensaje en español de un código
+(`messageFor(code, language: .english)` el mensaje en inglés; consulta
+[Textos e idiomas](texts-and-languages.md#mensajes-de-resultado)).
 
 ## `UnicusSdkError`
 
