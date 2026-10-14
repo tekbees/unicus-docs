@@ -118,6 +118,9 @@ platform.
 | Every `start` creates a new transaction | `resumeOpenTransactions` is off, the document changed, the flow was changed in the portal, more than 20 minutes passed, or Android 5.x. |
 | iOS Debug build on a physical iPhone cannot start the verification | Debug builds on a physical iPhone need the development framework swap. See [iOS installation](ios/installation.md). |
 | Location is never sent | Optional. Android: declare the location permissions in your app. iOS: add `NSLocationWhenInUseUsageDescription`. The user can refuse; the verification continues. |
+| An iPhone shows "rotate your device" and never continues | Fixed in the packages delivered from 14 October 2026 (newer camera engine, needed for the latest iPhones and iOS versions). Update the SDK. |
+| Flutter iOS app fails to install from TestFlight or closes on launch | Flutter 3.47 Release archive issue. See [Flutter installation](flutter/installation.md). |
+| No logo on the iOS camera screens | The portal logo could not be loaded or decoded (use an `https` PNG or JPG). Without a usable logo the camera screens show none, as on the web. |
 | The logo does not appear on Android | Android shows the logo from a drawable of your app (`setAndroidLogoResourceName`); remote logos are not shown. See [Android configuration](android/configuration.md). |
 
 ## API logs

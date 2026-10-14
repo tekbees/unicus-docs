@@ -129,7 +129,9 @@ phone, e-mail and location are redacted). See
 ## Branding
 
 Colours come from the company branding in the administrative portal and are
-applied automatically to the camera screens and the flow screens. Without a
+applied automatically to the camera screens and the flow screens. The camera
+screens look like those of the Web SDK 5.0 (same colours and texts; the
+animations are the closest the Android camera engine allows). Without a
 text colour, the SDK picks white or near-black, whichever contrasts better with
 your brand colour; without a button colour, it uses the brand colour.
 
@@ -143,7 +145,8 @@ UnicusSdk.shared.setAndroidLogoResourceName("my_company_logo") // res/drawable/m
 ```
 {% endcode %}
 
-Without it, the Unicus logo is shown.
+Without it, the Unicus logo is shown: in colour on the camera screens, in white
+on the top bar of the flow screens.
 
 ## Other members
 

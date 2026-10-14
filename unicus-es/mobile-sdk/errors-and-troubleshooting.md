@@ -118,6 +118,9 @@ todas las plataformas.
 | Cada `start` crea una transacción nueva | `resumeOpenTransactions` está desactivado, cambió el documento, el flujo se cambió en el portal, pasaron más de 20 minutos, o Android 5.x. |
 | Un build Debug de iOS en un iPhone físico no puede iniciar la verificación | Los builds Debug en un iPhone físico necesitan el cambio al framework de desarrollo. Consulta [Instalación en iOS](ios/installation.md). |
 | Nunca se envía la ubicación | Es opcional. Android: declara los permisos de ubicación en tu app. iOS: agrega `NSLocationWhenInUseUsageDescription`. El usuario puede negarla; la verificación continúa. |
+| Un iPhone muestra «gira el dispositivo» y no avanza | Corregido en los paquetes entregados desde el 14 de octubre de 2026 (motor de cámara más reciente, necesario para los últimos iPhone y versiones de iOS). Actualiza el SDK. |
+| La app Flutter en iOS no se instala desde TestFlight o se cierra al abrir | Problema de los archivos Release de Flutter 3.47. Consulta [Instalación en Flutter](flutter/installation.md). |
+| No hay logo en las pantallas de cámara de iOS | El logo del portal no se pudo cargar o decodificar (usa un PNG o JPG por `https`). Sin un logo utilizable, las pantallas de cámara no muestran ninguno, igual que en la web. |
 | El logo no aparece en Android | Android muestra el logo desde un drawable de tu app (`setAndroidLogoResourceName`); los logos remotos no se muestran. Consulta [Configuración en Android](android/configuration.md). |
 
 ## Logs del API

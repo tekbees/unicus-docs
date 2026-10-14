@@ -120,8 +120,10 @@ Consulta [Resultados y eventos](results-and-events.md).
 
 Tu app no configura colores ni logo. El SDK lee la marca de la empresa (colores
 y logo) configurada en el portal administrativo para la transacción y la aplica
-a las pantallas de cámara y del flujo. Si falta un color, el SDK elige uno
-legible por defecto; si el logo no se puede cargar, muestra el logo de Unicus.
+a las pantallas de cámara y del flujo. Las pantallas de cámara se ven como las
+del Web SDK 5.0: mismos colores, animaciones y textos. Si falta un color, el SDK
+usa los mismos valores por defecto que el Web SDK; si el logo no se puede
+cargar, las pantallas de cámara no muestran logo, igual que en la web.
 
 ## Otros miembros
 

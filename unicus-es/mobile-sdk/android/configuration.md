@@ -130,7 +130,10 @@ códigos OTP, teléfono, correo y ubicación se ocultan). Consulta
 ## Marca
 
 Los colores salen de la marca de la empresa en el portal administrativo y se
-aplican automáticamente a las pantallas de cámara y a las del flujo. Sin color
+aplican automáticamente a las pantallas de cámara y a las del flujo. Las
+pantallas de cámara se ven como las del Web SDK 5.0 (mismos colores y textos;
+las animaciones son las más cercanas que permite el motor de cámara de
+Android). Sin color
 de texto, el SDK elige blanco o casi negro, el que mejor contraste con tu color
 de marca; sin color de botón, usa el color de marca.
 
@@ -144,7 +147,8 @@ UnicusSdk.shared.setAndroidLogoResourceName("logo_mi_empresa") // res/drawable/l
 ```
 {% endcode %}
 
-Si no lo defines, se muestra el logo de Unicus.
+Si no lo defines, se muestra el logo de Unicus: a color en las pantallas de
+cámara y en blanco en la barra superior de las pantallas del flujo.
 
 ## Otros miembros
 

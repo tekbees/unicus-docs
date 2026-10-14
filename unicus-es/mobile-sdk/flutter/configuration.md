@@ -112,14 +112,17 @@ Los colores y el logo vienen de la configuración de tu compañía en el portal
 administrativo; no los pasas en código.
 
 * **Colores** (fondo, principal, botones, texto): se aplican a las pantallas
-  de cámara y a las del flujo en ambas plataformas.
+  de cámara y a las del flujo en ambas plataformas. Las pantallas de cámara se
+  ven como las del Web SDK 5.0.
 * **Logo en iOS:** el SDK carga el logo configurado en el portal (un PNG o JPG
   por `https`, una imagen raster en línea o un SVG simple hecho de trazos
-  básicos). Si no lo puede decodificar, usa el logo de Unicus.
+  básicos). Si no lo puede decodificar, las pantallas de cámara no muestran
+  logo, igual que en la web.
 * **Logo en Android:** las pantallas de cámara solo pueden mostrar una imagen
   de los recursos de tu app. Agrega tu logo en
   `android/app/src/main/res/drawable` y pasa su nombre en
-  `androidLogoResourceName`; si no, se muestra el logo de Unicus. Las
+  `androidLogoResourceName`; si no, se muestra el logo de Unicus (a color en
+  las pantallas de cámara). Las
   pantallas del flujo (vista web) usan el logo del portal en ambas
   plataformas.
 

@@ -118,9 +118,10 @@ See [Results and events](results-and-events.md).
 
 Your app does not configure colours or logo. The SDK reads the company branding
 (colours and logo) configured in the administrative portal for the transaction
-and applies it to the camera screens and the flow screens. When a colour is
-missing, the SDK chooses a readable default; when the logo cannot be loaded, it
-shows the Unicus logo.
+and applies it to the camera screens and the flow screens. The camera screens
+look like those of the Web SDK 5.0: same colours, animations and texts. When a
+colour is missing, the SDK uses the same defaults as the Web SDK; when the logo
+cannot be loaded, the camera screens show no logo, as on the web.
 
 ## Other members
 

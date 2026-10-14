@@ -202,6 +202,24 @@ If your Podfile already has a `post_install` block, add only the
 * If your app target is not called `Runner`, pass its name as the second
   argument: `unicus_install_facetec_development_swap(path, 'MyApp')`.
 
+### Release archives with Flutter 3.47
+
+Flutter 3.47 Release archives can leave `App.framework/App` (your Dart code)
+without the execute permission: the app then fails to install from TestFlight
+or closes on launch. This is a Flutter issue, not of the Unicus SDK. Until
+Flutter fixes it, add a **Run Script** phase to the `Runner` target in Xcode,
+right after **Thin Binary**:
+
+{% code overflow="wrap" %}
+```bash
+APP_BINARY="${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/App.framework/App"
+if [ -f "$APP_BINARY" ]; then chmod 755 "$APP_BINARY"; fi
+```
+{% endcode %}
+
+The example app in the package already has this phase ("Fix App.framework
+Permissions").
+
 ## 4. Check the installation
 
 Run the example of the package, or your app, on a physical device:

@@ -109,13 +109,15 @@ Colours and logo come from your company configuration in the administrative
 portal; you do not pass them in code.
 
 * **Colours** (background, primary, buttons, text) are applied to the camera
-  screens and the flow screens on both platforms.
+  screens and the flow screens on both platforms. The camera screens look like
+  those of the Web SDK 5.0.
 * **Logo on iOS:** the SDK loads the logo configured in the portal (an
   `https` PNG or JPG, an inline raster image, or a simple SVG made of basic
-  paths). If it cannot be decoded it falls back to the Unicus logo.
+  paths). If it cannot be decoded, the camera screens show no logo, as on the
+  web.
 * **Logo on Android:** the camera screens can only show an image from your
   app's resources. Add your logo to `android/app/src/main/res/drawable` and
   pass its name in `androidLogoResourceName`; otherwise the Unicus logo is
-  shown. The flow screens (web view) use the portal logo on both platforms.
+  shown (in colour on the camera screens). The flow screens (web view) use the portal logo on both platforms.
 
 Next: [Start a verification](start-a-verification.md).

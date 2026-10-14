@@ -40,6 +40,9 @@ flowchart LR
 - [ ] iOS: `platform :ios, '15.0'`, `NSCameraUsageDescription` (y
       `NSLocationWhenInUseUsageDescription` si quieres ubicación), helper del
       Podfile para builds Debug en dispositivo.
+- [ ] iOS con Flutter 3.47: la fase Run Script que mantiene ejecutable
+      `App.framework/App` en los archivos Release. Consulta
+      [Instalación](installation.md).
 - [ ] iOS: si la app usa `WKAppBoundDomains`, el dominio de las pantallas del
       flujo está incluido.
 - [ ] El Customer Token no está escrito en el código del control de versiones

@@ -33,12 +33,15 @@ flowchart LR
       (`path:` dependency committed or in your artifact repository).
 - [ ] Android: `minSdk` 21+, `compileSdk` 34+, AGP and Kotlin Gradle Plugin at
       the versions your Flutter requires (Flutter 3.47: AGP 8.11.1+, Kotlin
-      2.2.20+). See [Installation](installation.md).
+      2.2.20+). See [Installation](installation.md) (iOS, Release archives).
 - [ ] Android: location permissions declared only if you want location, and
       reported in Play Console's *Data safety*.
 - [ ] iOS: `platform :ios, '15.0'`, `NSCameraUsageDescription` (and
       `NSLocationWhenInUseUsageDescription` if you want location), Podfile
       helper for Debug builds on a device.
+- [ ] iOS with Flutter 3.47: the Run Script phase that keeps `App.framework/App`
+      executable in Release archives. See
+      [Installation](installation.md).
 - [ ] iOS: if the app uses `WKAppBoundDomains`, the flow screens domain is
       listed.
 - [ ] The Customer Token is not hard-coded in source control and can be
