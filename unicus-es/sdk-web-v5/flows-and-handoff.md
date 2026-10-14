@@ -117,8 +117,8 @@ mensajes pueden recibir una transacción y un número de celular, y lo indica en
 la pantalla cuando se alcanza el límite (el usuario aún puede usar el código QR).
 
 La pantalla le explica al usuario por qué el celular (su cámara toma mejores
-fotos) y cuántos pasos le faltan ahí. Cuando tu empresa tiene WhatsApp, aparece
-primero y marcado como recomendado. Si después de un minuto y medio en la
+fotos) y cuántos pasos le faltan ahí. El código QR aparece primero y marcado
+como recomendado; WhatsApp y SMS, si tu empresa los tiene, van después. Si después de un minuto y medio en la
 pantalla del QR o del mensaje el celular no ha empezado, una sugerencia le indica
 qué intentar (acercar el celular, enviar el mensaje de nuevo o usar otro canal).
 

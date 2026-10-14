@@ -109,8 +109,8 @@ one transaction and one phone number can receive, and says so on the screen
 when the limit is reached (the user can still use the QR code).
 
 The screen tells the user why the phone (its camera takes better pictures) and
-how many steps are left there. When your company has WhatsApp, it comes first
-and is marked as recommended. If the phone has not started after a minute and a
+how many steps are left there. The QR code comes first and is marked as
+recommended; WhatsApp and SMS, when your company has them, follow. If the phone has not started after a minute and a
 half on the QR or message screen, a hint suggests what to try (move the phone
 closer, send the message again, or use another channel).
 
