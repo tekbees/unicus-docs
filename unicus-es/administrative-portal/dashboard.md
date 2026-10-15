@@ -14,11 +14,19 @@ El **Dashboard** muestra lo que pasó en el periodo que elijas (hoy, los
   embudo de conversión, personas atendidas, tiempo para completar, reintentos
   de documento e intentos de prueba de vida, la evolución diaria o mensual, la
   actividad por hora y día, las cifras por flujo, una ubicación aproximada y
-  el estado de los webhooks de resultado.
+  el estado de los webhooks de resultado. El mapa es más preciso (unos 1 km)
+  con el permiso **Ver datos personales**; sin él, unos 10 km.
 
 Solo se cuentan las transacciones en las que la persona hizo algo: un enlace
 que nadie abrió no aparece en las cifras. Las transacciones de prueba no se
 mezclan con las reales.
+
+## Analítica
+
+**Analítica** muestra la conversión, el abandono y los motivos de rechazo del
+periodo: cómo terminaron las transacciones de cada flujo y de cada canal
+(botón web, Unicus Link, SDK móvil), en qué paso del flujo se detienen las
+personas y por qué fallaron o vencieron.
 
 {% hint style="info" %}
 Las secciones disponibles dependen de tu plan. Si necesitas una que no ves,

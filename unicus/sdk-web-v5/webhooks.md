@@ -16,7 +16,7 @@ Unicus sends **one event per transaction**, when its result is final:
 | Event | When |
 | --- | --- |
 | `TRANSACTION_FINALIZED` | Once per transaction, when it ends: approved, rejected, sent to review, expired, cancelled or deleted. |
-| `TRANSACTION_REVIEW_RESOLVED` | Only for a transaction that ended in `REVIEW`, when Tekbees decides the review. |
+| `TRANSACTION_REVIEW_RESOLVED` | Only for a transaction that ended in `REVIEW`, when the manual review is decided: by Tekbees or by a user of your company with the permission to edit enrollments, in the [Review queue](../administrative-portal/transactions.md#review-queue). |
 
 {% hint style="warning" %}
 **Coming from Web SDK 4.x?** The step webhooks (`LIVENESS_FACEMAP`,
@@ -180,8 +180,11 @@ static bool IsValid(string secret, string timestamp, string signature, byte[] ra
   down for longer, reconcile with [Get a transaction status](transaction-status.md).
 * **Answer fast.** Persist the event and answer `200`; do the slow work
   (updating your systems, notifying the user) afterwards.
-* **Order.** For one transaction, `TRANSACTION_FINALIZED` always comes before
-  `TRANSACTION_REVIEW_RESOLVED`; across transactions there is no order.
+* **Order.** Arrival order is not guaranteed. For one transaction,
+  `TRANSACTION_FINALIZED` is created before `TRANSACTION_REVIEW_RESOLVED`, but if
+  the `TRANSACTION_FINALIZED` delivery failed and is waiting for its retry,
+  `TRANSACTION_REVIEW_RESOLVED` can arrive first; across transactions there is no
+  order either. Process each event independently, by `tid` and `event_id`.
 * **Personal data.** The payload carries the person's document data (and
   optionally images): log only the `tid` and the outcome, never the body.
 

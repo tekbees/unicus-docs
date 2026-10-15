@@ -47,10 +47,12 @@ Si tu empresa aún no tiene flujos, usa **Crear flujos por defecto**.
 | Pantallas | Consentimiento (siempre al inicio, antes de cualquier paso con cámara), Información |
 | Captura biométrica | Prueba de vida, Documento, Cotejo facial |
 | Análisis del rostro | Verificación de edad |
-| Complementos | Código OTP (SMS, WhatsApp o correo), Formulario, Firma |
+| Complementos | Firma electrónica (firma manuscrita), Código OTP (SMS, WhatsApp o correo), Formulario, Firma con Unicus Sign (el paso "Firma de documento": firma un documento de Unicus Sign prellenado con los datos del flujo) |
 
 Algunos pasos dependen de los servicios de tu plan (por ejemplo, el código OTP
-o la firma con Unicus Sign); los que no tienes aparecen deshabilitados. Además
+o la firma con Unicus Sign); los que no tienes aparecen deshabilitados. La
+firma con Unicus Sign necesita además que conectes tu cuenta de Unicus Sign
+(ver [Integración](integration.md#conexiones)). Además
 de los pasos, un flujo puede incluir **verificaciones** del lado del servidor
 (por ejemplo, consultas en listas) si tu plan las incluye.
 

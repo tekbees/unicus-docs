@@ -220,11 +220,11 @@ portal: cada paso con un resultado registrado, en el orden del flujo.
 
 | Campo | Descripción |
 | --- | --- |
-| `stepId` / `type` | Id y tipo del paso (`liveness`, `document`, `face_match`, `signature`, `otp`, `form`, `consent`, `info`, `age_check`). |
+| `stepId` / `type` | Id y tipo del paso (`liveness`, `document`, `face_match`, `signature`, `otp`, `form`, `sign_document`, `consent`, `info`, `age_check`). |
 | `outcome` | `completed`, `failed` o `skipped` (paso opcional que falló). |
 | `resultCode` | `2000` o el código de la falla. |
 | `recordedAt` | Cuándo se registró el resultado (UTC). |
-| `data` | Lo que entregó el usuario: los `values` del formulario; `channel`, `destination` y `verifiedAt` del OTP; hash de la firma, texto del acuerdo y un `imageUrl` válido por 24 horas; texto y fechas del consentimiento; `validations` del documento; edad mínima y edad certificada de `age_check`. Datos personales. |
+| `data` | Lo que entregó el usuario: los `values` del formulario; `channel`, `destination` y `verifiedAt` del OTP; hash de la firma, texto del acuerdo y un `imageUrl` válido por 24 horas; texto y fechas del consentimiento; `validations` del documento; edad mínima y edad certificada de `age_check`; `envelopeId` y `signedAt` de `sign_document` (el sobre de Unicus Sign). Datos personales. |
 
 #### Imágenes
 

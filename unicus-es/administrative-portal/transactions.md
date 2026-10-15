@@ -8,9 +8,14 @@ description: >-
 
 ## Los listados
 
-**Operación → Enrolamientos**, **Verificaciones** y **Pruebas de vida** listan
-las transacciones de tu empresa, las más recientes primero. Los enrolamientos
-se actualizan en vivo.
+**Operación → Enrolamientos**, **Verificaciones**, **Pruebas de vida** y, si tu
+empresa tiene la validación de edad, **Validación de edad** listan las
+transacciones de tu empresa, las más recientes primero. Los enrolamientos se
+actualizan en vivo.
+
+Cada listado y su detalle necesitan el permiso de ver de su tipo de
+transacción (por ejemplo, ver enrolamientos); cambiar o eliminar necesitan el
+permiso de editar o eliminar de ese mismo tipo.
 
 * Busca por número de documento o por nombre y apellido.
 * Filtra por estado: exitoso, procesando, fallido, en revisión, sospechoso,
@@ -22,7 +27,9 @@ se actualizan en vivo.
 
 ## El detalle de una transacción
 
-Abre una transacción para ver, en pestañas:
+Abre una transacción para ver, en pestañas (**Actualizar** vuelve a cargarla;
+mientras la transacción está en curso, la página muestra **Actualizando en
+vivo** y se actualiza sola):
 
 | Pestaña | Qué muestra |
 | --- | --- |
@@ -35,10 +42,17 @@ Abre una transacción para ver, en pestañas:
 
 ### Datos personales
 
-Las fotos (rostro, documento, evidencias) y los datos personales leídos del
-documento solo los ve quien tiene el permiso **Ver datos personales**. Sin él,
-esos datos aparecen ocultos (`***`) y la ubicación se muestra redondeada; el
-nombre, el documento y los resultados siguen visibles.
+Las fotos (rostro, documento, evidencias) y los datos personales solo los ve
+completos quien tiene el permiso **Ver datos personales**. Sin él:
+
+* siguen visibles el nombre, el tipo y número de documento, las fechas y los
+  resultados;
+* las fotos no se muestran;
+* aparecen ocultos (`***` o enmascarados) la fecha y el lugar de nacimiento,
+  el sexo, el tipo de sangre, la fecha y el lugar de expedición, y lo que la
+  persona escribió en el flujo (formularios, teléfono o correo verificado con
+  OTP);
+* la ubicación se muestra aproximada (unos 10 km).
 
 Cada consulta completa de datos personales queda registrada en
 [Auditoría](users-roles-and-approvals.md).
@@ -47,13 +61,21 @@ Cada consulta completa de datos personales queda registrada en
 
 **Descargar PDF** genera la constancia de la transacción (de enrolamiento, de
 verificación de identidad o de prueba de vida). Unicus guarda la huella
-(SHA-256) de cada constancia que genera, con quién y cuándo. Si no tienes el
-permiso de datos personales, la constancia los omite y lo indica.
+(SHA-256) de cada constancia que genera, con quién y cuándo.
+
+* Si tienes el permiso de datos personales, **Descargar PDF** abre un menú:
+  **PDF completo** (con las imágenes y los datos personales) o **PDF sin datos
+  personales** (para compartir con terceros).
+* Sin el permiso, es un solo botón y la constancia ya sale sin ellos (y lo
+  indica).
 
 Para comprobar que una constancia que alguien te entregó es auténtica, usa
 **Herramientas → Verificar constancia** y suelta el PDF: el archivo no sale de
-tu navegador, solo su huella. El resultado es **Constancia auténtica**,
-**Documento modificado** o **Constancia no registrada**.
+tu navegador, solo su huella. El resultado es **Constancia registrada**,
+**Documento modificado** o **Constancia no registrada**. Si la transacción
+cambió después de generarse la constancia, el resultado lo advierte: "La
+transacción cambió después de generarse esta constancia (por ejemplo, por una
+decisión de revisión): el PDF ya no la muestra como está ahora."
 
 ## Cola de revisión
 
@@ -91,6 +113,8 @@ proveedor de correo.
 
 ## Eliminar una transacción
 
-El portal no elimina transacciones. Para eliminar un enrolamiento (y su rostro
-de la búsqueda de duplicados) o una verificación, tu backend usa
-`delete-transaction` (ver [API de servidor](../sdk-web-v5/server-api.md)).
+Un enrolamiento (y su rostro de la búsqueda de duplicados) se elimina desde
+su detalle con **Eliminar transacción** (se necesita el permiso de eliminar
+enrolamientos). Las verificaciones solo se
+eliminan desde tu backend con `delete-transaction`, que también sirve para
+enrolamientos (ver [API de servidor](../sdk-web-v5/server-api.md)).

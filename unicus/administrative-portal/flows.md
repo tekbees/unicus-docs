@@ -44,11 +44,13 @@ If your company has no flows yet, use **Create default flows**.
 | --- | --- |
 | Screens | Consent (always first, before any camera step), Information |
 | Biometric capture | Liveness, Document, Face match |
-| Face analysis | Age verification |
-| Add-ons | OTP code (SMS, WhatsApp or e-mail), Form, Signature |
+| Face analysis | Age check |
+| Add-ons | Electronic signature (handwritten signature), OTP code (SMS, WhatsApp or e-mail), Form, Unicus Sign signature (the "Document signing" step: signs a Unicus Sign document prefilled with the flow data) |
 
 Some steps depend on the services in your plan (for example the OTP code or
-signing with Unicus Sign); the ones you do not have are disabled. Besides
+signing with Unicus Sign); the ones you do not have are disabled. Signing with
+Unicus Sign also needs your Unicus Sign account connected (see
+[Integration](integration.md#connections)). Besides
 steps, a flow can include server-side **checks** (for example list screening)
 if your plan includes them.
 

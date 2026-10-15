@@ -219,11 +219,11 @@ step with a recorded result, in flow order.
 
 | Field | Description |
 | --- | --- |
-| `stepId` / `type` | Step id and type (`liveness`, `document`, `face_match`, `signature`, `otp`, `form`, `consent`, `info`, `age_check`). |
+| `stepId` / `type` | Step id and type (`liveness`, `document`, `face_match`, `signature`, `otp`, `form`, `sign_document`, `consent`, `info`, `age_check`). |
 | `outcome` | `completed`, `failed` or `skipped` (optional step that failed). |
 | `resultCode` | `2000` or the failure code. |
 | `recordedAt` | When the result was recorded (UTC). |
-| `data` | What the user gave: form `values`; OTP `channel`, `destination` and `verifiedAt`; signature hash, agreement text and an `imageUrl` valid for 24 hours; consent text and dates; document `validations`; `age_check` minimum and certified age. Personal data. |
+| `data` | What the user gave: form `values`; OTP `channel`, `destination` and `verifiedAt`; signature hash, agreement text and an `imageUrl` valid for 24 hours; consent text and dates; document `validations`; `age_check` minimum and certified age; `sign_document` `envelopeId` and `signedAt` (the Unicus Sign envelope). Personal data. |
 
 #### Images
 

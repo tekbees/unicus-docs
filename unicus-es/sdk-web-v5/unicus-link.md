@@ -109,8 +109,12 @@ webhook y la consulta del resultado se refieren a él.
   [Flujos y traspaso al celular](flows-and-handoff.md)).
 * La barra de direcciones se limpia apenas se lee el enlace: el identificador
   de la transacción no queda en el historial del navegador.
-* Si abre el enlace después de que la transacción terminó o expiró, ve "Este
-  enlace ya no está activo".
+* El enlace funciona una sola vez. Si la persona lo vuelve a abrir, o lo abre
+  después de que la transacción terminó o expiró, ve "Este enlace ya no está
+  activo". Para darle otro enlace de la misma transacción abierta, usa
+  `reissueLink` (ver [API de servidor y API keys](server-api.md#init-api-transaction)).
+* La verificación se abre en el idioma del navegador de la persona (español o
+  inglés); puede cambiarlo en las pantallas de los pasos.
 
 ## Cómo obtener el resultado
 

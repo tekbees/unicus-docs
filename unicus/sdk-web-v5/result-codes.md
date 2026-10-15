@@ -57,7 +57,8 @@ use up an attempt. Once the transaction is final its link no longer works
 | `2012` | The person is not enrolled (verification, or a flow that matches against an enrolment). Also returned when creating the transaction. | `REJECTED` |
 | `2014` | The face was found in the fraud 1:N group. | `REJECTED` |
 | `2061` | The attempts on one side of the document were used up. | `REJECTED` |
-| `4001` | The OTP step ran out of verification attempts. | `REJECTED` |
+| `4001` | A required OTP step ran out of verification attempts (an optional step is skipped and the flow goes on). | `REJECTED` |
+| `4011` | A required `sign_document` step: the person declined to sign the document in Unicus Sign (an optional step is skipped and the flow goes on). | `REJECTED` |
 | `9010` | `age_check` step: the face is not certified to be at least the flow's minimum age. | `REJECTED` |
 | `9011` | `age_check` step: the age could not be estimated from the face. | `REJECTED` |
 | `10020` | The person was not verified because of an age restriction. | `REJECTED` |
@@ -98,7 +99,7 @@ app shows the user an appropriate message. Main reasons:
 | `STEP_NOT_IN_FLOW:<stepIds>` / `STEP_TYPE_MISMATCH:<stepId>` | The step does not belong to the transaction's flow or has another type (stale client). |
 | `FLOW_ALREADY_FAILED:<stepId>` | A required step already failed; the transaction cannot continue. |
 | `NO_FLOW` | The transaction has no stored flow. |
-| `FORM_INVALID:<problems>` | Form rejected. Each problem is `<KIND>:<field>` with `KIND` `REQUIRED`, `INVALID_TYPE`, `PATTERN_MISMATCH` or `UNKNOWN_FIELD`. The user sees the errors next to the fields. |
+| `FORM_INVALID:<problems>` | Form rejected. Each problem is `<KIND>:<field>` with `KIND` `REQUIRED`, `INVALID_TYPE`, `PATTERN_MISMATCH`, `TOO_LONG` or `UNKNOWN_FIELD`. The user sees the errors next to the fields. |
 | `SIGNATURE_INVALID:<what>` | Signature missing or not valid. |
 | `CONSENT_INVALID` / `CONSENT_NOT_RECORDED` | The consent screen was not recorded correctly. |
 | `OTP_INVALID_CODE` | Wrong code; the user can retry until `4001`. |
@@ -120,6 +121,21 @@ app shows the user an appropriate message. Main reasons:
 
 If you expect more than 1,000 OTP codes a day (a campaign, a migration), ask
 [Support](support.md) to raise your company's limit beforehand.
+
+### Document signing (`sign_document`)
+
+When the Unicus Sign signing cannot be opened, the answer carries its own code
+(instead of `2052`) and the reason in `resultMessage`. They do not end the
+transaction.
+
+| Code | `resultMessage` | Meaning |
+| --- | --- | --- |
+| `4012` | `SIGN_EMAIL_MISSING` | The flow does not have the person's e-mail, needed to send them the document. Check where the step takes the e-mail from in the flow editor. |
+| `4013` | `SIGN_NOT_CONNECTED` | Your company has no Unicus Sign API key connected (or it is invalid). Connect it in the portal, in **Integration → Connections**. |
+| `4014` | `SIGN_SERVICE_UNAVAILABLE` | Unicus Sign did not answer or refused the request. The person can try again. |
+
+If the person declines to sign, the step ends with `4011` (reason
+`SIGN_DECLINED`).
 
 ## Camera and document codes
 
@@ -146,7 +162,8 @@ webhook, and as the final code when they end the transaction. Unless listed in
 | `8004` / `8005` / `8006` | Official registry error, communication error, or not available for that country. |
 | `9001` | The face does not match the document photo (match level below the minimum). |
 | `9002` | The face does not match the enrolled face. |
-| `9004` / `9005` | Biometric engine internal or communication error. |
+| `9004` | The biometric engine did not answer or could not process the capture (for example, when comparing the face). It is retried without using up an attempt. |
+| `9005` | The connection was lost while comparing the face. It is retried without using up an attempt. |
 | `9007` | Internal error processing the capture. |
 | `10010` / `10011` | Communication or internal error of the document classifier. |
 
@@ -160,7 +177,7 @@ never reach the webhook or `query-transaction`.
 | `9991` | The camera session was interrupted (for example a network error). |
 | `9994` | Locked out after too many failed attempts in the camera session. |
 | `9995` | Camera error. |
-| `9996` | Camera permission denied. |
+| `9996` | Camera permission denied. It does not reach your page: the person is shown how to allow the camera and the same transaction stays open. |
 | `9997` | Unexpected error, or the camera component did not start in time. |
 | `9998` | The camera cannot run inside a frame without permission. |
 | `500` | Generic error when no code was returned. |
@@ -170,8 +187,8 @@ When the user cancels the face or document scan, events report `2041`.
 ## Match levels and age groups
 
 Step results and webhooks can carry a `matchLevel` and an `ageEstimateGroup`.
-Match levels and their false acceptance rates are defined by FaceTec, the
-biometric engine.
+Match levels and their false acceptance rates are defined by the biometric
+engine.
 
 **Face against the enrolled face** (verification): levels `0` to `15`.
 

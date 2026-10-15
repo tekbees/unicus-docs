@@ -16,7 +16,7 @@ Unicus envía **un evento por transacción**, cuando su resultado es final:
 | Evento | Cuándo |
 | --- | --- |
 | `TRANSACTION_FINALIZED` | Una vez por transacción, cuando termina: aprobada, rechazada, enviada a revisión manual, expirada, cancelada o eliminada. |
-| `TRANSACTION_REVIEW_RESOLVED` | Solo para una transacción que terminó en `REVIEW`, cuando Tekbees decide la revisión manual. |
+| `TRANSACTION_REVIEW_RESOLVED` | Solo para una transacción que terminó en `REVIEW`, cuando se decide la revisión manual: la decide Tekbees o un usuario de tu empresa con el permiso de editar enrolamientos, en la [Cola de revisión](../administrative-portal/transactions.md#cola-de-revision). |
 
 {% hint style="warning" %}
 **¿Vienes de Web SDK 4.x?** Los webhooks por paso (`LIVENESS_FACEMAP`,
@@ -180,8 +180,11 @@ static bool IsValid(string secret, string timestamp, string signature, byte[] ra
   caído por más tiempo, concilia con [Consultar el estado de una transacción](transaction-status.md).
 * **Responde rápido.** Persiste el evento y responde `200`; haz el trabajo lento
   (actualizar tus sistemas, notificar al usuario) después.
-* **Orden.** Para una misma transacción, `TRANSACTION_FINALIZED` siempre llega antes que
-  `TRANSACTION_REVIEW_RESOLVED`; entre transacciones distintas no hay orden.
+* **Orden.** El orden de llegada no está garantizado. Para una misma transacción,
+  `TRANSACTION_FINALIZED` se crea antes que `TRANSACTION_REVIEW_RESOLVED`, pero si la entrega
+  de `TRANSACTION_FINALIZED` falló y espera su reintento, `TRANSACTION_REVIEW_RESOLVED` puede
+  llegar primero; entre transacciones distintas tampoco hay orden. Procesa cada evento de forma
+  independiente, por `tid` y `event_id`.
 * **Datos personales.** El payload contiene los datos del documento de la persona (y
   opcionalmente imágenes): registra en los logs solo el `tid` y el resultado, nunca el cuerpo.
 

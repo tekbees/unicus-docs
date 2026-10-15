@@ -44,7 +44,8 @@ connections with other services. See [Integration](integration.md).
 Administrators only:
 
 * **Access only from the company's IPs:** the portal only accepts sign-ins
-  from the addresses or ranges (CIDR) you add. Use **Use my current IP** so you
+  from the addresses or ranges (CIDR) you add; it is checked at sign-in and at
+  least every hour during the session. Use **Use my current IP** so you
   do not lock yourself out; the portal will not save a list that would block
   your own session.
 * **Second-person approval:** publishing a flow and creating a production API
@@ -58,5 +59,6 @@ Administrators only:
 
 **Settings → Countries and documents** shows the countries and document types
 your company accepts in verifications. The active countries also define which
-phone numbers can receive SMS and WhatsApp. To add a country or a document,
-write to [Support](../sdk-web-v5/support.md).
+phone numbers can receive SMS and WhatsApp. This section is read-only:
+countries and documents are assigned by Tekbees. To add a country or a
+document, write to [Support](../sdk-web-v5/support.md).

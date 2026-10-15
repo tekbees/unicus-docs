@@ -27,7 +27,7 @@ y volver con el mismo enlace antes de que venza.
 | **Empresa** | Razón social, nombre comercial, identificación tributaria (NIT), país, ciudad, dirección, teléfono, sitio web y sector. |
 | **Administrador** | Nombres, apellidos, correo, documento, cargo y teléfono de quien administrará la cuenta. Opcional: un contacto técnico. |
 | **Marca** | Logo (opcional; PNG, JPG, WEBP o SVG de hasta 2 MB) y los colores de fondo, botones y textos, con una vista previa de cómo los verá la persona. |
-| **Integración** | URL de tu webhook (opcional, `https://`), cuántas verificaciones esperas al mes, los países donde operarás y comentarios. |
+| **Integración** | URL de tu webhook (opcional, `https://`), cuántas verificaciones esperas al mes, los países donde operarás y, en cada país, los **Documentos que aceptarás** (Tekbees los habilita al aprobar tu registro), y comentarios. |
 | **Revisar y enviar** | Revisa todo, acepta el tratamiento de datos personales y selecciona **Enviar a revisión**. |
 
 En este formulario no se crea ninguna contraseña.

@@ -8,8 +8,13 @@ description: >-
 
 ## The lists
 
-**Operations → Enrollments**, **Verifications** and **Liveness checks** list
-your company's transactions, newest first. Enrollments update live.
+**Operations → Enrollments**, **Verifications**, **Liveness checks** and, if
+your company has age checks, **Age checks** list your company's transactions,
+newest first. Enrollments update live.
+
+Each list and its detail need the view permission of their transaction type
+(for example, view enrollments); changing or deleting needs the edit or delete
+permission of that same type.
 
 * Search by document number or by name and last name.
 * Filter by status: successful, processing, failed, in review, suspicious,
@@ -20,7 +25,9 @@ your company's transactions, newest first. Enrollments update live.
 
 ## A transaction's detail
 
-Open a transaction to see, in tabs:
+Open a transaction to see, in tabs (**Refresh** reloads it; while the
+transaction is in progress, the page shows **Live updates** and updates
+itself):
 
 | Tab | What it shows |
 | --- | --- |
@@ -33,10 +40,16 @@ Open a transaction to see, in tabs:
 
 ### Personal data
 
-Photos (face, document, evidence) and the personal data read from the document
-are only shown to users with the **View personal data** permission. Without
-it, that data is hidden (`***`) and the location is rounded; the name, the
-document and the results stay visible.
+Photos (face, document, evidence) and personal data are only shown in full to
+users with the **View personal data** permission. Without it:
+
+* the name, the document type and number, the dates and the results stay
+  visible;
+* photos are not shown;
+* the birth date and place, sex, blood type, issue date and place, and what the
+  person typed in the flow (forms, phone or e-mail verified with OTP) are
+  hidden (`***` or masked);
+* the location is shown approximately (about 10 km).
 
 Every full read of personal data is recorded in the
 [Audit log](users-roles-and-approvals.md#audit-log).
@@ -45,13 +58,21 @@ Every full read of personal data is recorded in the
 
 **Download PDF** generates the transaction's certificate (enrollment, identity
 verification or liveness). Unicus keeps the fingerprint (SHA-256) of every
-certificate it generates, with who generated it and when. Without the personal
-data permission, the certificate leaves that data out and says so.
+certificate it generates, with who generated it and when.
+
+* With the personal data permission, **Download PDF** opens a menu: **Full
+  PDF** (with the images and personal data) or **PDF without personal data**
+  (to share with third parties).
+* Without the permission, it is a single button and the certificate already
+  comes without that data (and says so).
 
 To check that a certificate someone gave you is genuine, use **Tools → Verify
 certificate** and drop the PDF: the file never leaves your browser, only its
-fingerprint does. The result is **Genuine certificate**, **Modified document**
-or **Certificate not registered**.
+fingerprint does. The result is **Registered certificate**, **Altered
+document** or **Certificate not recorded**. If the transaction changed after
+the certificate was generated, the result warns you: "The transaction changed
+after this certificate was generated (for example, a review decision): the PDF
+no longer shows it as it is now."
 
 ## Review queue
 
@@ -88,6 +109,8 @@ their status and, in the detail, the domain and mail provider information.
 
 ## Deleting a transaction
 
-The portal does not delete transactions. To delete an enrollment (and its face
-from the duplicate search) or a verification, your backend calls
-`delete-transaction` (see [Server API](../sdk-web-v5/server-api.md)).
+An enrollment (and its face in the duplicate search) is deleted from its
+detail with **Delete Transaction** (it needs the permission to delete
+enrollments). Verifications can only be deleted from your backend with
+`delete-transaction`, which also works for enrollments (see
+[Server API](../sdk-web-v5/server-api.md)).

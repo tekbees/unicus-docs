@@ -86,9 +86,8 @@ sequenceDiagram
    revisión manual, un segundo webhook, `TRANSACTION_REVIEW_RESOLVED`, llega
    cuando se decide la revisión.
 
-La aplicación del cliente nunca llama directamente a `/start-process-transaction`,
-`/get-restart-session` ni `/process-request`, y nunca crea el iframe
-manualmente.
+Tu página no llama directamente a la API que usan el botón y la aplicación web,
+y nunca crea el iframe manualmente: el botón se encarga de todo.
 
 ## Lo que necesitas de Unicus
 

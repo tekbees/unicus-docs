@@ -14,11 +14,17 @@ the recommended order.
 
 The **Company ID** is the [Customer Token](../sdk-web-v5/customer-token.md): the
 `customerid` value of the button and the mobile SDKs. It is public and can go
-in your page. Use **Copy ID** to take it to your code.
+in your page.
 
-**Generate a new ID** invalidates the old one immediately: the button and the
-apps that use it stop working until you publish the new one. Do it only if you
-need to, and coordinate the change with your team.
+The portal shows only its first characters. **Copy ID** copies the whole ID,
+and only the company administrator can do it; other users see "Only the
+company administrator can copy the token". Every copy is recorded in the
+[Audit log](users-roles-and-approvals.md#audit-log).
+
+**Generate a new ID** (administrator only) invalidates the old one
+immediately: the button and the apps that use it stop working until you
+publish the new one. Do it only if you need to, and coordinate the change with
+your team.
 
 ## API keys
 

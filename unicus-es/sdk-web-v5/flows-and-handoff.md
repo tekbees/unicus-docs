@@ -35,6 +35,7 @@ página.
 | `signature` | Dibuja una firma electrónica en pantalla después de leer el documento mostrado. | Cualquier dispositivo |
 | `otp` | Recibe un código de un solo uso por SMS, WhatsApp o correo electrónico y lo escribe. | Cualquier dispositivo |
 | `form` | Diligencia un formulario de datos definido en el portal (campos, tipos, reglas de validación). | Cualquier dispositivo |
+| `sign_document` | Firma un documento de Unicus Sign prellenado con los datos del flujo (documento y formularios). La firma se abre en una pestaña nueva y la verificación sigue cuando Unicus Sign confirma la firma. | Cualquier dispositivo |
 | `age_check` | Sin pantalla: Unicus compara la edad estimada a partir de la selfie de prueba de vida con un umbral (8, 13, 16, 18, 21, 25 o 30). Se ubica justo después de la sesión de cámara que captura la prueba de vida. | Servidor |
 
 <div><figure><img src="../.gitbook/assets/web-sdk-5-consent.jpg" alt="Pantalla de consentimiento en un celular" width="280"><figcaption><p>Consentimiento: qué se capturará y por qué.</p></figcaption></figure> <figure><img src="../.gitbook/assets/web-sdk-5-before-start.jpg" alt="Pantalla de preparación antes de que se abra la cámara" width="280"><figcaption><p>Preparación antes de que se abra la cámara.</p></figcaption></figure></div>
@@ -117,8 +118,9 @@ mensajes pueden recibir una transacción y un número de celular, y lo indica en
 la pantalla cuando se alcanza el límite (el usuario aún puede usar el código QR).
 
 La pantalla le explica al usuario por qué el celular (su cámara toma mejores
-fotos) y cuántos pasos le faltan ahí. Cuando tu empresa tiene WhatsApp, aparece
-primero y marcado como recomendado. Si después de un minuto y medio en la
+fotos) y cuántos pasos le faltan ahí. El código QR aparece
+primero y, si hay más canales, marcado como recomendado: siempre está
+disponible y no pide escribir un número; después siguen WhatsApp y SMS. Si después de un minuto y medio en la
 pantalla del QR o del mensaje el celular no ha empezado, una sugerencia le indica
 qué intentar (acercar el celular, enviar el mensaje de nuevo o usar otro canal).
 

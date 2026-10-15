@@ -119,5 +119,6 @@ Permissions-Policy: camera=(self "https://id.idunicus.com"), geolocation=(self "
 7. Error path: render the button with `clientid="ID:"` (no number) and
    confirm your page shows a recoverable message on `OnUnicus:error`.
 8. Close the verification before finishing and confirm your page handles
-   `OnUnicus:exit`; click again and confirm a new `tid` arrives in
+   `OnUnicus:exit`; click again and confirm the same transaction resumes (same
+   `tid`). After `OnUnicus:finished`, a new click brings a new `tid` in
    `OnUnicus:loaded`.

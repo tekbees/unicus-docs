@@ -24,9 +24,10 @@ After the password, the portal may ask for a **6-digit code** sent to your
 e-mail. It is asked of administrators and, if your company turned it on in
 **Security**, of every user.
 
-* The code expires within minutes; you can request another.
-* Tick **Remember this device** so you do not have to type it again in that
-  browser for a few days.
+* Each code expires after 10 minutes and allows 5 tries; you can request a new
+  one every minute.
+* Tick **Remember this device for 30 days** so you do not have to type it
+  again in that browser during that time.
 
 ### Access only from your network
 

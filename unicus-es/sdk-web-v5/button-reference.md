@@ -79,10 +79,12 @@ estilos u observarlo (`button.getAttribute('state')`).
    responde en 20 segundos (bloqueada por una CSP o una extensión, sin red), la
    capa superpuesta se quita y el botón pasa a *Reintentar* con
    `OnUnicus:error`.
-4. **De nuevo.** Después de `finished` o `exit`, el siguiente clic crea una
-   transacción **nueva**, emite `OnUnicus:loaded` con el nuevo `tid` y abre el
-   flujo. Una transacción nunca se reutiliza. Hasta ese clic, `transactionId`
-   conserva el `tid` anterior.
+4. **De nuevo.** Después de `exit`, el siguiente clic retoma la **misma**
+   transacción mientras siga abierta, en el paso donde iba el usuario. Después
+   de `finished`, el siguiente clic crea una transacción **nueva**, emite
+   `OnUnicus:loaded` con el nuevo `tid` y abre el flujo; una transacción
+   finalizada nunca se reutiliza. Hasta ese clic, `transactionId` conserva el
+   `tid` anterior.
 5. **Eliminación.** Si el elemento se quita del DOM mientras la verificación
    está abierta, el iframe se quita con él y no se emite `finished` ni `exit`.
    Un botón que se vuelve a conectar retoma la misma transacción en el

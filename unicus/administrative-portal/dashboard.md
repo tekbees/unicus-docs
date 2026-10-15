@@ -14,11 +14,19 @@ last few days, a month or your own range):
   conversion funnel, people served, time to complete, document retries and
   liveness attempts, the daily or monthly trend, activity by hour and day,
   figures per flow, an approximate location and the status of result
-  webhooks.
+  webhooks. The map is more precise (about 1 km) with the **View personal
+  data** permission; without it, about 10 km.
 
 Only transactions where the person did something are counted: a link nobody
 opened is not in the figures. Test transactions are never mixed with real
 ones.
+
+## Analytics
+
+**Analytics** shows the conversion, drop-off and rejection reasons for the
+period: how the transactions of each flow and each channel (web button, Unicus
+Link, mobile SDK) ended, at which flow step people stop, and why transactions
+failed or expired.
 
 {% hint style="info" %}
 The available sections depend on your plan. If you need one you do not see,
