@@ -26,7 +26,8 @@ El script se publica bajo una ruta de versión mayor:
 
 * Nueva aplicación web: flujos modulares compuestos en el portal administrativo
   (consentimiento, información, prueba de vida, documento con validaciones en servidor, comparación facial,
-  firma, OTP, formulario, verificación de edad).
+  firma electrónica, OTP, formulario, firma de documento con Unicus Sign,
+  verificación de edad).
 * Inicio liviano; motor biométrico precargado en segundo plano y almacenado en caché;
   diseñado para redes móviles de bajo ancho de banda.
 * Traspaso al celular (hand-off) desde el computador por QR, WhatsApp o SMS, con un espejo en vivo del
@@ -34,8 +35,8 @@ El script se publica bajo una ruta de versión mayor:
 * Tokens de traspaso de un solo uso en el fragmento de la URL; el id de la transacción nunca
   viaja en un enlace.
 * Rediseño del botón: una sola pieza con la marca Unicus, colores de marca aplicados
-  automáticamente y recordados, atributos `label`, `size` y `radius`, estados visibles, clic durante la carga respetado, nueva
-  transacción después de cada flujo finalizado o abandonado.
+  automáticamente y recordados, atributos `label`, `size` y `radius`, estados visibles, clic durante la carga respetado; después
+  de `exit` el siguiente clic retoma la misma transacción mientras siga abierta, y después de `finished` crea una nueva.
 * Eventos: payloads `stepProgress` por paso, `resultCode` en `finished` y
   `error`, `2002` *no configurado*, `2013` *en revisión manual*. Los eventos se propagan (bubble) y
   son `composed`, así que un listener en `document` los recibe.

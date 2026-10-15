@@ -36,8 +36,8 @@ browser's time zone.
 
 | Menu group | Sections | What for |
 | --- | --- | --- |
-| — | Dashboard | The figures of your verifications for the period. See [Dashboard](dashboard.md). |
-| Operations | Enrollments, Review queue, Verifications, Liveness checks, Reports | Day-to-day work with transactions. See [Transactions and reports](transactions.md). |
+| — | Dashboard, Analytics | The figures of your verifications for the period. See [Dashboard](dashboard.md). |
+| Operations | Enrollments, Review queue, Verifications, Liveness checks, Age checks, Reports | Day-to-day work with transactions. See [Transactions and reports](transactions.md). |
 | Tools | Unicus Link, E-mail validation, Verify certificate | Send verification links, review e-mail validations and check that a certificate is genuine. |
 | Platform | Flows, Webhooks | What the person does in each verification, and your webhook's delivery log. See [Verification flows](flows.md) and [Integration](integration.md). |
 | Administration | Users, Roles, Approvals, Audit log | Who has access, what they can do and the record of what each one did. See [Users, roles and approvals](users-roles-and-approvals.md). |
@@ -51,11 +51,13 @@ by its TID, the document number or the person's name.
 Every user has a **role**, and every role has permissions per service: view,
 create, edit and delete. A section shows a lock and "Not included in your plan"
 when your company does not have that service or your role lacks the
-permission.
+permission; that section cannot be opened.
 
 Some actions are reserved for your company's **administrators**, whatever a
 custom role allows: access security, approvals, API keys, webhook signing and
-the webhook delivery log, and the portal's address and colour.
+the webhook delivery log, the portal's address and colour, copying or
+regenerating the Company ID, and assigning the administrator role or editing an
+administrator.
 
 ## Getting started
 

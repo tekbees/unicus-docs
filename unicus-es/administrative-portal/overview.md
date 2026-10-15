@@ -36,8 +36,8 @@ zona horaria de tu navegador.
 
 | Grupo del menú | Secciones | Para qué |
 | --- | --- | --- |
-| — | Dashboard | Las cifras de tus verificaciones en el periodo. Ver [Panel de control](dashboard.md). |
-| Operación | Enrolamientos, Cola de revisión, Verificaciones, Pruebas de vida, Reportes | El trabajo diario con las transacciones. Ver [Transacciones y reportes](transactions.md). |
+| — | Dashboard, Analítica | Las cifras de tus verificaciones en el periodo. Ver [Panel de control](dashboard.md). |
+| Operación | Enrolamientos, Cola de revisión, Verificaciones, Pruebas de vida, Validación de edad, Reportes | El trabajo diario con las transacciones. Ver [Transacciones y reportes](transactions.md). |
 | Herramientas | Unicus Link, Validación de correo, Verificar constancia | Enviar enlaces de verificación, revisar validaciones de correo y comprobar que una constancia es auténtica. |
 | Plataforma | Flujos, Webhooks | Qué hace la persona en cada verificación y el registro de entregas de tu webhook. Ver [Flujos de verificación](flows.md) y [Integración](integration.md). |
 | Administración | Usuarios, Roles, Aprobaciones, Auditoría | Quién accede, qué puede hacer y el registro de lo que hizo cada uno. Ver [Usuarios, roles y aprobaciones](users-roles-and-approvals.md). |
@@ -51,12 +51,13 @@ transacción por su TID, el número de documento o el nombre de la persona.
 Cada usuario tiene un **rol**, y cada rol tiene permisos por servicio: ver,
 crear, editar y eliminar. Una sección aparece con un candado y el mensaje "No
 incluido en tu plan" cuando tu empresa no tiene ese servicio contratado o tu
-rol no tiene el permiso.
+rol no tiene el permiso; esa sección no se puede abrir.
 
 Algunas acciones son solo para los **administradores** de la empresa, sin
 importar los permisos de un rol personalizado: la seguridad de acceso, las
-aprobaciones, las API keys, la firma y el registro de entregas del webhook, y
-la dirección y el color del portal.
+aprobaciones, las API keys, la firma y el registro de entregas del webhook, la
+dirección y el color del portal, copiar o regenerar el ID de la compañía, y
+asignar el rol de administrador o editar a un administrador.
 
 ## Primeros pasos
 

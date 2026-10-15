@@ -24,9 +24,10 @@ Después de la contraseña, el portal puede pedirte un **código de 6 dígitos**
 que llega a tu correo. Se pide a los administradores y, si tu empresa lo
 activó en **Seguridad**, a todos los usuarios.
 
-* El código vence a los pocos minutos; puedes pedir otro.
-* Marca **Recordar este dispositivo** para no volver a escribirlo en ese
-  navegador durante unos días.
+* Cada código vence a los 10 minutos y admite 5 intentos; puedes pedir uno
+  nuevo cada minuto.
+* Marca **Recordar este dispositivo por 30 días** para no volver a escribirlo
+  en ese navegador durante ese tiempo.
 
 ### Acceso solo desde tu red
 

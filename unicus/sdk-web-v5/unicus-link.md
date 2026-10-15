@@ -106,8 +106,12 @@ and the result query refer to it.
   [Flows and hand-off](flows-and-handoff.md)).
 * The address bar is cleaned as soon as the link is read: the transaction id
   does not stay in the browser history.
-* Reopening the link after the transaction finished or expired shows "This
-  link is no longer active".
+* The link works once. If the person opens it again, or opens it after the
+  transaction finished or expired, they see "This link is no longer active".
+  To give them another link for the same open transaction, use `reissueLink`
+  (see [Server API and API keys](server-api.md#init-api-transaction)).
+* The verification opens in the language of the person's browser (Spanish or
+  English); they can change it on the step screens.
 
 ## Getting the result
 

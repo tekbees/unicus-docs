@@ -33,6 +33,7 @@ portal applies to the next transaction without touching your page.
 | `signature` | Draws an electronic signature on screen after reading the document shown. | Any device |
 | `otp` | Receives a one-time code by SMS, WhatsApp or email and types it. | Any device |
 | `form` | Fills a data form defined in the portal (fields, types, validation rules). | Any device |
+| `sign_document` | Signs a Unicus Sign document prefilled with the flow data (document and forms). The signing opens in a new tab and the verification goes on once Unicus Sign confirms the signature. | Any device |
 | `age_check` | No screen: Unicus checks the age estimated from the liveness selfie against a threshold (8, 13, 16, 18, 21, 25 or 30). Placed right after the camera session that captures the liveness. | Server |
 
 <div><figure><img src="../.gitbook/assets/web-sdk-5-consent.jpg" alt="Consent screen on a phone" width="280"><figcaption><p>Consent: what will be captured and why.</p></figcaption></figure> <figure><img src="../.gitbook/assets/web-sdk-5-before-start.jpg" alt="Preparation screen before the camera opens" width="280"><figcaption><p>Preparation before the camera opens.</p></figcaption></figure></div>
@@ -109,8 +110,9 @@ one transaction and one phone number can receive, and says so on the screen
 when the limit is reached (the user can still use the QR code).
 
 The screen tells the user why the phone (its camera takes better pictures) and
-how many steps are left there. When your company has WhatsApp, it comes first
-and is marked as recommended. If the phone has not started after a minute and a
+how many steps are left there. The QR code comes first and, when there are
+more channels, is marked as recommended: it is always available and needs no
+number typed in; WhatsApp and SMS follow. If the phone has not started after a minute and a
 half on the QR or message screen, a hint suggests what to try (move the phone
 closer, send the message again, or use another channel).
 

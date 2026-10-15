@@ -129,7 +129,7 @@ not produce it:
 | `stepProgress` | boolean | Always `true`. |
 | `flowId` | string | Id of the flow running the transaction. |
 | `stepId` | string | Id of the step in the flow, as configured in the portal. |
-| `stepType` | string | `liveness`, `document`, `face_match`, `signature`, `otp`, `form`, `age_check` |
+| `stepType` | string | `liveness`, `document`, `face_match`, `signature`, `otp`, `form`, `sign_document`, `age_check` |
 | `status` | string | `started`, `completed`, `retry` (liveness attempt rejected, the user tries again), `failed`, `skipped` (optional step that failed or was not run) |
 | `resultCode` | number | Present when the step ended or was retried. See [Result codes](result-codes.md). |
 
@@ -203,7 +203,10 @@ technical fields depending on the step.
 close button), whatever the result. It is also the event you receive when the
 user cancels the camera on a required step (`resultCode` `2041`): that ends the
 flow with a failure and a result screen. Denying camera access does not end it:
-the user is shown how to allow the camera and the flow resumes.
+the user is shown how to allow the camera and the flow resumes. Leaving the
+screen while the camera is open (switching apps, locking the phone) does not end
+it either: it is an interruption, no event and no `2041` is emitted, and the
+user taps **Continue** to go on with the same transaction.
 On a computer with hand-off, the result screen appears when the phone finishes
 and Unicus confirms the result; if the phone stops on an error it cannot
 recover from, the computer shows a failure and `finished` carries that code.

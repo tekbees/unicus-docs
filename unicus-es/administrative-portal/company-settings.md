@@ -46,7 +46,8 @@ conexiones con otros servicios. Ver [Integración](integration.md).
 Solo para administradores:
 
 * **Acceso solo desde las IPs de la compañía:** el portal solo acepta inicios
-  de sesión desde las direcciones o rangos (CIDR) que agregues. Usa **Usar mi
+  de sesión desde las direcciones o rangos (CIDR) que agregues; se revisa al
+  iniciar sesión y al menos cada hora durante la sesión. Usa **Usar mi
   IP actual** para no quedarte por fuera; el portal no te deja guardar una
   lista que bloquearía tu propia sesión.
 * **Aprobación de una segunda persona:** publicar un flujo y crear una API key
@@ -61,5 +62,6 @@ Solo para administradores:
 
 **Configuración → Países y documentos** muestra los países y los tipos de
 documento que acepta tu empresa en las verificaciones. Los países activos
-también definen a qué números de celular se pueden enviar SMS y WhatsApp. Para
+también definen a qué números de celular se pueden enviar SMS y WhatsApp. Esta
+sección es de solo lectura: los países y documentos los asigna Tekbees. Para
 agregar un país o un documento, escríbele a [Soporte](../sdk-web-v5/support.md).

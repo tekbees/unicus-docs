@@ -84,9 +84,8 @@ sequenceDiagram
    is a manual review, a second webhook, `TRANSACTION_REVIEW_RESOLVED`, arrives
    when the review is decided.
 
-The customer application never calls `/start-process-transaction`,
-`/get-restart-session` or `/process-request` directly and never creates the
-iframe manually.
+Your page never calls the API the button and the web app use directly, and
+never creates the iframe manually: the button takes care of it.
 
 ## What you need from Unicus
 

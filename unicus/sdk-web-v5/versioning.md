@@ -26,7 +26,7 @@ The script is published under a major-version path:
 
 * New web application: modular flows composed in the administrative portal
   (consent, info, liveness, document with server validations, face match,
-  signature, OTP, form, age check).
+  electronic signature, OTP, form, Unicus Sign document signing, age check).
 * Lightweight start; biometric engine prefetched in the background and cached;
   designed for low-bandwidth mobile networks.
 * Desktop hand-off by QR, WhatsApp or SMS with a live mirror of the phone's
@@ -34,8 +34,8 @@ The script is published under a major-version path:
 * One-time hand-off tokens in the URL fragment; the transaction id never
   travels in a link.
 * Button redesign: one piece with the Unicus mark, brand colours applied
-  automatically and remembered, `label`, `size` and `radius` attributes, visible states, click during loading honoured, new
-  transaction after every finished or exited flow.
+  automatically and remembered, `label`, `size` and `radius` attributes, visible states, click during loading honoured; after
+  `exit` the next click resumes the same transaction while it is open, and after `finished` it creates a new one.
 * Events: `stepProgress` payloads per step, `resultCode` in `finished` and
   `error`, `2002` *not configured*, `2013` *under review*. Events bubble and
   are `composed`, so a listener on `document` receives them.

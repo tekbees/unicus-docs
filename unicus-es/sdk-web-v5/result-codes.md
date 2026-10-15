@@ -57,7 +57,8 @@ funcionar (`2051`) y Unicus envía el webhook final.
 | `2012` | La persona no está enrolada (verificación, o un flujo que compara contra un enrolamiento). También se devuelve al crear la transacción. | `REJECTED` |
 | `2014` | El rostro se encontró en el grupo 1:N de fraude. | `REJECTED` |
 | `2061` | Se agotaron los intentos en un lado del documento. | `REJECTED` |
-| `4001` | El paso OTP se quedó sin intentos de verificación. | `REJECTED` |
+| `4001` | Un paso OTP obligatorio se quedó sin intentos de verificación (un paso opcional se omite y el flujo sigue). | `REJECTED` |
+| `4011` | Un paso `sign_document` obligatorio: la persona rechazó la firma del documento en Unicus Sign (un paso opcional se omite y el flujo sigue). | `REJECTED` |
 | `9010` | Paso `age_check`: no se certifica que el rostro tenga al menos la edad mínima del flujo. | `REJECTED` |
 | `9011` | Paso `age_check`: no fue posible estimar la edad a partir del rostro. | `REJECTED` |
 | `10020` | La persona no fue verificada debido a una restricción de edad. | `REJECTED` |
@@ -99,7 +100,7 @@ apropiado. Motivos principales:
 | `STEP_NOT_IN_FLOW:<stepIds>` / `STEP_TYPE_MISMATCH:<stepId>` | El paso no pertenece al flujo de la transacción o es de otro tipo (cliente desactualizado). |
 | `FLOW_ALREADY_FAILED:<stepId>` | Un paso obligatorio ya falló; la transacción no puede continuar. |
 | `NO_FLOW` | La transacción no tiene un flujo almacenado. |
-| `FORM_INVALID:<problems>` | Formulario rechazado. Cada problema es `<KIND>:<field>`, con `KIND` igual a `REQUIRED`, `INVALID_TYPE`, `PATTERN_MISMATCH` o `UNKNOWN_FIELD`. El usuario ve los errores junto a los campos. |
+| `FORM_INVALID:<problems>` | Formulario rechazado. Cada problema es `<KIND>:<field>`, con `KIND` igual a `REQUIRED`, `INVALID_TYPE`, `PATTERN_MISMATCH`, `TOO_LONG` o `UNKNOWN_FIELD`. El usuario ve los errores junto a los campos. |
 | `SIGNATURE_INVALID:<what>` | Firma ausente o no válida. |
 | `CONSENT_INVALID` / `CONSENT_NOT_RECORDED` | La pantalla de consentimiento no se registró correctamente. |
 | `OTP_INVALID_CODE` | Código incorrecto; el usuario puede reintentar hasta `4001`. |
@@ -121,6 +122,21 @@ apropiado. Motivos principales:
 
 Si esperas más de 1.000 códigos OTP al día (una campaña, una migración), pide a
 [Soporte](support.md) que aumente el límite de tu compañía con anticipación.
+
+### Firma de documento (`sign_document`)
+
+Cuando no se puede abrir la firma en Unicus Sign, la respuesta trae su propio
+código (en lugar de `2052`) y el motivo en `resultMessage`. No finalizan la
+transacción.
+
+| Código | `resultMessage` | Significado |
+| --- | --- | --- |
+| `4012` | `SIGN_EMAIL_MISSING` | El flujo no tiene el correo de la persona, necesario para enviarle el documento. Revisa de dónde toma el correo el paso en el editor de flujos. |
+| `4013` | `SIGN_NOT_CONNECTED` | Tu empresa no tiene conectada (o tiene inválida) la API key de Unicus Sign. Conéctala en el portal, en **Integración → Conexiones**. |
+| `4014` | `SIGN_SERVICE_UNAVAILABLE` | Unicus Sign no respondió o rechazó la solicitud. La persona puede intentarlo de nuevo. |
+
+Si la persona rechaza la firma, el paso termina con `4011` (motivo
+`SIGN_DECLINED`).
 
 ## Códigos de cámara y documento
 
@@ -148,7 +164,8 @@ usuario puede reintentar dentro de los límites indicados arriba.
 | `8004` / `8005` / `8006` | Error del registro oficial, error de comunicación, o no disponible para ese país. |
 | `9001` | El rostro no coincide con la foto del documento (nivel de coincidencia por debajo del mínimo). |
 | `9002` | El rostro no coincide con el rostro enrolado. |
-| `9004` / `9005` | Error interno o de comunicación del motor biométrico. |
+| `9004` | El motor biométrico no respondió o no pudo procesar la captura (por ejemplo, al comparar el rostro). Se reintenta sin consumir un intento. |
+| `9005` | Se perdió la conexión al comparar el rostro. Se reintenta sin consumir un intento. |
 | `9007` | Error interno al procesar la captura. |
 | `10010` / `10011` | Error de comunicación o interno del clasificador de documentos. |
 
@@ -162,7 +179,7 @@ antes de tiempo. Nunca llegan al webhook ni a `query-transaction`.
 | `9991` | La sesión de cámara se interrumpió (por ejemplo, por un error de red). |
 | `9994` | Bloqueo después de demasiados intentos fallidos en la sesión de cámara. |
 | `9995` | Error de cámara. |
-| `9996` | Permiso de cámara denegado. |
+| `9996` | Permiso de cámara denegado. No llega a tu página: la persona ve cómo permitir la cámara y la misma transacción sigue abierta. |
 | `9997` | Error inesperado, o el componente de cámara no inició a tiempo. |
 | `9998` | La cámara no puede ejecutarse dentro de un frame sin permiso. |
 | `500` | Error genérico cuando no se devolvió ningún código. |
@@ -174,7 +191,7 @@ informan `2041`.
 
 Los resultados de los pasos y los webhooks pueden incluir un `matchLevel` y un
 `ageEstimateGroup`. Los niveles de coincidencia y sus tasas de falsa aceptación
-los define FaceTec, el motor biométrico.
+los define el motor biométrico.
 
 **Rostro contra el rostro enrolado** (verificación): niveles `0` a `15`.
 

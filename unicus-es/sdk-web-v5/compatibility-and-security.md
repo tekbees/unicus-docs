@@ -124,5 +124,6 @@ Permissions-Policy: camera=(self "https://id.idunicus.com"), geolocation=(self "
 7. Ruta de error: renderiza el botón con `clientid="ID:"` (sin número) y
    confirma que tu página muestra un mensaje recuperable en `OnUnicus:error`.
 8. Cierra la verificación antes de terminar y confirma que tu página maneja
-   `OnUnicus:exit`; haz clic de nuevo y confirma que llega un nuevo `tid` en
-   `OnUnicus:loaded`.
+   `OnUnicus:exit`; haz clic de nuevo y confirma que se retoma la misma
+   transacción (mismo `tid`). Después de `OnUnicus:finished`, un nuevo clic
+   trae un nuevo `tid` en `OnUnicus:loaded`.

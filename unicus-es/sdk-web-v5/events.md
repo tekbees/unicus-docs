@@ -129,7 +129,7 @@ lo producen:
 | `stepProgress` | boolean | Siempre `true`. |
 | `flowId` | string | Id del flujo que ejecuta la transacción. |
 | `stepId` | string | Id del paso en el flujo, tal como se configuró en el portal. |
-| `stepType` | string | `liveness`, `document`, `face_match`, `signature`, `otp`, `form`, `age_check` |
+| `stepType` | string | `liveness`, `document`, `face_match`, `signature`, `otp`, `form`, `sign_document`, `age_check` |
 | `status` | string | `started`, `completed`, `retry` (intento de prueba de vida rechazado, el usuario lo intenta de nuevo), `failed`, `skipped` (paso opcional que falló o no se ejecutó) |
 | `resultCode` | number | Presente cuando el paso terminó o tuvo un reintento. Consulta [Códigos de resultado](result-codes.md). |
 
@@ -203,7 +203,9 @@ campos técnicos según el paso.
 botón de cerrar), cualquiera que sea el resultado. También es el evento que recibes cuando el
 usuario cancela la cámara en un paso obligatorio (`resultCode` `2041`): eso termina el flujo con
 una falla y una pantalla de resultado. Negar el acceso a la cámara no lo termina: al usuario se le
-muestra cómo permitirla y el flujo se retoma.
+muestra cómo permitirla y el flujo se retoma. Tampoco lo termina salir de la pantalla con la
+cámara abierta (cambiar de app, bloquear el celular): es una interrupción, no se emite ningún
+evento ni `2041`, y el usuario toca **Continuar** para seguir en la misma transacción.
 En un computador con traspaso al celular, la pantalla de resultado aparece cuando el celular termina
 y Unicus confirma el resultado; si el celular se detiene en un error del que no puede
 recuperarse, el computador muestra una falla y `finished` lleva ese código.

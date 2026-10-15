@@ -14,11 +14,18 @@ integrarte con Unicus**, con el orden recomendado.
 
 El **ID de la compañía** es el [Customer Token](../sdk-web-v5/customer-token.md):
 el valor de `customerid` en el botón y en los SDK móviles. Es público, puede ir
-en tu página. Usa **Copiar ID** para llevarlo a tu código.
+en tu página.
 
-**Generar un ID nuevo** invalida el anterior de inmediato: el botón y las apps
-que lo usan dejan de funcionar hasta que publiques el nuevo. Hazlo solo si lo
-necesitas, y coordina el cambio con tu equipo.
+El portal muestra solo sus primeros caracteres. **Copiar ID** copia el ID
+completo, y solo lo puede hacer el administrador de la compañía; a los demás
+usuarios el portal les indica "Solo el administrador de la compañía puede
+copiar el token". Cada copia queda registrada en
+[Auditoría](users-roles-and-approvals.md#auditoria).
+
+**Generar un ID nuevo** (solo el administrador) invalida el anterior de
+inmediato: el botón y las apps que lo usan dejan de funcionar hasta que
+publiques el nuevo. Hazlo solo si lo necesitas, y coordina el cambio con tu
+equipo.
 
 ## API keys
 

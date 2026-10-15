@@ -27,7 +27,7 @@ it and come back with the same link before it expires.
 | **Company** | Legal name, trade name, tax ID, country, city, address, phone, website and sector. |
 | **Administrator** | Names, last names, e-mail, ID document, position and phone of the person who will administer the account. Optional: a technical contact. |
 | **Brand** | Logo (optional; PNG, JPG, WEBP or SVG up to 2 MB) and the background, button and text colours, with a preview of what the person will see. |
-| **Integration** | Your webhook URL (optional, `https://`), how many verifications you expect per month, the countries where you will operate, and comments. |
+| **Integration** | Your webhook URL (optional, `https://`), how many verifications you expect per month, the countries where you will operate and, for each country, the **Documents you will accept** (Tekbees enables them when it approves your registration), and comments. |
 | **Review and submit** | Check everything, accept the processing of personal data and select **Submit for review**. |
 
 No password is created in this form.

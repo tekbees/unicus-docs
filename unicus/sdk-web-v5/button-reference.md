@@ -78,10 +78,11 @@ observe it (`button.getAttribute('state')`).
    not answer within 20 seconds (blocked by a CSP or an extension, no
    network), the overlay is removed and the button goes to *Retry* with
    `OnUnicus:error`.
-4. **Again.** After `finished` or `exit` the next click creates a **new**
-   transaction, emits `OnUnicus:loaded` with the new `tid` and opens the flow.
-   A transaction is never reused. Until that click, `transactionId` still
-   holds the previous `tid`.
+4. **Again.** After `exit` the next click resumes the **same** transaction
+   while it is open, at the step where the user was. After `finished` the next
+   click creates a **new** transaction, emits `OnUnicus:loaded` with the new
+   `tid` and opens the flow; a finished transaction is never reused. Until that
+   click, `transactionId` still holds the previous `tid`.
 5. **Removal.** If the element is removed from the DOM while the
    verification is open, the iframe is removed with it and no `finished` or
    `exit` is emitted. A button that is connected again resumes the same
