@@ -16,7 +16,7 @@ Unicus envía **un evento por transacción**, cuando su resultado es final:
 | Evento | Cuándo |
 | --- | --- |
 | `TRANSACTION_FINALIZED` | Una vez por transacción, cuando termina: aprobada, rechazada, enviada a revisión manual, expirada, cancelada o eliminada. |
-| `TRANSACTION_REVIEW_RESOLVED` | Solo para una transacción que terminó en `REVIEW`, cuando se decide la revisión manual: la decide Tekbees o un usuario de tu empresa con el permiso de editar enrolamientos, en la [Cola de revisión](../administrative-portal/transactions.md#cola-de-revision). |
+| `TRANSACTION_REVIEW_RESOLVED` | Solo para una transacción que terminó en `REVIEW`, cuando se decide la revisión manual: la decide un usuario de tu empresa con el permiso de editar enrolamientos, en la [Cola de revisión](../administrative-portal/transactions.md#cola-de-revision). |
 
 {% hint style="warning" %}
 **¿Vienes de Web SDK 4.x?** Los webhooks por paso (`LIVENESS_FACEMAP`,

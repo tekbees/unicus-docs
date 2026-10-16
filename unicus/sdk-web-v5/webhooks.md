@@ -16,7 +16,7 @@ Unicus sends **one event per transaction**, when its result is final:
 | Event | When |
 | --- | --- |
 | `TRANSACTION_FINALIZED` | Once per transaction, when it ends: approved, rejected, sent to review, expired, cancelled or deleted. |
-| `TRANSACTION_REVIEW_RESOLVED` | Only for a transaction that ended in `REVIEW`, when the manual review is decided: by Tekbees or by a user of your company with the permission to edit enrollments, in the [Review queue](../administrative-portal/transactions.md#review-queue). |
+| `TRANSACTION_REVIEW_RESOLVED` | Only for a transaction that ended in `REVIEW`, when the manual review is decided: by a user of your company with the permission to edit enrollments, in the [Review queue](../administrative-portal/transactions.md#review-queue). |
 
 {% hint style="warning" %}
 **Coming from Web SDK 4.x?** The step webhooks (`LIVENESS_FACEMAP`,
