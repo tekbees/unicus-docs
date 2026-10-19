@@ -60,7 +60,8 @@ para el `tid`. Significado de cada código:
 | `steps` | `[UnicusStepResult]` | Por paso: `stepId`, `outcome` (`completed`, `failed`, `skipped`), `resultCode`, `validations` del documento. |
 | `transactionResultCode` | `Int?` | Código final reportado por Unicus para la transacción, cuando se conoce. |
 | `sessionError` | `Bool` | La sesión terminó por un problema técnico. |
-| `errorMessage` | `String?` | Detalle técnico, para logs. |
+| `errorMessage` | `String?` | Detalle técnico (texto del servidor o motivo por el que terminó la sesión de cámara), para logs. |
+| `serverResponse` | `UnicusProcessResponse?` | Última respuesta de Unicus a una captura, para diagnóstico. `expectedMediaStatusEnumInt`: `0`, el documento probablemente es físico; `1`, no se pudo confirmar y la persona tuvo que repetir la captura (`7006`). `digitalIdSpoofStatusEnumInt` está deprecado: trae el mismo valor (antes llegaba siempre en `0`); usa `expectedMediaStatusEnumInt`. |
 | `raw` | `[String: Any]` | Todos los campos como diccionario (también `resumeReason`: `userLeft`, `flowResumable`, `transactionOpen`). |
 
 `UnicusResultCode` tiene las constantes (`success`, `resumable`, `userCanceled`,

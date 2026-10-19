@@ -34,6 +34,8 @@ With the `suspend` variants, `start` returns the result and throws
 | `steps` | `List<UnicusStepResult>` | Result of each step in flow order: `stepId`, `outcome` (`COMPLETED`, `FAILED`, `SKIPPED`), `resultCode`, `validations`. |
 | `transactionResultCode` | `Int?` | Final code reported by Unicus for the transaction, when it answered. |
 | `sessionError` | `Boolean` | `true` when the camera session ended because of a technical interruption. |
+| `errorMessage` | `String?` | Technical detail (server text or why the camera session ended), for logs. |
+| `serverResponse` | `UnicusProcessResponse?` | Last Unicus answer to a capture, for diagnostics. `expectedMediaStatusEnumInt`: `0`, the document is probably physical; `1`, it could not be confirmed and the person had to capture it again (`7006`). `digitalIdSpoofStatusEnumInt` is deprecated: it carries the same value (before it was always `0`); use `expectedMediaStatusEnumInt`. |
 | `raw` | `Map<String, Any?>` | Diagnostic data (for example `raw["errorKey"]` of a flow screen error, `raw["leftOnStepId"]`). Do not depend on its keys for routing. |
 
 ## Handling every outcome

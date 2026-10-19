@@ -65,7 +65,7 @@ attempt limits are reached, the user can retry inside the flow.
 | `6009` | The document classifier rejected the document. | `FAILED` |
 | `7001`, `7002` | Low quality or unreadable front / back. | `FAILED` |
 | `7003`, `7004`, `7005` | The document could not be read. | `FAILED` |
-| `7006` | The document did not pass the authenticity checks. | `FAILED` |
+| `7006` | The document did not pass the authenticity checks: it could not be confirmed as a physical document (for example a photocopy, a screen or a printout) or another security check of the document failed. During the capture the photo is asked for again in the same session; `7006` is the final result only when the person leaves the camera after the rejection, and when the captures of that side run out the verification ends with `2061`. `serverResponse.expectedMediaStatusEnumInt` set to `1` tells that the physical-document check was the one that failed. | `FAILED` |
 | `7007` | Document marked as fraud in a duplicate review. | `FAILED` |
 | `8001`, `8002` | Not found or not verified in the official registry. | `FAILED` |
 | `8003`–`8006` | Official registry timeout, error or not available. | `FAILED` |
@@ -127,6 +127,8 @@ with the same wording as the Web SDK:
 | `2000` | Validación exitosa. | Verification successful. |
 | `2041` | Cancelaste la validación. | You canceled the verification. |
 | `4001` | Se agotaron los intentos. | No attempts left. |
+| `2061` | Se agotaron los intentos de esta validación. | This verification has no attempts left. |
+| `7006` | No pudimos confirmar que el documento sea físico. Intenta de nuevo con el documento original. | We could not confirm the document is physical. Try again with the original document. |
 | `1005` | Se perdió la conexión. Revisa tu internet e inténtalo de nuevo. | The connection was lost. Check your internet and try again. |
 | `9002` | No pudimos comparar tu rostro con la foto del documento. | We could not compare your face with the photo on the document. |
 
@@ -135,6 +137,8 @@ pass the language to get the English one (Android
 `messageFor(code, UnicusLanguage.ENGLISH)`, iOS
 `messageFor(code, language: .english)`, Flutter
 `messageFor(code, language: UnicusLanguage.english)`). A reason written by
-Unicus for a rejected step is passed as it is. Route by `outcome` and
+Unicus for a rejected step (`2052`) is passed as it is. When the camera session
+ends early (for example `2061`) or after a `7006`, `resultMessage` is the
+message of the code and the technical detail stays in `errorMessage`. Route by `outcome` and
 `resultCode`, never by the message text: the wording can change between
 versions. Use your own texts if you need another wording.

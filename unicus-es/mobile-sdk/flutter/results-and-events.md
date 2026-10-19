@@ -71,7 +71,8 @@ Future<void> verify(UnicusVerificationRequest request) async {
 | `transactionResultCode` | `int?` | Código final que reportó el estado de la transacción, cuando respondió. |
 | `sessionError` | `bool` | La sesión de cámara terminó por una interrupción técnica. |
 | `status`, `nativeStatusCode` | `String`, `int?` | Estado de salida de la pantalla de cámara, para diagnóstico. |
-| `errorMessage`, `serverResponse`, `raw` | | Detalles de diagnóstico. No dependas de ellos para decidir. |
+| `errorMessage`, `raw` | | Detalles de diagnóstico. No dependas de ellos para decidir. |
+| `serverResponse` | `UnicusProcessResponse?` | Última respuesta de Unicus a una captura, para diagnóstico. `expectedMediaStatusEnumInt`: `0`, el documento probablemente es físico; `1`, no se pudo confirmar y la persona tuvo que repetir la captura (`7006`). `digitalIdSpoofStatusEnumInt` está deprecado: trae el mismo valor (antes llegaba siempre en `0`); usa `expectedMediaStatusEnumInt`. |
 
 ## Eventos
 

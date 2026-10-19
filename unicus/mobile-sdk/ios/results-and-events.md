@@ -59,7 +59,8 @@ Meaning of each code: [Result codes](../result-codes.md).
 | `steps` | `[UnicusStepResult]` | Per step: `stepId`, `outcome` (`completed`, `failed`, `skipped`), `resultCode`, document `validations`. |
 | `transactionResultCode` | `Int?` | Final code reported by Unicus for the transaction, when known. |
 | `sessionError` | `Bool` | The session ended because of a technical problem. |
-| `errorMessage` | `String?` | Technical detail, for logs. |
+| `errorMessage` | `String?` | Technical detail (server text or why the camera session ended), for logs. |
+| `serverResponse` | `UnicusProcessResponse?` | Last Unicus answer to a capture, for diagnostics. `expectedMediaStatusEnumInt`: `0`, the document is probably physical; `1`, it could not be confirmed and the person had to capture it again (`7006`). `digitalIdSpoofStatusEnumInt` is deprecated: it carries the same value (before it was always `0`); use `expectedMediaStatusEnumInt`. |
 | `raw` | `[String: Any]` | Every field as a dictionary (also `resumeReason`: `userLeft`, `flowResumable`, `transactionOpen`). |
 
 `UnicusResultCode` has the constants (`success`, `resumable`, `userCanceled`,
