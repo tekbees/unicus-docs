@@ -67,7 +67,7 @@ dentro del flujo.
 | `6009` | El clasificador rechazó el documento. | `FAILED` |
 | `7001`, `7002` | Frente / reverso de baja calidad o ilegible. | `FAILED` |
 | `7003`, `7004`, `7005` | No se pudo leer el documento. | `FAILED` |
-| `7006` | El documento no pasó las verificaciones de autenticidad. | `FAILED` |
+| `7006` | El documento no pasó las verificaciones de autenticidad: no se pudo confirmar que fuera un documento físico (por ejemplo, una fotocopia, una pantalla o una impresión) u otra verificación de seguridad del documento falló. Durante la captura se pide repetir la foto; si se agotan las capturas de ese lado, la verificación termina con `2061`. | `FAILED` |
 | `7007` | Documento marcado como fraude en una revisión de duplicado. | `FAILED` |
 | `8001`, `8002` | No encontrado o no verificado en el registro oficial. | `FAILED` |
 | `8003`–`8006` | Tiempo agotado, error o registro oficial no disponible. | `FAILED` |

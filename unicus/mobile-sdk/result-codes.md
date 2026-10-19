@@ -65,7 +65,7 @@ attempt limits are reached, the user can retry inside the flow.
 | `6009` | The document classifier rejected the document. | `FAILED` |
 | `7001`, `7002` | Low quality or unreadable front / back. | `FAILED` |
 | `7003`, `7004`, `7005` | The document could not be read. | `FAILED` |
-| `7006` | The document did not pass the authenticity checks. | `FAILED` |
+| `7006` | The document did not pass the authenticity checks: it could not be confirmed as a physical document (for example a photocopy, a screen or a printout) or another security check of the document failed. During the capture the photo is asked for again; when the captures of that side run out, the verification ends with `2061`. | `FAILED` |
 | `7007` | Document marked as fraud in a duplicate review. | `FAILED` |
 | `8001`, `8002` | Not found or not verified in the official registry. | `FAILED` |
 | `8003`–`8006` | Official registry timeout, error or not available. | `FAILED` |

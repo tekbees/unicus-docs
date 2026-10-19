@@ -224,7 +224,7 @@ static bool IsValid(string secret, string timestamp, string signature, byte[] ra
       "idLastName": "<APELLIDOS>",
       "birthDate": "<FECHA>",
       "match_level": 6,
-      "digital_id_spoof": 1,
+      "digital_id_spoof": 0,
       "face_on_document_status": 1,
       "full_id_status": 1,
       "text_on_document_status": 1,
@@ -282,6 +282,12 @@ la foto del documento, `0`–`7`), `age_estimate_group`, `digital_id_spoof`,
 `unexpectedMediaEncounteredAtLeastOnce`. Los campos presentes dependen
 del país y de la plantilla del documento. Compara `idNumberOCR` con `idNumber` si
 necesitas asegurarte de que el documento pertenece a la persona que esperabas.
+
+`digital_id_spoof` indica si se pudo confirmar que el documento es físico: `0`, el documento
+probablemente es físico; `1`, no se pudo confirmar y la persona tuvo que repetir la captura (por
+ejemplo, mostró una fotocopia o una pantalla). Conserva su nombre por compatibilidad; antes de este
+cambio llegaba siempre en `0`. El rechazo de la captura se informa con el código
+`7006`.
 
 ### Resultados
 

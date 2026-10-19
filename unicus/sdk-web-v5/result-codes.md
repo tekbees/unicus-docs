@@ -154,7 +154,7 @@ webhook, and as the final code when they end the transaction. Unless listed in
 | `6009` | The document classifier rejected the document. |
 | `7001` / `7002` | Low quality or unreadable front / back of the document (for Colombian ID cards, also a number that is not only digits or an unreadable issue date). |
 | `7003` / `7004` / `7005` | Document reading failed: timeout, data could not be read, communication error. |
-| `7006` | The document did not pass the authenticity checks: the ID could not be confirmed as a physical document (digital spoof), the full ID was not visible, the face or text on the document could not be confirmed, possible photocopy, expired document, or unexpected media (only for companies with that check enabled). Also returned when the document's country or type is not accepted for the company. |
+| `7006` | The document did not pass the authenticity checks: the ID could not be confirmed as a physical document (for example a photocopy, a screen or a printout), the full ID was not visible, the face or text on the document could not be confirmed, possible photocopy, expired document, or unexpected media (only for companies with that check enabled). Also returned when the document's country or type is not accepted for the company. During the capture Unicus asks for the document photo again and the person sees "We could not confirm the document is physical. Try again with the original document."; when the captures of that side run out, the transaction ends with `2061`. |
 | `7007` | Document marked as fraud in the review of a duplicate. |
 | `8001` | Identity not found in the official registry. |
 | `8002` | Not verified by the official registry (for example a document that is no longer valid). |

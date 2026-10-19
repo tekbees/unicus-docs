@@ -224,7 +224,7 @@ static bool IsValid(string secret, string timestamp, string signature, byte[] ra
       "idLastName": "<LAST NAMES>",
       "birthDate": "<DATE>",
       "match_level": 6,
-      "digital_id_spoof": 1,
+      "digital_id_spoof": 0,
       "face_on_document_status": 1,
       "full_id_status": 1,
       "text_on_document_status": 1,
@@ -282,6 +282,11 @@ the document photo, `0`–`7`), `age_estimate_group`, `digital_id_spoof`,
 `unexpectedMediaEncounteredAtLeastOnce`. Which fields are present depends on
 the country and the document template. Compare `idNumberOCR` with `idNumber` if
 you need to make sure the document belongs to the person you expected.
+
+`digital_id_spoof` tells whether the document could be confirmed as physical: `0`, the document is
+probably physical; `1`, it could not be confirmed and the person had to capture it again (for
+example, they showed a photocopy or a screen). It keeps its name for compatibility; before this
+change it was always `0`. The rejected capture itself is reported with code `7006`.
 
 ### Outcomes
 
