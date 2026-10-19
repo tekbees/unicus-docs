@@ -67,7 +67,7 @@ dentro del flujo.
 | `6009` | El clasificador rechazó el documento. | `FAILED` |
 | `7001`, `7002` | Frente / reverso de baja calidad o ilegible. | `FAILED` |
 | `7003`, `7004`, `7005` | No se pudo leer el documento. | `FAILED` |
-| `7006` | El documento no pasó las verificaciones de autenticidad: no se pudo confirmar que fuera un documento físico (por ejemplo, una fotocopia, una pantalla o una impresión) u otra verificación de seguridad del documento falló. Durante la captura se pide repetir la foto; si se agotan las capturas de ese lado, la verificación termina con `2061`. | `FAILED` |
+| `7006` | El documento no pasó las verificaciones de autenticidad: no se pudo confirmar que fuera un documento físico (por ejemplo, una fotocopia, una pantalla o una impresión) u otra verificación de seguridad del documento falló. Durante la captura se pide repetir la foto en la misma sesión; `7006` es el resultado final solo si la persona sale de la cámara después del rechazo, y si se agotan las capturas de ese lado la verificación termina con `2061`. `serverResponse.expectedMediaStatusEnumInt` en `1` indica que lo que falló fue la verificación de documento físico. | `FAILED` |
 | `7007` | Documento marcado como fraude en una revisión de duplicado. | `FAILED` |
 | `8001`, `8002` | No encontrado o no verificado en el registro oficial. | `FAILED` |
 | `8003`–`8006` | Tiempo agotado, error o registro oficial no disponible. | `FAILED` |
@@ -130,6 +130,8 @@ qué hacer, con la misma redacción que el Web SDK:
 | `2000` | Validación exitosa. | Verification successful. |
 | `2041` | Cancelaste la validación. | You canceled the verification. |
 | `4001` | Se agotaron los intentos. | No attempts left. |
+| `2061` | Se agotaron los intentos de esta validación. | This verification has no attempts left. |
+| `7006` | No pudimos confirmar que el documento sea físico. Intenta de nuevo con el documento original. | We could not confirm the document is physical. Try again with the original document. |
 | `1005` | Se perdió la conexión. Revisa tu internet e inténtalo de nuevo. | The connection was lost. Check your internet and try again. |
 | `9002` | No pudimos comparar tu rostro con la foto del documento. | We could not compare your face with the photo on the document. |
 
@@ -138,6 +140,9 @@ código; pasa el idioma para obtener el mensaje en inglés (Android
 `messageFor(code, UnicusLanguage.ENGLISH)`, iOS
 `messageFor(code, language: .english)`, Flutter
 `messageFor(code, language: UnicusLanguage.english)`). Un motivo escrito por
-Unicus para un paso rechazado se entrega tal cual. Decide según `outcome` y
+Unicus para un paso rechazado (`2052`) se entrega tal cual. Cuando la sesión de
+cámara termina antes de tiempo (por ejemplo `2061`) o después de un `7006`,
+`resultMessage` es el mensaje del código y el detalle técnico queda en
+`errorMessage`. Decide según `outcome` y
 `resultCode`, nunca según el texto del mensaje: la redacción puede cambiar
 entre versiones. Usa tus propios textos si necesitas otra redacción.

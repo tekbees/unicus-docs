@@ -71,7 +71,8 @@ exhaustive `switch` must include it. The meaning of every code is in
 | `transactionResultCode` | `int?` | Final code reported by the transaction status, when it answered. |
 | `sessionError` | `bool` | The camera session ended on a technical interruption. |
 | `status`, `nativeStatusCode` | `String`, `int?` | Exit status of the camera screen, for diagnostics. |
-| `errorMessage`, `serverResponse`, `raw` | | Diagnostic details. Do not rely on them for routing. |
+| `errorMessage`, `raw` | | Diagnostic details. Do not rely on them for routing. |
+| `serverResponse` | `UnicusProcessResponse?` | Last Unicus answer to a capture, for diagnostics. `expectedMediaStatusEnumInt`: `0`, the document is probably physical; `1`, it could not be confirmed and the person had to capture it again (`7006`). `digitalIdSpoofStatusEnumInt` is deprecated: it carries the same value (before it was always `0`); use `expectedMediaStatusEnumInt`. |
 
 ## Events
 
