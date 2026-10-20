@@ -72,7 +72,26 @@ exhaustive `switch` must include it. The meaning of every code is in
 | `sessionError` | `bool` | The camera session ended on a technical interruption. |
 | `status`, `nativeStatusCode` | `String`, `int?` | Exit status of the camera screen, for diagnostics. |
 | `errorMessage`, `raw` | | Diagnostic details. Do not rely on them for routing. |
-| `serverResponse` | `UnicusProcessResponse?` | Last Unicus answer to a capture, for diagnostics. `expectedMediaStatusEnumInt`: `0`, the document is probably physical; `1`, it could not be confirmed and the person had to capture it again (`7006`). `digitalIdSpoofStatusEnumInt` is deprecated: it carries the same value (before it was always `0`); use `expectedMediaStatusEnumInt`. |
+| `serverResponse` | `UnicusProcessResponse?` | Last Unicus answer to a capture, for diagnostics. It carries only `responseType`, `success`, `resultCode`, `isCompletelyDone`, `photoIDNextStepEnumInt` and `isFrontSide`; the other fields are empty (see [What the result and events carry](#what-the-result-and-events-carry)). `expectedMediaStatusEnumInt` and the deprecated `digitalIdSpoofStatusEnumInt` are not filled: a document that could not be confirmed as physical shows as result code `7006`. |
+
+## What the result and events carry
+
+The result and the events are built on the device. From each Unicus answer to a
+camera capture they keep only `responseType`, `success`, `resultCode`,
+`isCompletelyDone`, `photoIDNextStepEnumInt` and `isFrontSide` (the `raw` maps
+add the SDK's own labels `resolvedResponseType` and `eventName`). Document
+data, match levels, the status of each check, age groups, session data and any
+field Unicus adds later never reach your app: your server reads them with the
+[webhook](../../sdk-web-v5/webhooks.md) or [Get a transaction
+status](../../sdk-web-v5/transaction-status.md). The results of the flow steps
+keep their `validations` (type, status, result code and profile).
+
+{% hint style="warning" %}
+Because they are computed on the device, the result and the events can be
+altered and may never arrive (the app is closed, the network fails). Decide
+access only on your server, with the `TRANSACTION_FINALIZED` webhook or
+`query-transaction` and your server API key.
+{% endhint %}
 
 ## Events
 
@@ -112,6 +131,8 @@ final subscription = unicus.events.listen((event) {
 | `nativeExit` | The camera screen closed. | `message` (exit status) |
 | `error` | Error during the session (the result or exception follows). | `message` |
 
+`response` is the reduced Unicus answer: see
+[What the result and events carry](#what-the-result-and-events-carry).
 Every event also has `flow`, `tid`, `message` and `raw`. `stepType` values are
 in `UnicusStepType` (`consent`, `info`, `liveness`, `document`, `face_match`,
 `signature`, `otp`, `form`, `age_check`, `sign_document`). Events never carry
@@ -134,7 +155,10 @@ unicus.apiLogs.listen((entry) {
 
 The SDK redacts `requestBlob`, `responseBlob`, `response`, `documentData`,
 `ocrResults`, `unicusSession` and `sessionToken` (`<redacted>`) and truncates
-long strings (`apiLogStringLimit`). `includeSensitiveApiLogData: true` disables
-the redaction: debug builds only. Logs can still contain the document number
-and the `tid`; do not send them to third-party services. When you contact
-[Support](../support.md), share logs captured with sensitive logging off.
+long strings (`apiLogStringLimit`). Answers to camera captures keep only what
+the SDK reads: type, flags, codes, messages, flow state, summaries of
+validations and step results, and the document check status.
+`includeSensitiveApiLogData: true` disables the redaction: debug builds only.
+Logs can still contain the document number and the `tid`; do not send them to
+third-party services. When you contact [Support](../support.md), share logs
+captured with sensitive logging off.

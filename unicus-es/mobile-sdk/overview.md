@@ -44,7 +44,7 @@ sequenceDiagram
   K->>U: estado final
   K-->>A: resultado (outcome, resultCode, tid)
   U->>S: webhook TRANSACTION_FINALIZED
-  S->>U: consulta el estado de la transacción (opcional)
+  S->>U: query-transaction (opcional)
 ```
 
 1. Tu app configura el SDK una vez con su **Customer Token** (`apiKey`) y el
@@ -62,15 +62,15 @@ sequenceDiagram
    id de la transacción (`tid`). Consulta
    [Resultados y reanudación](results-and-resuming.md).
 6. Tu backend recibe el resultado autoritativo por medio de tu
-   [webhook](../sdk-web-v5/webhooks.md) o consultando
-   [el estado de una transacción](../sdk-web-v5/transaction-status.md) con el
-   `tid`.
+   [webhook](../sdk-web-v5/webhooks.md) o llamando a `query-transaction` con
+   tu API key de servidor y el `tid` (consulta
+   [Consultar el estado de una transacción](../sdk-web-v5/transaction-status.md)).
 
 {% hint style="info" %}
 El resultado que recibe tu app guía la experiencia del usuario. Las decisiones
 de negocio (abrir una cuenta, aprobar un crédito) corresponden a tu backend, con
-el webhook o el estado de la transacción: cualquier cosa que reporte un
-dispositivo puede ser manipulada.
+el webhook o `query-transaction`: cualquier cosa que reporte un dispositivo
+puede ser manipulada o no llegar nunca.
 {% endhint %}
 
 ## Qué SDK elegir

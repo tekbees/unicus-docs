@@ -134,6 +134,7 @@ de privacidad en el selector de apps de iOS. Por defecto: `false`.
 | Escaneo del rostro e imágenes del documento | Cámara | Cifrados, solo a Unicus. |
 | Datos leídos del documento | Unicus | Se muestran al usuario para que los confirme; no van en el resultado. |
 | Ubicación (opcional) | Dispositivo | Unicus, como metadato de la transacción. |
+| Dirección IP | Red | La resuelve Unicus en su servidor. El SDK no la envía. |
 | Consentimiento, valores del formulario, teléfono o correo del OTP, firma | Usuario, en los pasos del flujo | Unicus. |
 | Versión del SDK y plataforma | SDK | Unicus, en el user agent. |
 | Llave de reanudación | Unicus | Cifrada en el dispositivo; se borra con un resultado final. |
@@ -151,13 +152,23 @@ Los logs del API están desactivados por defecto. Cuando los activas
 los datos del documento, los tokens de sesión y los datos personales de los
 pasos del flujo (códigos, teléfonos, correos, valores de formulario, firmas,
 número de documento, ubicación), y se recortan los valores largos. La llave de
-reanudación siempre se oculta.
+reanudación siempre se oculta. Las respuestas a las capturas de cámara
+conservan solo lo que lee el SDK: tipo, indicadores, códigos, mensajes, estado
+del flujo, resúmenes de validaciones y resultados de pasos, y el estado de la
+revisión del documento.
 
 `includeSensitiveApiLogData` muestra los datos personales. Úsalo solo en tus
 propios dispositivos de prueba, nunca en un build de producción.
 
 ## Privacidad
 
+* **Tu app no recibe datos del documento ni puntajes.** El resultado y los
+  eventos traen códigos, indicadores y resultados de los pasos: ni datos leídos
+  del documento, ni niveles de coincidencia, ni puntajes de las verificaciones.
+  Tu servidor los lee con el [webhook](../sdk-web-v5/webhooks.md) o con
+  [Consultar el estado de una transacción](../sdk-web-v5/transaction-status.md).
+* **No se envía la IP.** El SDK no envía la dirección IP del dispositivo;
+  Unicus la resuelve en su servidor. `clientIp` está deprecado y se ignora.
 * Explica a tus usuarios por qué verificas su identidad. Agrega un paso
   `consent` a tu flujo, o activa `prependConsent` (consulta
   [Flujos y pasos de UI](flows-and-ui-steps.md)).

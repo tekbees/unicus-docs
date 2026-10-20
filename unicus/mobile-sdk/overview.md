@@ -44,7 +44,7 @@ sequenceDiagram
   K->>U: final status
   K-->>A: result (outcome, resultCode, tid)
   U->>S: webhook TRANSACTION_FINALIZED
-  S->>U: get transaction status (optional)
+  S->>U: query-transaction (optional)
 ```
 
 1. Your app configures the SDK once with its **Customer Token** (`apiKey`) and
@@ -61,14 +61,15 @@ sequenceDiagram
 5. The SDK returns a result to your app: an outcome, a result code and the
    transaction id (`tid`). See [Results and resuming](results-and-resuming.md).
 6. Your backend receives the authoritative result through your
-   [webhook](../sdk-web-v5/webhooks.md) or by calling
-   [Get a transaction status](../sdk-web-v5/transaction-status.md) with the
-   `tid`.
+   [webhook](../sdk-web-v5/webhooks.md) or by calling `query-transaction`
+   with your server API key and the `tid` (see
+   [Get a transaction status](../sdk-web-v5/transaction-status.md)).
 
 {% hint style="info" %}
 The result your app receives drives the user experience. Business decisions
 (open an account, approve a loan) belong to your backend, with the webhook or
-the transaction status: anything reported by a device can be tampered with.
+`query-transaction`: anything reported by a device can be tampered with or
+never arrive.
 {% endhint %}
 
 ## Which SDK to choose

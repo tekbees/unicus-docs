@@ -60,7 +60,7 @@ Meaning of each code: [Result codes](../result-codes.md).
 | `transactionResultCode` | `Int?` | Final code reported by Unicus for the transaction, when known. |
 | `sessionError` | `Bool` | The session ended because of a technical problem. |
 | `errorMessage` | `String?` | Technical detail (server text or why the camera session ended), for logs. |
-| `serverResponse` | `UnicusProcessResponse?` | Last Unicus answer to a capture, for diagnostics. `expectedMediaStatusEnumInt`: `0`, the document is probably physical; `1`, it could not be confirmed and the person had to capture it again (`7006`). `digitalIdSpoofStatusEnumInt` is deprecated: it carries the same value (before it was always `0`); use `expectedMediaStatusEnumInt`. |
+| `serverResponse` | `UnicusProcessResponse?` | Last Unicus answer to a capture, for diagnostics. It carries only `responseType`, `success`, `resultCode`, `isCompletelyDone`, `photoIDNextStepEnumInt` and `isFrontSide`; the other fields are empty (see [What the result and events carry](#what-the-result-and-events-carry)). `expectedMediaStatusEnumInt` and the deprecated `digitalIdSpoofStatusEnumInt` are not filled: a document that could not be confirmed as physical shows as result code `7006`. |
 | `raw` | `[String: Any]` | Every field as a dictionary (also `resumeReason`: `userLeft`, `flowResumable`, `transactionOpen`). |
 
 `UnicusResultCode` has the constants (`success`, `resumable`, `userCanceled`,
@@ -68,6 +68,25 @@ Meaning of each code: [Result codes](../result-codes.md).
 `UnicusResultCode.messageFor(code)` returns the Spanish message of a code
 (`messageFor(code, language: .english)` the English one; see
 [Texts and languages](texts-and-languages.md#result-messages)).
+
+## What the result and events carry
+
+The result and the events are built on the device. From each Unicus answer to a
+camera capture they keep only `responseType`, `success`, `resultCode`,
+`isCompletelyDone`, `photoIDNextStepEnumInt` and `isFrontSide` (the `raw` maps
+add the SDK's own labels `resolvedResponseType` and `eventName`). Document
+data, match levels, the status of each check, age groups, session data and any
+field Unicus adds later never reach your app: your server reads them with the
+[webhook](../../sdk-web-v5/webhooks.md) or [Get a transaction
+status](../../sdk-web-v5/transaction-status.md). The results of the flow steps
+keep their `validations` (type, status, result code and profile).
+
+{% hint style="warning" %}
+Because they are computed on the device, the result and the events can be
+altered and may never arrive (the app is closed, the network fails). Decide
+access only on your server, with the `TRANSACTION_FINALIZED` webhook or
+`query-transaction` and your server API key.
+{% endhint %}
 
 ## `UnicusSdkError`
 
@@ -99,8 +118,10 @@ UnicusSdk.shared.eventHandler = { event in
 {% endcode %}
 
 Events are informative: never decide the result from them. They arrive on the
-main queue. `UnicusSdkEvent` has `name`, `tid`, `message`, `response` (parsed
-server answer, when there is one), `raw`, plus `stepId` and `segmentKind`.
+main queue. `UnicusSdkEvent` has `name`, `tid`, `message`, `response` (the reduced
+Unicus answer, when there is one: see
+[What the result and events carry](#what-the-result-and-events-carry)), `raw`,
+plus `stepId` and `segmentKind`.
 
 | Event | When |
 | --- | --- |
@@ -137,6 +158,8 @@ UnicusSdk.shared.apiLogHandler = { entry in print(entry.toPrettyJson()) }
 Logs are redacted: encrypted biometric data, document data, session tokens and
 the personal data of flow steps (codes, phone, e-mail, form values, signature
 image, document number, location) are removed or truncated. The resume key is
-always removed. `includeSensitiveApiLogData = true` keeps tokens and payloads:
-use it only locally and never in a production build. Turn `enableApiLogging`
-off in production.
+always removed. Answers to camera captures keep only what the SDK reads: type,
+flags, codes, messages, flow state, summaries of validations and step results,
+and the document check status. `includeSensitiveApiLogData = true` keeps tokens
+and payloads: use it only locally and never in a production build. Turn
+`enableApiLogging` off in production.

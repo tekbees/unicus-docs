@@ -122,10 +122,12 @@ final request = UnicusVerificationRequest.enrollmentVerify(
 {% endcode %}
 
 The other fields of `UnicusVerificationRequest` (`flow`, `minMatchLevel`,
-`enableSearch1N`, `transactionComponentId`, `state`, `clientIp`,
+`enableSearch1N`, `transactionComponentId`, `state`,
 `extraProcessRequestFields`) are advanced: keep the defaults unless Tekbees
-asks otherwise. `UnicusVerificationRequest.processTransaction` and the unnamed
-constructor are deprecated: use `enrollmentVerify`.
+asks otherwise. `clientIp` is deprecated and ignored: the SDK sends no IP, and
+Unicus resolves the device IP on its server.
+`UnicusVerificationRequest.processTransaction` and the unnamed constructor are
+deprecated: use `enrollmentVerify`.
 
 ## Cancelling
 

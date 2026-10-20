@@ -35,8 +35,29 @@ Con las variantes `suspend`, `start` devuelve el resultado y lanza
 | `transactionResultCode` | `Int?` | Código final que reporta Unicus para la transacción, cuando respondió. |
 | `sessionError` | `Boolean` | `true` cuando la sesión de cámara terminó por una interrupción técnica. |
 | `errorMessage` | `String?` | Detalle técnico (texto del servidor o motivo por el que terminó la sesión de cámara), para logs. |
-| `serverResponse` | `UnicusProcessResponse?` | Última respuesta de Unicus a una captura, para diagnóstico. `expectedMediaStatusEnumInt`: `0`, el documento probablemente es físico; `1`, no se pudo confirmar y la persona tuvo que repetir la captura (`7006`). `digitalIdSpoofStatusEnumInt` está deprecado: trae el mismo valor (antes llegaba siempre en `0`); usa `expectedMediaStatusEnumInt`. |
+| `serverResponse` | `UnicusProcessResponse?` | Última respuesta de Unicus a una captura, para diagnóstico. Trae solo `responseType`, `success`, `resultCode`, `isCompletelyDone`, `photoIDNextStepEnumInt` e `isFrontSide`; los demás campos llegan vacíos (consulta [Lo que traen el resultado y los eventos](#lo-que-traen-el-resultado-y-los-eventos)). `expectedMediaStatusEnumInt` y el deprecado `digitalIdSpoofStatusEnumInt` no se llenan: un documento que no se pudo confirmar como físico aparece con el código de resultado `7006`. |
 | `raw` | `Map<String, Any?>` | Datos de diagnóstico (por ejemplo `raw["errorKey"]` de un error de una pantalla del flujo, `raw["leftOnStepId"]`). No dependas de sus llaves para enrutar. |
+
+## Lo que traen el resultado y los eventos
+
+El resultado y los eventos se construyen en el dispositivo. De cada respuesta
+de Unicus a una captura de cámara conservan solo `responseType`, `success`,
+`resultCode`, `isCompletelyDone`, `photoIDNextStepEnumInt` e `isFrontSide` (los
+mapas `raw` agregan las etiquetas propias del SDK `resolvedResponseType` y
+`eventName`). Los datos del documento, los niveles de coincidencia, el estado
+de cada verificación, los grupos de edad, los datos de sesión y cualquier campo
+que Unicus agregue más adelante nunca llegan a tu app: tu servidor los lee con
+el [webhook](../../sdk-web-v5/webhooks.md) o con [Consultar el estado de una
+transacción](../../sdk-web-v5/transaction-status.md). Los resultados de los
+pasos del flujo conservan sus `validations` (tipo, estado, código de resultado
+y perfil).
+
+{% hint style="warning" %}
+Como se calculan en el dispositivo, el resultado y los eventos pueden ser
+alterados y es posible que nunca lleguen (la app se cierra, la red falla).
+Decide el acceso solo en tu servidor, con el webhook `TRANSACTION_FINALIZED` o
+con `query-transaction` y tu API key de servidor.
+{% endhint %}
 
 ## Manejar cada outcome
 
@@ -140,7 +161,7 @@ Pasa `null` para quitar el listener. Todos los eventos tienen `name`, `tid` y
 | `stepProgress` | Avance de la firma de documentos en modo Custom. | `raw["signStatus"]`, `raw["envelopeId"]`, `raw["reason"]` |
 | `pageError` | Una pantalla del flujo muestra un error recuperable (red, falla temporal) con "reintentar". | `message` (llave del error) |
 | `processRequest` | Se está enviando una captura biométrica a Unicus. | — |
-| `livenessProcessed`, `enrollmentProcessed`, `authenticationComplete`, `idScanProcessed`, `idScanFrontRetry`, `idScanBackRequired`, `idScanBackRetry`, `idScanUserConfirmation`, `idScanComplete`, `idScanNfcFallback`, `enrollmentRetry`, `verificationRetry`, `serverError` | Unicus respondió una captura biométrica. | `response` (sanitizada) |
+| `livenessProcessed`, `enrollmentProcessed`, `authenticationComplete`, `idScanProcessed`, `idScanFrontRetry`, `idScanBackRequired`, `idScanBackRetry`, `idScanUserConfirmation`, `idScanComplete`, `idScanNfcFallback`, `enrollmentRetry`, `verificationRetry`, `serverError` | Unicus respondió una captura biométrica. | `response` (reducida, consulta [Lo que traen el resultado y los eventos](#lo-que-traen-el-resultado-y-los-eventos)) |
 | `completed` | Unicus finalizó la transacción. | `response` |
 | `nativeExit` | Se cerró la pantalla de cámara. | `message` (estado de salida) |
 | `error` | Falló una solicitud a Unicus. | `message` |
@@ -168,7 +189,10 @@ Las entradas vienen **sanitizadas**: datos biométricos, datos del documento y
 del OCR, tokens de sesión, la referencia de la transacción, valores de
 formularios, códigos y destinos OTP, imágenes y textos de firma, ubicación,
 teléfono y correo se reemplazan por `<redacted>`, y los textos largos se
-recortan (`apiLogStringLimit`). La llave de reanudación siempre se oculta.
+recortan (`apiLogStringLimit`). La llave de reanudación siempre se oculta. Las
+respuestas a las capturas de cámara conservan solo lo que lee el SDK: tipo,
+indicadores, códigos, mensajes, estado del flujo, resúmenes de validaciones y
+resultados de pasos, y el estado de la revisión del documento.
 
 {% hint style="danger" %}
 Mantén `enableApiLogging` desactivado en los builds de producción y nunca

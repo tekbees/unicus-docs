@@ -61,7 +61,7 @@ para el `tid`. Significado de cada código:
 | `transactionResultCode` | `Int?` | Código final reportado por Unicus para la transacción, cuando se conoce. |
 | `sessionError` | `Bool` | La sesión terminó por un problema técnico. |
 | `errorMessage` | `String?` | Detalle técnico (texto del servidor o motivo por el que terminó la sesión de cámara), para logs. |
-| `serverResponse` | `UnicusProcessResponse?` | Última respuesta de Unicus a una captura, para diagnóstico. `expectedMediaStatusEnumInt`: `0`, el documento probablemente es físico; `1`, no se pudo confirmar y la persona tuvo que repetir la captura (`7006`). `digitalIdSpoofStatusEnumInt` está deprecado: trae el mismo valor (antes llegaba siempre en `0`); usa `expectedMediaStatusEnumInt`. |
+| `serverResponse` | `UnicusProcessResponse?` | Última respuesta de Unicus a una captura, para diagnóstico. Trae solo `responseType`, `success`, `resultCode`, `isCompletelyDone`, `photoIDNextStepEnumInt` e `isFrontSide`; los demás campos llegan vacíos (consulta [Lo que traen el resultado y los eventos](#lo-que-traen-el-resultado-y-los-eventos)). `expectedMediaStatusEnumInt` y el deprecado `digitalIdSpoofStatusEnumInt` no se llenan: un documento que no se pudo confirmar como físico aparece con el código de resultado `7006`. |
 | `raw` | `[String: Any]` | Todos los campos como diccionario (también `resumeReason`: `userLeft`, `flowResumable`, `transactionOpen`). |
 
 `UnicusResultCode` tiene las constantes (`success`, `resumable`, `userCanceled`,
@@ -69,6 +69,27 @@ para el `tid`. Significado de cada código:
 `UnicusResultCode.messageFor(code)` devuelve el mensaje en español de un código
 (`messageFor(code, language: .english)` el mensaje en inglés; consulta
 [Textos e idiomas](texts-and-languages.md#mensajes-de-resultado)).
+
+## Lo que traen el resultado y los eventos
+
+El resultado y los eventos se construyen en el dispositivo. De cada respuesta
+de Unicus a una captura de cámara conservan solo `responseType`, `success`,
+`resultCode`, `isCompletelyDone`, `photoIDNextStepEnumInt` e `isFrontSide` (los
+mapas `raw` agregan las etiquetas propias del SDK `resolvedResponseType` y
+`eventName`). Los datos del documento, los niveles de coincidencia, el estado
+de cada verificación, los grupos de edad, los datos de sesión y cualquier campo
+que Unicus agregue más adelante nunca llegan a tu app: tu servidor los lee con
+el [webhook](../../sdk-web-v5/webhooks.md) o con [Consultar el estado de una
+transacción](../../sdk-web-v5/transaction-status.md). Los resultados de los
+pasos del flujo conservan sus `validations` (tipo, estado, código de resultado
+y perfil).
+
+{% hint style="warning" %}
+Como se calculan en el dispositivo, el resultado y los eventos pueden ser
+alterados y es posible que nunca lleguen (la app se cierra, la red falla).
+Decide el acceso solo en tu servidor, con el webhook `TRANSACTION_FINALIZED` o
+con `query-transaction` y tu API key de servidor.
+{% endhint %}
 
 ## `UnicusSdkError`
 
@@ -100,10 +121,11 @@ UnicusSdk.shared.eventHandler = { event in
 ```
 {% endcode %}
 
-Los eventos son informativos: nunca decidas el resultado con ellos. Llegan en la
-cola principal. `UnicusSdkEvent` tiene `name`, `tid`, `message`, `response`
-(respuesta del servidor ya interpretada, cuando existe), `raw`, además de
-`stepId` y `segmentKind`.
+Los eventos son informativos: nunca decidas el resultado con ellos. Llegan en
+la cola principal. `UnicusSdkEvent` tiene `name`, `tid`, `message`, `response`
+(la respuesta reducida de Unicus, cuando existe: consulta [Lo que traen el
+resultado y los eventos](#lo-que-traen-el-resultado-y-los-eventos)), `raw`,
+además de `stepId` y `segmentKind`.
 
 | Evento | Cuándo |
 | --- | --- |
@@ -140,8 +162,11 @@ UnicusSdk.shared.apiLogHandler = { entry in print(entry.toPrettyJson()) }
 
 Los logs están depurados: los datos biométricos cifrados, los datos del
 documento, los tokens de sesión y los datos personales de los pasos del flujo
-(códigos, teléfono, correo, valores de formulario, imagen de la firma, número de
-documento, ubicación) se eliminan o se truncan. La llave de reanudación siempre
-se elimina. `includeSensitiveApiLogData = true` conserva tokens y datos: úsalo
+(códigos, teléfono, correo, valores de formulario, imagen de la firma, número
+de documento, ubicación) se eliminan o se truncan. La llave de reanudación
+siempre se elimina. Las respuestas a las capturas de cámara conservan solo lo
+que lee el SDK: tipo, indicadores, códigos, mensajes, estado del flujo,
+resúmenes de validaciones y resultados de pasos, y el estado de la revisión del
+documento. `includeSensitiveApiLogData = true` conserva tokens y datos: úsalo
 solo en local y nunca en una compilación de producción. Desactiva
 `enableApiLogging` en producción.

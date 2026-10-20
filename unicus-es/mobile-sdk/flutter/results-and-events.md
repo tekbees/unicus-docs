@@ -72,7 +72,28 @@ Future<void> verify(UnicusVerificationRequest request) async {
 | `sessionError` | `bool` | La sesión de cámara terminó por una interrupción técnica. |
 | `status`, `nativeStatusCode` | `String`, `int?` | Estado de salida de la pantalla de cámara, para diagnóstico. |
 | `errorMessage`, `raw` | | Detalles de diagnóstico. No dependas de ellos para decidir. |
-| `serverResponse` | `UnicusProcessResponse?` | Última respuesta de Unicus a una captura, para diagnóstico. `expectedMediaStatusEnumInt`: `0`, el documento probablemente es físico; `1`, no se pudo confirmar y la persona tuvo que repetir la captura (`7006`). `digitalIdSpoofStatusEnumInt` está deprecado: trae el mismo valor (antes llegaba siempre en `0`); usa `expectedMediaStatusEnumInt`. |
+| `serverResponse` | `UnicusProcessResponse?` | Última respuesta de Unicus a una captura, para diagnóstico. Trae solo `responseType`, `success`, `resultCode`, `isCompletelyDone`, `photoIDNextStepEnumInt` e `isFrontSide`; los demás campos llegan vacíos (consulta [Lo que traen el resultado y los eventos](#lo-que-traen-el-resultado-y-los-eventos)). `expectedMediaStatusEnumInt` y el deprecado `digitalIdSpoofStatusEnumInt` no se llenan: un documento que no se pudo confirmar como físico aparece con el código de resultado `7006`. |
+
+## Lo que traen el resultado y los eventos
+
+El resultado y los eventos se construyen en el dispositivo. De cada respuesta
+de Unicus a una captura de cámara conservan solo `responseType`, `success`,
+`resultCode`, `isCompletelyDone`, `photoIDNextStepEnumInt` e `isFrontSide` (los
+mapas `raw` agregan las etiquetas propias del SDK `resolvedResponseType` y
+`eventName`). Los datos del documento, los niveles de coincidencia, el estado
+de cada verificación, los grupos de edad, los datos de sesión y cualquier campo
+que Unicus agregue más adelante nunca llegan a tu app: tu servidor los lee con
+el [webhook](../../sdk-web-v5/webhooks.md) o con [Consultar el estado de una
+transacción](../../sdk-web-v5/transaction-status.md). Los resultados de los
+pasos del flujo conservan sus `validations` (tipo, estado, código de resultado
+y perfil).
+
+{% hint style="warning" %}
+Como se calculan en el dispositivo, el resultado y los eventos pueden ser
+alterados y es posible que nunca lleguen (la app se cierra, la red falla).
+Decide el acceso solo en tu servidor, con el webhook `TRANSACTION_FINALIZED` o
+con `query-transaction` y tu API key de servidor.
+{% endhint %}
 
 ## Eventos
 
@@ -112,11 +133,13 @@ final subscription = unicus.events.listen((event) {
 | `nativeExit` | Se cerró la pantalla de cámara. | `message` (estado de salida) |
 | `error` | Error durante la sesión (luego llega el resultado o la excepción). | `message` |
 
-Todos los eventos tienen además `flow`, `tid`, `message` y `raw`. Los valores
-de `stepType` están en `UnicusStepType` (`consent`, `info`, `liveness`,
+`response` es la respuesta reducida de Unicus: consulta [Lo que traen el
+resultado y los eventos](#lo-que-traen-el-resultado-y-los-eventos). Todos los
+eventos tienen además `flow`, `tid`, `message` y `raw`. Los valores de
+`stepType` están en `UnicusStepType` (`consent`, `info`, `liveness`,
 `document`, `face_match`, `signature`, `otp`, `form`, `age_check`,
-`sign_document`). Los eventos nunca llevan la llave de reanudación ni tokens
-de sesión.
+`sign_document`). Los eventos nunca llevan la llave de reanudación ni tokens de
+sesión.
 
 ## Logs del API
 
@@ -135,8 +158,11 @@ unicus.apiLogs.listen((entry) {
 
 El SDK oculta `requestBlob`, `responseBlob`, `response`, `documentData`,
 `ocrResults`, `unicusSession` y `sessionToken` (`<redacted>`) y trunca los
-textos largos (`apiLogStringLimit`). `includeSensitiveApiLogData: true`
-desactiva el ocultamiento: solo en builds de depuración. Los logs aún pueden
-contener el número de documento y el `tid`; no los envíes a servicios de
-terceros. Cuando contactes a [Soporte](../support.md), comparte logs
-capturados con el registro sensible desactivado.
+textos largos (`apiLogStringLimit`). Las respuestas a las capturas de cámara
+conservan solo lo que lee el SDK: tipo, indicadores, códigos, mensajes, estado
+del flujo, resúmenes de validaciones y resultados de pasos, y el estado de la
+revisión del documento. `includeSensitiveApiLogData: true` desactiva el
+ocultamiento: solo en builds de depuración. Los logs aún pueden contener el
+número de documento y el `tid`; no los envíes a servicios de terceros. Cuando
+contactes a [Soporte](../support.md), comparte logs capturados con el registro
+sensible desactivado.

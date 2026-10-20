@@ -35,8 +35,27 @@ With the `suspend` variants, `start` returns the result and throws
 | `transactionResultCode` | `Int?` | Final code reported by Unicus for the transaction, when it answered. |
 | `sessionError` | `Boolean` | `true` when the camera session ended because of a technical interruption. |
 | `errorMessage` | `String?` | Technical detail (server text or why the camera session ended), for logs. |
-| `serverResponse` | `UnicusProcessResponse?` | Last Unicus answer to a capture, for diagnostics. `expectedMediaStatusEnumInt`: `0`, the document is probably physical; `1`, it could not be confirmed and the person had to capture it again (`7006`). `digitalIdSpoofStatusEnumInt` is deprecated: it carries the same value (before it was always `0`); use `expectedMediaStatusEnumInt`. |
+| `serverResponse` | `UnicusProcessResponse?` | Last Unicus answer to a capture, for diagnostics. It carries only `responseType`, `success`, `resultCode`, `isCompletelyDone`, `photoIDNextStepEnumInt` and `isFrontSide`; the other fields are empty (see [What the result and events carry](#what-the-result-and-events-carry)). `expectedMediaStatusEnumInt` and the deprecated `digitalIdSpoofStatusEnumInt` are not filled: a document that could not be confirmed as physical shows as result code `7006`. |
 | `raw` | `Map<String, Any?>` | Diagnostic data (for example `raw["errorKey"]` of a flow screen error, `raw["leftOnStepId"]`). Do not depend on its keys for routing. |
+
+## What the result and events carry
+
+The result and the events are built on the device. From each Unicus answer to a
+camera capture they keep only `responseType`, `success`, `resultCode`,
+`isCompletelyDone`, `photoIDNextStepEnumInt` and `isFrontSide` (the `raw` maps
+add the SDK's own labels `resolvedResponseType` and `eventName`). Document
+data, match levels, the status of each check, age groups, session data and any
+field Unicus adds later never reach your app: your server reads them with the
+[webhook](../../sdk-web-v5/webhooks.md) or [Get a transaction
+status](../../sdk-web-v5/transaction-status.md). The results of the flow steps
+keep their `validations` (type, status, result code and profile).
+
+{% hint style="warning" %}
+Because they are computed on the device, the result and the events can be
+altered and may never arrive (the app is closed, the network fails). Decide
+access only on your server, with the `TRANSACTION_FINALIZED` webhook or
+`query-transaction` and your server API key.
+{% endhint %}
 
 ## Handling every outcome
 
@@ -139,7 +158,7 @@ Pass `null` to remove the listener. Every event has `name`, `tid` and
 | `stepProgress` | Document signing progress in Custom mode. | `raw["signStatus"]`, `raw["envelopeId"]`, `raw["reason"]` |
 | `pageError` | A flow screen shows a recoverable error (network, temporary failure) with "try again". | `message` (error key) |
 | `processRequest` | A biometric capture is being sent to Unicus. | — |
-| `livenessProcessed`, `enrollmentProcessed`, `authenticationComplete`, `idScanProcessed`, `idScanFrontRetry`, `idScanBackRequired`, `idScanBackRetry`, `idScanUserConfirmation`, `idScanComplete`, `idScanNfcFallback`, `enrollmentRetry`, `verificationRetry`, `serverError` | Unicus answered a biometric capture. | `response` (sanitized) |
+| `livenessProcessed`, `enrollmentProcessed`, `authenticationComplete`, `idScanProcessed`, `idScanFrontRetry`, `idScanBackRequired`, `idScanBackRetry`, `idScanUserConfirmation`, `idScanComplete`, `idScanNfcFallback`, `enrollmentRetry`, `verificationRetry`, `serverError` | Unicus answered a biometric capture. | `response` (reduced, see [What the result and events carry](#what-the-result-and-events-carry)) |
 | `completed` | Unicus finalized the transaction. | `response` |
 | `nativeExit` | The camera screen closed. | `message` (exit status) |
 | `error` | A request to Unicus failed. | `message` |
@@ -167,7 +186,9 @@ The entries are **sanitized**: biometric data, document and OCR data, session
 tokens, the transaction reference, form values, OTP codes and destinations,
 signature images and texts, location, phone and e-mail are replaced by
 `<redacted>`, and long strings are truncated (`apiLogStringLimit`). The resume
-key is always redacted.
+key is always redacted. Answers to camera captures keep only what the SDK
+reads: type, flags, codes, messages, flow state, summaries of validations and
+step results, and the document check status.
 
 {% hint style="danger" %}
 Keep `enableApiLogging` off in production builds and never turn on

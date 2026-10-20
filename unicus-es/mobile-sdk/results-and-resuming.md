@@ -127,15 +127,20 @@ Los límites de intentos son los mismos de la web: consulta
 
 ## Confirma en tu backend
 
-El resultado en tu app es para la experiencia del usuario. Tu backend decide con
-datos que vienen de Unicus:
+El resultado en tu app es para la experiencia del usuario. Se calcula en el
+dispositivo, así que puede ser alterado y es posible que nunca llegue (la app se
+cierra, la red falla). Tu backend decide con datos que vienen de Unicus:
 
 * **Webhook.** Unicus envía un `TRANSACTION_FINALIZED` por transacción cuando
   es final, y `TRANSACTION_REVIEW_RESOLVED` después de una revisión manual.
   Consulta [Webhooks](../sdk-web-v5/webhooks.md).
-* **Estado de la transacción.** Tu backend llama a
+* **`query-transaction`.** Tu backend llama a `query-transaction` con tu API
+  key de servidor y el `tid` que envió tu app. Consulta
   [Consultar el estado de una transacción](../sdk-web-v5/transaction-status.md)
-  con el `tid` que envió tu app.
+  y [API de servidor y API keys](../sdk-web-v5/server-api.md).
+
+El estado de la transacción que lee el SDK durante la verificación pertenece a
+la sesión del usuario: no es una API para tu backend.
 
 Una transacción `RESUMABLE` aún no tiene webhook: el webhook llega cuando
 termina o expira.

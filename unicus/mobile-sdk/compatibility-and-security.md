@@ -131,6 +131,7 @@ switcher. Default: `false`.
 | Face scan and document images | Camera | Encrypted, to Unicus only. |
 | Data read from the document | Unicus | Shown to the user for confirmation; not in the result. |
 | Location (optional) | Device | Unicus, as transaction metadata. |
+| IP address | Network | Resolved by Unicus on its server. The SDK does not send it. |
 | Consent, form values, OTP phone or e-mail, signature | User, in the flow steps | Unicus. |
 | SDK version and platform | SDK | Unicus, in the user agent. |
 | Resume key | Unicus | Encrypted on the device; deleted on a final result. |
@@ -146,13 +147,22 @@ API logging is off by default. When you turn it on (`enableApiLogging`), the
 logs are sanitized: encrypted biometric data, document data, session tokens and
 the personal data of the flow steps (codes, phone numbers, e-mails, form
 values, signatures, document number, location) are redacted and long values
-truncated. The resume key is always redacted.
+truncated. The resume key is always redacted. Answers to camera captures keep
+only what the SDK reads: type, flags, codes, messages, flow state, summaries of
+validations and step results, and the document check status.
 
 `includeSensitiveApiLogData` shows the personal data. Use it only on your own
 test devices, never in a production build.
 
 ## Privacy
 
+* **Your app does not receive document data or scores.** The result and the
+  events carry codes, flags and step outcomes only: no data read from the
+  document, match levels or check scores. Your server reads them with the
+  [webhook](../sdk-web-v5/webhooks.md) or
+  [Get a transaction status](../sdk-web-v5/transaction-status.md).
+* **No IP is sent.** The SDK does not send the device IP address; Unicus
+  resolves it on its server. `clientIp` is deprecated and ignored.
 * Tell your users why you verify their identity. Add a `consent` step to your
   flow, or set `prependConsent` (see [Consent](flows-and-ui-steps.md#consent)).
 * **Android:** declaring the location permissions means reporting location
