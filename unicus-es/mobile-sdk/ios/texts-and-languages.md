@@ -112,8 +112,8 @@ Claves que se cambian con frecuencia:
 | `Unicus_instructions_header_ready_1` | Get Ready For | Prepárate para |
 | `Unicus_presession_frame_your_face` | Frame Your Face In The Oval | Ubica tu rostro en el óvalo. |
 | `Unicus_initializing_camera` | Opening the camera | Abriendo la cámara |
-| `Unicus_idscan_capture_id_front_instruction_message` | Place the front of the document in the frame | Ubica el frente del documento en el recuadro |
-| `Unicus_idscan_capture_id_back_instruction_message` | Place the back of the document in the frame | Ubica el reverso del documento en el recuadro |
+| `Unicus_idscan_capture_id_front_instruction_message` | Front of your physical ID | Frente de tu documento físico |
+| `Unicus_idscan_capture_id_back_instruction_message` | Place the back in the frame | Ubica el reverso en el recuadro |
 | `Unicus_retry_header` | Let's Try That Again | Intentemos de nuevo |
 | `Unicus_result_session_abort_message` | Session Ended<br>Please Try Again | Sesión finalizada<br>Inténtalo de nuevo |
 
