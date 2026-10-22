@@ -29,6 +29,14 @@ activó en **Seguridad**, a todos los usuarios.
 * Marca **Recordar este dispositivo por 30 días** para no volver a escribirlo
   en ese navegador durante ese tiempo.
 
+### Con el inicio de sesión de tu empresa (SSO)
+
+Si tu empresa configuró el inicio de sesión único, escribe tu correo y elige
+**Entrar con SSO corporativo**: entras con la cuenta de la empresa (Microsoft,
+Google u Okta) y sin contraseña de Unicus. Si tu empresa lo hizo obligatorio, la
+contraseña deja de servir para tu correo. Ver
+[Inicio de sesión único (SSO)](single-sign-on.md).
+
 ### Acceso solo desde tu red
 
 Si tu empresa limitó el acceso a sus direcciones IP, solo puedes entrar desde

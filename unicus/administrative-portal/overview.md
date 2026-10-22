@@ -16,7 +16,7 @@ results of its verifications. From there you:
 * review every **enrollment, verification and liveness check**, with its PDF
   certificate;
 * send a **Unicus Link** to a person by WhatsApp or SMS;
-* manage your **team**: users, roles and approvals.
+* manage your **team**: users and roles, and their access with your company's sign-in (SSO).
 
 ## How to get in
 
@@ -40,7 +40,7 @@ browser's time zone.
 | Operations | Enrollments, Review queue, Verifications, Liveness checks, Age checks, Reports | Day-to-day work with transactions. See [Transactions and reports](transactions.md). |
 | Tools | Unicus Link, E-mail validation, Verify certificate | Send verification links, review e-mail validations and check that a certificate is genuine. |
 | Platform | Flows, Webhooks | What the person does in each verification, and your webhook's delivery log. See [Verification flows](flows.md) and [Integration](integration.md). |
-| Administration | Users, Roles, Approvals, Audit log | Who has access, what they can do and the record of what each one did. See [Users, roles and approvals](users-roles-and-approvals.md). |
+| Administration | Users, Roles, Audit log | Who has access, what they can do and the record of what each one did. See [Users and roles](users-roles-and-approvals.md). |
 | Settings | Company, Countries and documents | Brand, biometrics, integration and security. See [Company settings](company-settings.md). |
 
 Press **Ctrl + K** (**Cmd + K** on a Mac) for quick search: find a transaction
@@ -54,7 +54,7 @@ when your company does not have that service or your role lacks the
 permission; that section cannot be opened.
 
 Some actions are reserved for your company's **administrators**, whatever a
-custom role allows: access security, approvals, API keys, webhook signing and
+custom role allows: access security and single sign-on (SSO), API keys, webhook signing and
 the webhook delivery log, the portal's address and colour, copying or
 regenerating the Company ID, and assigning the administrator role or editing an
 administrator.

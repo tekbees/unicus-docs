@@ -72,5 +72,6 @@
 * [Verification flows](administrative-portal/flows.md)
 * [Integration](administrative-portal/integration.md)
 * [Company settings](administrative-portal/company-settings.md)
-* [Users, roles and approvals](administrative-portal/users-roles-and-approvals.md)
+* [Users and roles](administrative-portal/users-roles-and-approvals.md)
+* [Single sign-on (SSO)](administrative-portal/single-sign-on.md)
 * [Glossary](administrative-portal/glossary.md)

@@ -50,10 +50,9 @@ Solo para administradores:
   iniciar sesión y al menos cada hora durante la sesión. Usa **Usar mi
   IP actual** para no quedarte por fuera; el portal no te deja guardar una
   lista que bloquearía tu propia sesión.
-* **Aprobación de una segunda persona:** publicar un flujo y crear una API key
-  de producción necesitan que otro administrador lo apruebe (ver
-  [Aprobaciones](users-roles-and-approvals.md#aprobaciones)). Requiere al menos
-  dos administradores activos.
+* **Inicio de sesión único (SSO):** tu equipo entra con la cuenta de la empresa
+  (Microsoft Entra ID, Google Workspace u Okta), y con SCIM sus usuarios se
+  crean y desactivan solos. Ver [Inicio de sesión único (SSO)](single-sign-on.md).
 * **Código por correo para todos:** además de la contraseña, todos los
   usuarios de tu empresa escriben un código que llega a su correo al iniciar
   sesión.

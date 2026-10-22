@@ -45,7 +45,7 @@ personalizar.
 
 Para usar Unicus Link en el portal se necesita el permiso de Unicus Link en el
 rol (ver
-[Usuarios, roles y aprobaciones](../administrative-portal/users-roles-and-approvals.md)).
+[Usuarios y roles](../administrative-portal/users-roles-and-approvals.md)).
 
 ## Opción 2: desde tu backend
 

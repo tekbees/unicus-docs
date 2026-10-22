@@ -29,6 +29,13 @@ e-mail. It is asked of administrators and, if your company turned it on in
 * Tick **Remember this device for 30 days** so you do not have to type it
   again in that browser during that time.
 
+### With your company's sign-in (SSO)
+
+If your company set up single sign-on, type your e-mail and choose **Sign in
+with corporate SSO**: you sign in with the company account (Microsoft, Google or
+Okta) and no Unicus password. If your company made it mandatory, the password no
+longer works for your e-mail. See [Single sign-on (SSO)](single-sign-on.md).
+
 ### Access only from your network
 
 If your company restricted access to its IP addresses, you can only sign in

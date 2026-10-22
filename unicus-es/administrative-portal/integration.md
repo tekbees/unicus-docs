@@ -40,8 +40,6 @@ Las API keys autorizan a tu **backend** a llamar los endpoints de servidor
   nueva, despliégala y luego revoca la anterior.
 * Las keys que crea tu empresa son de **producción**. Las credenciales de
   prueba las entrega Tekbees y aparecen marcadas como gestionadas por Tekbees.
-* Si tu empresa activó la aprobación de una segunda persona, crear una key de
-  producción necesita la aprobación de otro administrador.
 
 Solo los administradores de la empresa ven y gestionan las API keys.
 

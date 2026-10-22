@@ -39,8 +39,6 @@ API keys authorise your **backend** to call the server endpoints
   one, deploy it and then revoke the old one.
 * Keys your company creates are **production** keys. Test credentials are
   provided by Tekbees and are marked as managed by Tekbees.
-* If your company turned on second-person approval, creating a production key
-  needs another administrator's approval.
 
 Only your company's administrators see and manage API keys.
 

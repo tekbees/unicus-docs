@@ -72,5 +72,6 @@
 * [Flujos de verificación](administrative-portal/flows.md)
 * [Integración](administrative-portal/integration.md)
 * [Configuración de la compañía](administrative-portal/company-settings.md)
-* [Usuarios, roles y aprobaciones](administrative-portal/users-roles-and-approvals.md)
+* [Usuarios y roles](administrative-portal/users-roles-and-approvals.md)
+* [Inicio de sesión único (SSO)](administrative-portal/single-sign-on.md)
 * [Glosario](administrative-portal/glossary.md)
