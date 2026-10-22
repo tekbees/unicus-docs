@@ -62,9 +62,6 @@ another one.
 
 * New transactions use the published version; those already in progress
   finish with the one they started with.
-* If your company turned on **second-person approval**, the publication waits
-  until another administrator approves it (see
-  [Approvals](users-roles-and-approvals.md#approvals)).
 * **Versions** shows the history: compare versions or restore one as the
   draft.
 

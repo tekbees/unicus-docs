@@ -1,10 +1,10 @@
 ---
 description: >-
-  Invita a tu equipo, define qué puede hacer cada rol, aprueba cambios
-  sensibles y consulta el registro de auditoría.
+  Invita a tu equipo, define qué puede hacer cada rol y consulta el registro de
+  auditoría.
 ---
 
-# Usuarios, roles y aprobaciones
+# Usuarios y roles
 
 ## Usuarios
 
@@ -67,20 +67,6 @@ revisar transacciones sin el permiso **Ver datos personales**: verá el nombre,
 el número de documento y los resultados, pero no las fotos ni los demás datos
 personales.
 {% endhint %}
-
-## Aprobaciones
-
-Si tu empresa activó la **aprobación de una segunda persona** (en
-[Seguridad](company-settings.md#seguridad)), estas acciones necesitan que otro
-administrador las apruebe:
-
-* publicar un flujo;
-* crear una API key de producción.
-
-**Administración → Aprobaciones** lista las solicitudes pendientes, aprobadas,
-rechazadas y retiradas. Nadie aprueba su propia solicitud; un rechazo lleva un
-motivo. Una solicitud aprobada le permite a quien la pidió hacer el cambio una
-vez, dentro de las 24 horas siguientes.
 
 ## Auditoría
 

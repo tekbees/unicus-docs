@@ -43,7 +43,7 @@ message uses a template approved by WhatsApp and cannot be customised.
 
 Using Unicus Link in the portal requires the Unicus Link permission in your
 role (see
-[Users, roles and approvals](../administrative-portal/users-roles-and-approvals.md)).
+[Users and roles](../administrative-portal/users-roles-and-approvals.md)).
 
 ## Option 2: from your backend
 

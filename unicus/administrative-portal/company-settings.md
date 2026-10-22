@@ -48,10 +48,10 @@ Administrators only:
   least every hour during the session. Use **Use my current IP** so you
   do not lock yourself out; the portal will not save a list that would block
   your own session.
-* **Second-person approval:** publishing a flow and creating a production API
-  key need another administrator's approval (see
-  [Approvals](users-roles-and-approvals.md#approvals)). It requires at least two
-  active administrators.
+* **Single sign-on (SSO):** your team signs in with the company account
+  (Microsoft Entra ID, Google Workspace or Okta), and with SCIM its users are
+  created and deactivated automatically. See
+  [Single sign-on (SSO)](single-sign-on.md).
 * **E-mailed code for everyone:** besides the password, every user of your
   company types a code sent to their e-mail when signing in.
 

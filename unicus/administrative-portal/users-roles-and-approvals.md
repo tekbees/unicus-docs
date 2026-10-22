@@ -1,10 +1,9 @@
 ---
 description: >-
-  Invite your team, define what each role can do, approve sensitive changes and
-  review the audit log.
+  Invite your team, define what each role can do and review the audit log.
 ---
 
-# Users, roles and approvals
+# Users and roles
 
 ## Users
 
@@ -64,20 +63,6 @@ transactions without the **View personal data** permission: they see the
 name, the document number and the results, but not the photos or the rest of
 the personal data.
 {% endhint %}
-
-## Approvals
-
-If your company turned on **second-person approval** (in
-[Security](company-settings.md#security)), these actions need another
-administrator's approval:
-
-* publishing a flow;
-* creating a production API key.
-
-**Administration → Approvals** lists pending, approved, rejected and withdrawn
-requests. Nobody approves their own request; a rejection carries a reason. An
-approved request lets the requester make the change once, within the next 24
-hours.
 
 ## Audit log
 

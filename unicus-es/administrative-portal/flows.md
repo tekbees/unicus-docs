@@ -64,9 +64,6 @@ borrador y publica otra.
 
 * Las transacciones nuevas usan la versión publicada; las que ya estaban en
   curso terminan con la que empezaron.
-* Si tu empresa activó la **aprobación de una segunda persona**, la
-  publicación queda pendiente hasta que otro administrador la apruebe (ver
-  [Aprobaciones](users-roles-and-approvals.md#aprobaciones)).
 * **Versiones** muestra el historial: compara versiones o restaura una como
   borrador.
 
