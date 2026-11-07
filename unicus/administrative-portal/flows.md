@@ -51,7 +51,7 @@ Some steps depend on the services in your plan (for example the OTP code or
 signing with Unicus Sign); the ones you do not have are disabled. Signing with
 Unicus Sign also needs your Unicus Sign account connected (see
 [Integration](integration.md#connections)). Besides
-steps, a flow can include server-side **checks** (for example list screening)
+steps, a flow can include server-side **checks** (for example an Integrity check against restrictive lists)
 if your plan includes them.
 
 ## Publish
