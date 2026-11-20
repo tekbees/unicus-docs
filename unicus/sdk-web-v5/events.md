@@ -178,7 +178,9 @@ technical fields depending on the step.
     "state": {
       "exited": true,
       "success": true,
-      "resultCode": 2000
+      "resultCode": 2000,
+      "outcome": "success",
+      "transactionResult": 1
     }
   }
 }
@@ -190,13 +192,15 @@ technical fields depending on the step.
 | Field | Type | Description |
 | --- | --- | --- |
 | `exited` | boolean | Always `true`. |
-| `success` | boolean | `true` only for a successful result. |
-| `resultCode` | number | Final result code of the flow. |
+| `success` | boolean | `true` only for a successful result confirmed by Unicus. |
+| `resultCode` | number | Final result code of the flow, as Unicus confirmed it. |
+| `outcome` | string | `success`, `review`, `fail` or `pending` (Unicus had not confirmed the result yet when the user closed the screen: treat it as unknown and wait for the webhook). |
+| `transactionResult` | number | Present when Unicus confirmed the result: `1` successful, `4` in review, any other value a failure. |
 
 | `success` | `resultCode` | Meaning |
 | --- | --- | --- |
 | `true` | `2000` (`0` and `200` in legacy flows) | Identity verified; every required step passed. |
-| `false` | `2013` | Flow completed but the transaction is **under manual review** in Unicus (for example a possible duplicate). Not a failure: wait for the webhook. |
+| `false` | `2013`, or `3090`–`3106` with `outcome` `review` | Flow completed but the transaction is **under manual review** in Unicus (a possible duplicate, or a possible match in an Integrity check of the flow). Not a failure: wait for the webhook. |
 | `false` | any other | Verification failed. The code says why; see [Result codes](result-codes.md). |
 
 `finished` is emitted when the user leaves the result screen (its button or the
@@ -210,6 +214,13 @@ user taps **Continue** to go on with the same transaction.
 On a computer with hand-off, the result screen appears when the phone finishes
 and Unicus confirms the result; if the phone stops on an error it cannot
 recover from, the computer shows a failure and `finished` carries that code.
+
+Before showing the result, the web app (on the computer and on the phone) asks
+Unicus for the final result of the transaction: checks that run after the last
+step (for example an Integrity check) can still send it to review or reject it.
+Meanwhile the person sees "Confirming your result". A review, or a failure
+decided by an Integrity check, never offers **Try again**: a new capture would
+not change a decision about the person.
 
 ## `OnUnicus:exit`
 
@@ -312,8 +323,8 @@ button.addEventListener('OnUnicus:details', ({ detail }) => {
 });
 
 button.addEventListener('OnUnicus:finished', ({ detail }) => {
-  const { success, resultCode } = detail.transaction.state;
-  if (success || resultCode === 2013) {
+  const { success, resultCode, outcome } = detail.transaction.state;
+  if (success || outcome === 'review' || outcome === 'pending') {
     refreshFromBackend(tid);        // your backend confirms with Unicus
   } else {
     showRetry(resultCode);

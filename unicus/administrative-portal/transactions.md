@@ -19,7 +19,13 @@ permission of that same type.
 * Search by document number or by name and last name.
 * Filter by status: successful, processing, failed, in review, suspicious,
   deleted or expired.
-* Pick the date range (up to 90 days) and the columns you want to see.
+* Pick the date range (up to 90 days) and the columns you want to see. The
+  lists open on **Today** and offer the same quick ranges as the dashboard and
+  reports.
+* **Version** (enrollments and verifications) shows which Unicus API created
+  each transaction, `v4` or `v5`, and lets you filter by it; the report shows it
+  as a column. While your company moves to v5, it tells you which integration
+  each transaction came from.
 * **Show tests** appears if your company has test credentials: it shows only
   the test transactions (see [Customer Token](../sdk-web-v5/customer-token.md)).
 
@@ -65,6 +71,11 @@ certificate it generates, with who generated it and when.
   (to share with third parties).
 * Without the permission, it is a single button and the certificate already
   comes without that data (and says so).
+* The certificate shows where the verification took place with a map and a
+  **View on map** link (an approximate point in the version without personal
+  data).
+* The certificate and its watermark name the user who generated it by first
+  and last name, never by e-mail.
 
 To check that a certificate someone gave you is genuine, use **Tools → Verify
 certificate** and drop the PDF: the file never leaves your browser, only its
@@ -78,7 +89,8 @@ no longer shows it as it is now."
 
 When a new face matches other enrollments of your company, the enrollment is
 put **in review** and appears in **Operations → Review queue** (the menu shows
-how many are pending).
+how many are pending). The newest cases come first, and the header says how
+long the oldest one has been waiting.
 
 For each case you decide:
 

@@ -216,6 +216,7 @@ static bool IsValid(string secret, string timestamp, string signature, byte[] ra
     "attempts": { "face": 0, "document_front": 1, "document_back": 0, "document": 0,
                   "face_captures": 1, "document_front_captures": 2, "document_back_captures": 1 },
     "idNumber": "<DOCUMENT NUMBER>",
+    "user_document": { "type": "ID", "number": "<DOCUMENT NUMBER>" },
     "location": "{\"latitude\":4.7398,\"longitude\":-74.1137}",
     "document": {
       "idType": "ID",
@@ -266,6 +267,7 @@ static bool IsValid(string secret, string timestamp, string signature, byte[] ra
 | `attempts` | object | Failed attempts per capture: `face`, `document_front`, `document_back`, `document` (face against document). Technical errors on Unicus' side are not counted. Also every capture made, the successful one included: `face_captures` (face captures, for example the selfies of a verification), `document_front_captures`, `document_back_captures`. |
 | `last_failure` | object | `{ code, message, step }` of the last failed attempt. Absent when approved or when nothing failed. |
 | `idNumber` | string | Document number the transaction was created with (`clientid`). |
+| `user_document` | object | Enrollments and verifications only: `{ type, number }`, the document type and number your integration sent to create the transaction (for example `clientid` `ID:123456789`). It is what you declared, not what was read: the capture's reading is in `document`. Absent for other transaction types or when the transaction was created without a document. |
 | `location` | string | JSON text `{"latitude":…,"longitude":…}` when the user shared their location. Absent otherwise. |
 | `document` | object | Document data and checks, when a document was captured (see below). |
 | `biometrics` | object | Face results, when the face was captured: `ageEstimateGroup`, `livenessCheck`, `matchLevel` (verification). |
@@ -358,3 +360,7 @@ sent, the transaction is closed and its link no longer works.
   the URL answers `2xx` to a `POST` with a JSON body. **Platform → Webhooks**
   shows every delivery with its response and lets you retry failed ones (see
   [Integration](../administrative-portal/integration.md#delivery-log)).
+* A transaction that ends while your webhook is **turned off** is not sent, but
+  it is recorded in **Platform → Webhooks** as failed ("not sent: the webhook
+  is turned off"). Once you turn the webhook back on you can resend it from
+  there, for up to 7 days.

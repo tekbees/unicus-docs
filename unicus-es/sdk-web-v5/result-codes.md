@@ -42,6 +42,7 @@ funcionar (`2051`) y Unicus envía el webhook final.
 | --- | --- | --- |
 | `APPROVED` | `2000` | La última etapa fue exitosa, o se completó el último paso obligatorio del flujo. |
 | `REVIEW` | `2013` | Posible identidad duplicada: queda en espera de revisión manual. A continuación llega `TRANSACTION_REVIEW_RESOLVED` con `APPROVED` (`2000`) o `REJECTED` (`2013`, o `7007` cuando se marca como fraude, `8002` cuando se rechaza). |
+| `REVIEW` | `3090`–`3106` | Un chequeo de Integrity del flujo envió la transacción a revisión (ver abajo). |
 | `REJECTED` | Un código final de los listados abajo, o la última falla | Un código final, un límite de intentos, o 20 minutos de inactividad después de una falla. |
 | `EXPIRED` | `6003` | Abierta e inactiva durante 20 minutos sin una falla pendiente (`finalized_by: INACTIVITY`), o nunca abierta en 24 horas (`finalized_by: NOT_STARTED`). |
 | `CANCELLED` | `2041` | El usuario canceló la verificación. |
@@ -66,6 +67,25 @@ funcionar (`2051`) y Unicus envía el webhook final.
 | `2041` | El usuario canceló la sesión de cámara. Cerrar o salir de la página no cancela. | `CANCELLED` |
 | `2053` | La transacción fue eliminada. | `DELETED` |
 | `6003` | La transacción expiró por inactividad o nunca se inició. También se usa para un tiempo de espera agotado de un servicio durante un paso, que admite reintento. | `EXPIRED` |
+
+### Chequeos de Integrity
+
+Cuando el flujo incluye chequeos de Integrity del lado del servidor (listas
+restrictivas), estos corren después del último paso. Lo que hace cada resultado
+(revisión o rechazo) se define en la configuración del chequeo en el flujo; abajo
+están los valores por defecto. Ninguno de estos códigos se corrige capturando de
+nuevo, por eso la aplicación web nunca ofrece **Intentar de nuevo**.
+
+| Código | Significado | Resultado por defecto |
+| --- | --- | --- |
+| `3090` | El chequeo no se pudo completar: una fuente que requiere no estaba al día, o no había un nombre para consultar. | `REVIEW` |
+| `3092` | El servicio de Integrity no respondió. Una transacción nunca se aprueba sin su chequeo. | `REVIEW` |
+| `3101` | La persona coincide con una entrada de una lista de sanciones. | `REJECTED` |
+| `3102` | Posible coincidencia en una lista de sanciones. | `REVIEW` |
+| `3103` | La persona coincide con una persona expuesta políticamente (PEP). | `REVIEW` |
+| `3104` | Posible coincidencia PEP. | `REVIEW` |
+| `3105` | Coincidencia en antecedentes colombianos (disciplinarios, fiscales, sanciones contractuales). | `REVIEW` |
+| `3106` | Posible coincidencia en antecedentes colombianos. | `REVIEW` |
 
 ## Creación de la transacción
 

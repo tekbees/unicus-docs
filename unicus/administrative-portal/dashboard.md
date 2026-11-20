@@ -21,6 +21,11 @@ Only transactions where the person did something are counted: a link nobody
 opened is not in the figures. Test transactions are never mixed with real
 ones.
 
+The cards, the funnel, the results and the analytics count the same
+transactions, so their numbers add up. The success rate is successful ÷
+(successful + failed): transactions still in process or expired are not part
+of it, and the card says how many started and how many have a result.
+
 ## Analytics
 
 **Analytics** shows the conversion, drop-off and rejection reasons for the

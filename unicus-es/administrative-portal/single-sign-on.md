@@ -11,9 +11,10 @@ empresa en lugar de una contraseña de Unicus. Tu proveedor de identidad (Entra
 ID, Google Workspace u Okta) confirma quién es cada persona y aplica sus propias
 reglas: doble factor, bloqueo de cuentas, horarios.
 
-Lo configura un **administrador de tu empresa** en
+Lo configura el **administrador principal de tu empresa** en
 **Configuración → Compañía → Seguridad**, junto con quien administra el
-proveedor de identidad. Se usa el estándar OpenID Connect (OIDC).
+proveedor de identidad. Solo el administrador principal puede guardar o quitar
+la configuración de SSO; los demás administradores pueden verla. Se usa el estándar OpenID Connect (OIDC).
 
 {% hint style="info" %}
 El SSO no crea usuarios por sí solo: solo entran las personas que ya tienen

@@ -178,7 +178,9 @@ campos técnicos según el paso.
     "state": {
       "exited": true,
       "success": true,
-      "resultCode": 2000
+      "resultCode": 2000,
+      "outcome": "success",
+      "transactionResult": 1
     }
   }
 }
@@ -190,13 +192,15 @@ campos técnicos según el paso.
 | Campo | Tipo | Descripción |
 | --- | --- | --- |
 | `exited` | boolean | Siempre `true`. |
-| `success` | boolean | `true` solo para un resultado exitoso. |
-| `resultCode` | number | Código de resultado final del flujo. |
+| `success` | boolean | `true` solo para un resultado exitoso confirmado por Unicus. |
+| `resultCode` | number | Código de resultado final del flujo, tal como Unicus lo confirmó. |
+| `outcome` | string | `success`, `review`, `fail` o `pending` (Unicus aún no había confirmado el resultado cuando el usuario cerró la pantalla: trátalo como desconocido y espera el webhook). |
+| `transactionResult` | number | Viene cuando Unicus confirmó el resultado: `1` exitosa, `4` en revisión, cualquier otro valor una falla. |
 
 | `success` | `resultCode` | Significado |
 | --- | --- | --- |
 | `true` | `2000` (`0` y `200` en flujos legacy) | Identidad verificada; todos los pasos obligatorios se aprobaron. |
-| `false` | `2013` | El flujo se completó pero la transacción está **en revisión manual** en Unicus (por ejemplo, un posible duplicado). No es una falla: espera el webhook. |
+| `false` | `2013`, o `3090`–`3106` con `outcome` `review` | El flujo se completó pero la transacción está **en revisión manual** en Unicus (un posible duplicado, o una posible coincidencia en un chequeo de Integrity del flujo). No es una falla: espera el webhook. |
 | `false` | cualquier otro | La verificación falló. El código indica el motivo; consulta [Códigos de resultado](result-codes.md). |
 
 `finished` se emite cuando el usuario sale de la pantalla de resultado (con su botón o con el
@@ -209,6 +213,13 @@ evento ni `2041`, y el usuario toca **Continuar** para seguir en la misma transa
 En un computador con traspaso al celular, la pantalla de resultado aparece cuando el celular termina
 y Unicus confirma el resultado; si el celular se detiene en un error del que no puede
 recuperarse, el computador muestra una falla y `finished` lleva ese código.
+
+Antes de mostrar el resultado, la aplicación web (en el computador y en el celular) le pide a
+Unicus el resultado final de la transacción: los chequeos que corren después del último paso (por
+ejemplo, un chequeo de Integrity) todavía pueden enviarla a revisión o rechazarla. Mientras tanto la
+persona ve "Estamos confirmando tu resultado". Una revisión, o una falla decidida por un chequeo de
+Integrity, nunca ofrece **Intentar de nuevo**: una nueva captura no cambiaría una decisión sobre la
+persona.
 
 ## `OnUnicus:exit`
 
@@ -312,8 +323,8 @@ button.addEventListener('OnUnicus:details', ({ detail }) => {
 });
 
 button.addEventListener('OnUnicus:finished', ({ detail }) => {
-  const { success, resultCode } = detail.transaction.state;
-  if (success || resultCode === 2013) {
+  const { success, resultCode, outcome } = detail.transaction.state;
+  if (success || outcome === 'review' || outcome === 'pending') {
     refreshFromBackend(tid);        // tu backend confirma con Unicus
   } else {
     showRetry(resultCode);

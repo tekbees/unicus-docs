@@ -21,6 +21,11 @@ Solo se cuentan las transacciones en las que la persona hizo algo: un enlace
 que nadie abrió no aparece en las cifras. Las transacciones de prueba no se
 mezclan con las reales.
 
+Las tarjetas, el embudo, los resultados y la analítica cuentan las mismas
+transacciones, así que sus números cuadran. La tasa de éxito es exitosas ÷
+(exitosas + fallidas): las transacciones aún en proceso o expiradas no entran,
+y la tarjeta indica cuántas se iniciaron y cuántas tienen resultado.
+
 ## Analítica
 
 **Analítica** muestra la conversión, el abandono y los motivos de rechazo del

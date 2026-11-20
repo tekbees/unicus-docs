@@ -12,8 +12,10 @@ instead of a Unicus password. Your identity provider (Entra ID, Google Workspace
 or Okta) confirms who each person is and applies its own rules: multi-factor
 authentication, account lockout, sign-in hours.
 
-A **company administrator** sets it up in **Settings → Company → Security**,
-together with whoever manages the identity provider. It uses the OpenID Connect
+Your company's **main administrator** sets it up in **Settings → Company →
+Security**, together with whoever manages the identity provider. Only the main
+administrator can save or remove the SSO configuration; other administrators
+can see it. It uses the OpenID Connect
 (OIDC) standard.
 
 {% hint style="info" %}

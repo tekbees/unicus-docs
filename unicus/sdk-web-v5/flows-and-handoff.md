@@ -60,6 +60,15 @@ camera step on, the rest of the flow (including later non-camera steps such as
 * A transaction ends with `success` only when every required step passed. A
   step configured as optional can fail without failing the transaction.
   Liveness, document and face match are always required.
+* A flow whose only camera step is `liveness` (for example consent and
+  liveness, with or without `age_check`) also works for `enrollment-verify`: a
+  person Unicus does not know is enrolled and the transaction ends approved
+  when the liveness (and the age check) pass; a person already enrolled is
+  verified by comparing the liveness with the face of their enrollment (3D:3D).
+* The button prepares the transaction when your page loads and checks it again
+  on the first click: if the flow assigned in the portal changed in between,
+  the click starts with the current flow, and if the company no longer has a
+  flow, the button shows "Verification not configured" (`2002`).
 * `OnUnicus:details` reports steps by their `stepId`, so your page can show
   progress for the steps that exist in your flow instead of a fixed list.
   `consent` and `info` steps are not reported, and steps completed on the

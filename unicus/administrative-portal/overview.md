@@ -49,12 +49,12 @@ by its TID, the document number or the person's name.
 ## Who sees what
 
 Every user has a **role**, and every role has permissions per service: view,
-create, edit and delete. A section shows a lock and "Not included in your plan"
-when your company does not have that service or your role lacks the
-permission; that section cannot be opened.
+create, edit and delete. The menu shows only the sections your company has
+and your role can use; the others are not listed. Opening one of them by its
+address shows that the service is not available.
 
 Some actions are reserved for your company's **administrators**, whatever a
-custom role allows: access security and single sign-on (SSO), API keys, webhook signing and
+custom role allows: access security and single sign-on (SSO; only the main administrator can change it), API keys, webhook signing and
 the webhook delivery log, the portal's address and colour, copying or
 regenerating the Company ID, and assigning the administrator role or editing an
 administrator.

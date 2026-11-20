@@ -46,6 +46,10 @@ transacción se guarda como prueba:
 * sus webhooks llevan `meta.livemode: false`;
 * se borra 30 días después de creada.
 
+Una API key de prueba solo funciona con transacciones de prueba:
+`query-transaction`, `query-id` y `delete-transaction` llamados con ella nunca
+encuentran ni borran una transacción real.
+
 Solo Tekbees crea y revoca las credenciales de prueba (pídelas a
 [Soporte](support.md)); los administradores de tu empresa las ven en
 Configuración → Compañía → Integración → API keys. Cuando se revoca la última, el modo de

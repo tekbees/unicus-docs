@@ -66,6 +66,16 @@ en el celular.
   obligatorios fueron aprobados. Un paso configurado como opcional puede fallar
   sin que falle la transacción. La prueba de vida, el documento y el cotejo
   facial son siempre obligatorios.
+* Un flujo cuyo único paso de cámara es `liveness` (por ejemplo, consentimiento
+  y prueba de vida, con o sin `age_check`) también sirve para
+  `enrollment-verify`: una persona que Unicus no conoce queda enrolada y la
+  transacción termina aprobada cuando pasan la prueba de vida (y la
+  verificación de edad); una persona ya enrolada se verifica comparando la
+  prueba de vida con el rostro de su enrolamiento (3D:3D).
+* El botón prepara la transacción cuando carga tu página y la vuelve a
+  comprobar en el primer clic: si entre tanto cambió el flujo asignado en el
+  portal, el clic arranca con el flujo actual, y si la empresa ya no tiene
+  flujo, el botón muestra "Validación no configurada" (`2002`).
 * `OnUnicus:details` informa los pasos por su `stepId`, de modo que tu página
   puede mostrar el avance de los pasos que existen en tu flujo en lugar de una
   lista fija. Los pasos `consent` e `info` no se informan, y tampoco los pasos

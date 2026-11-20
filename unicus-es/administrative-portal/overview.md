@@ -49,13 +49,13 @@ transacción por su TID, el número de documento o el nombre de la persona.
 ## Quién ve qué
 
 Cada usuario tiene un **rol**, y cada rol tiene permisos por servicio: ver,
-crear, editar y eliminar. Una sección aparece con un candado y el mensaje "No
-incluido en tu plan" cuando tu empresa no tiene ese servicio contratado o tu
-rol no tiene el permiso; esa sección no se puede abrir.
+crear, editar y eliminar. El menú muestra solo las secciones que tu empresa
+tiene contratadas y que tu rol puede usar; las demás no aparecen. Si abres una
+de ellas por su dirección, verás que el servicio no está disponible.
 
 Algunas acciones son solo para los **administradores** de la empresa, sin
 importar los permisos de un rol personalizado: la seguridad de acceso y el
-inicio de sesión único (SSO), las API keys, la firma y el registro de entregas del webhook, la
+inicio de sesión único (SSO; solo el administrador principal puede cambiarlo), las API keys, la firma y el registro de entregas del webhook, la
 dirección y el color del portal, copiar o regenerar el ID de la compañía, y
 asignar el rol de administrador o editar a un administrador.
 

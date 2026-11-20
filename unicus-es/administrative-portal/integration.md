@@ -58,13 +58,21 @@ con el que se firma cada entrega. Se muestra **una sola vez**. También puedes
 **Plataforma → Webhooks** (administradores) muestra cada entrega de tu webhook
 en los últimos días: entregadas, fallidas y en cola, con su respuesta.
 
-* Busca una entrega por el TID de la transacción.
+* Busca una entrega por el TID de la transacción. **Fallidas** muestra solo
+  las entregas que fallaron.
+* Una entrega fallida dice por qué: "Falló tras N intentos" con el último
+  error, o "No se envió: el webhook de la compañía está desactivado" cuando la
+  transacción terminó mientras tu webhook estaba apagado.
 * **Reintentar** vuelve a enviar una entrega fallida, o **Reintentar
   fallidos** todas a la vez. Las entregas fallidas se pueden reenviar durante
-  7 días.
+  7 días, incluidas las que no se enviaron con el webhook apagado, una vez lo
+  vuelvas a activar.
 
 ## Conexiones
 
 * **Unicus Sign:** para usar el paso de firma con Unicus Sign, conecta la API
-  key de tu cuenta de Unicus Sign. Se guarda cifrada y puedes cambiarla o
+  key de tu cuenta de Unicus Sign (empieza por `usk_` y necesita los permisos
+  para leer sobres y archivos y para crear, enviar y anular sobres). Si Unicus
+  Sign rechaza la key, el portal te dice por qué, por ejemplo un permiso
+  faltante o una key de otro ambiente. Se guarda cifrada y puedes cambiarla o
   desconectarla.
