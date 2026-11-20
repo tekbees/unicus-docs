@@ -20,7 +20,13 @@ permiso de editar o eliminar de ese mismo tipo.
 * Busca por número de documento o por nombre y apellido.
 * Filtra por estado: exitoso, procesando, fallido, en revisión, sospechoso,
   eliminado o expirado.
-* Elige el rango de fechas (hasta 90 días) y las columnas que quieres ver.
+* Elige el rango de fechas (hasta 90 días) y las columnas que quieres ver. Las
+  listas abren en **Hoy** y ofrecen los mismos rangos rápidos que el panel y
+  los reportes.
+* **Versión** (enrolamientos y verificaciones) muestra qué API de Unicus creó
+  cada transacción, `v4` o `v5`, y permite filtrar por ella; el reporte la
+  muestra como columna. Mientras tu empresa pasa a v5, te dice de qué
+  integración vino cada transacción.
 * **Ver pruebas** aparece si tu empresa tiene credenciales de prueba: muestra
   solo las transacciones de prueba (ver
   [Customer Token](../sdk-web-v5/customer-token.md)).
@@ -68,6 +74,10 @@ verificación de identidad o de prueba de vida). Unicus guarda la huella
   personales** (para compartir con terceros).
 * Sin el permiso, es un solo botón y la constancia ya sale sin ellos (y lo
   indica).
+* La constancia muestra dónde se hizo la verificación con un mapa y un enlace
+  **Ver en el mapa** (un punto aproximado en la versión sin datos personales).
+* La constancia y su marca de agua identifican al usuario que la generó por
+  su nombre y apellido, nunca por su correo.
 
 Para comprobar que una constancia que alguien te entregó es auténtica, usa
 **Herramientas → Verificar constancia** y suelta el PDF: el archivo no sale de
@@ -81,7 +91,8 @@ decisión de revisión): el PDF ya no la muestra como está ahora."
 
 Cuando un rostro nuevo coincide con otros enrolamientos de tu empresa, el
 enrolamiento queda **en revisión** y aparece en **Operación → Cola de
-revisión** (el menú muestra cuántos hay pendientes).
+revisión** (el menú muestra cuántos hay pendientes). Los casos más recientes
+aparecen primero, y el encabezado indica desde cuándo espera el más antiguo.
 
 Para cada caso decides:
 

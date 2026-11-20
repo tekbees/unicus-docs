@@ -216,6 +216,7 @@ static bool IsValid(string secret, string timestamp, string signature, byte[] ra
     "attempts": { "face": 0, "document_front": 1, "document_back": 0, "document": 0,
                   "face_captures": 1, "document_front_captures": 2, "document_back_captures": 1 },
     "idNumber": "<NÚMERO DE DOCUMENTO>",
+    "user_document": { "type": "ID", "number": "<NÚMERO DE DOCUMENTO>" },
     "location": "{\"latitude\":4.7398,\"longitude\":-74.1137}",
     "document": {
       "idType": "ID",
@@ -266,6 +267,7 @@ static bool IsValid(string secret, string timestamp, string signature, byte[] ra
 | `attempts` | object | Intentos fallidos por captura: `face`, `document_front`, `document_back`, `document` (rostro contra documento). Los errores técnicos del lado de Unicus no se cuentan. Además, todas las capturas hechas, incluida la exitosa: `face_captures` (capturas del rostro, por ejemplo las selfies de una verificación), `document_front_captures`, `document_back_captures`. |
 | `last_failure` | object | `{ code, message, step }` del último intento fallido. Ausente cuando se aprueba o cuando nada falló. |
 | `idNumber` | string | Número de documento con el que se creó la transacción (`clientid`). |
+| `user_document` | object | Solo enrolamientos y verificaciones: `{ type, number }`, el tipo y número de documento que tu integración envió al crear la transacción (por ejemplo, `clientid` `ID:123456789`). Es lo que declaraste, no lo que se leyó: la lectura de la captura está en `document`. No viene en otros tipos de transacción ni cuando la transacción se creó sin documento. |
 | `location` | string | Texto JSON `{"latitude":…,"longitude":…}` cuando el usuario compartió su ubicación. Ausente en otro caso. |
 | `document` | object | Datos y validaciones del documento, cuando se capturó un documento (ver más abajo). |
 | `biometrics` | object | Resultados faciales, cuando se capturó el rostro: `ageEstimateGroup`, `livenessCheck`, `matchLevel` (verificación). |
@@ -359,3 +361,7 @@ la transacción se cierra y su enlace deja de funcionar.
   la URL responda `2xx` a un `POST` con un cuerpo JSON. En **Plataforma →
   Webhooks** ves cada entrega con su respuesta y puedes reintentar las
   fallidas (ver [Integración](../administrative-portal/integration.md#registro-de-entregas)).
+* Una transacción que termina mientras tu webhook está **desactivado** no se
+  envía, pero queda registrada en **Plataforma → Webhooks** como fallida ("no se
+  envió: el webhook está desactivado"). Cuando vuelvas a activar el webhook
+  puedes reenviarla desde ahí, hasta 7 días después.

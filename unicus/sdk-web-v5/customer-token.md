@@ -46,6 +46,10 @@ is stored as a test:
 * its webhooks carry `meta.livemode: false`;
 * it is deleted 30 days after it was created.
 
+A test API key works only with test transactions: `query-transaction`,
+`query-id` and `delete-transaction` called with it never find or delete a real
+transaction.
+
 Test credentials are created and revoked by Tekbees only (ask
 [Support](support.md)); your company admins can see them in
 Settings → Company → Integration → API keys. When the last one is revoked, test mode ends

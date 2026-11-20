@@ -57,12 +57,20 @@ each delivery is signed with. It is shown **only once**. You can also
 **Platform → Webhooks** (administrators) shows every delivery of your webhook
 over the last days: delivered, failed and queued, with the response.
 
-* Find a delivery by the transaction's TID.
+* Find a delivery by the transaction's TID. **Failed** shows only the
+  deliveries that failed.
+* A failed delivery says why: "Failed after N attempts" with the last error,
+  or "Not sent: the company's webhook is turned off" when the transaction ended
+  while your webhook was off.
 * **Retry** resends a failed delivery, or retry all failed ones at once.
-  Failed deliveries can be resent for 7 days.
+  Failed deliveries can be resent for 7 days, including the ones not sent
+  while the webhook was off, once you turn it back on.
 
 ## Connections
 
 * **Unicus Sign:** to use the Unicus Sign signature step, connect your Unicus
-  Sign account's API key. It is stored encrypted and you can change or
+  Sign account's API key (it starts with `usk_` and needs the permissions to
+  read envelopes and files and to create, send and void envelopes). If Unicus
+  Sign refuses the key, the portal tells you why, for example a missing
+  permission or a key from another environment. It is stored encrypted and you can change or
   disconnect it.

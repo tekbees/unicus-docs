@@ -42,6 +42,7 @@ use up an attempt. Once the transaction is final its link no longer works
 | --- | --- | --- |
 | `APPROVED` | `2000` | The last stage succeeded, or the flow's last required step was completed. |
 | `REVIEW` | `2013` | Possible duplicate identity: held for manual review. `TRANSACTION_REVIEW_RESOLVED` follows with `APPROVED` (`2000`) or `REJECTED` (`2013` or `7007` when marked as fraud, `8002` when rejected). |
+| `REVIEW` | `3090`–`3106` | An Integrity check of the flow sent the transaction to review (see below). |
 | `REJECTED` | A final code below, or the last failure | A final code, an attempt limit, or 20 minutes of inactivity after a failure. |
 | `EXPIRED` | `6003` | Opened and inactive for 20 minutes without a pending failure (`finalized_by: INACTIVITY`), or never opened in 24 hours (`finalized_by: NOT_STARTED`). |
 | `CANCELLED` | `2041` | The user cancelled the verification. |
@@ -66,6 +67,24 @@ use up an attempt. Once the transaction is final its link no longer works
 | `2041` | The user cancelled the camera session. Closing or leaving the page does not cancel. | `CANCELLED` |
 | `2053` | The transaction was deleted. | `DELETED` |
 | `6003` | The transaction expired by inactivity or was never started. Also used for a service timeout during a step, which is retryable. | `EXPIRED` |
+
+### Integrity checks
+
+When the flow includes server-side Integrity checks (restrictive lists), they
+run after the last step. What each result does (review or reject) is set in the
+check's configuration in the flow; the defaults are below. None of these codes
+can be fixed by capturing again, so the web app never offers **Try again**.
+
+| Code | Meaning | Default outcome |
+| --- | --- | --- |
+| `3090` | The check could not be completed: a source it requires was not up to date, or there was no name to check. | `REVIEW` |
+| `3092` | The Integrity service did not answer. A transaction is never approved without its check. | `REVIEW` |
+| `3101` | The person matches an entry of a sanctions list. | `REJECTED` |
+| `3102` | Possible match in a sanctions list. | `REVIEW` |
+| `3103` | The person matches a politically exposed person (PEP). | `REVIEW` |
+| `3104` | Possible PEP match. | `REVIEW` |
+| `3105` | Match in Colombian records (disciplinary, fiscal, contract sanctions). | `REVIEW` |
+| `3106` | Possible match in Colombian records. | `REVIEW` |
 
 ## Transaction creation
 
